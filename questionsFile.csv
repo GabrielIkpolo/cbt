@@ -1,0 +1,6 @@
+text,options,correctAnswer,image,examId
+"What is the capital of Delta State?","A: Berlin; B: Madrid; C: Asaba; D: Abuja","C","https://example.com/image.jpg","examId123"
+"Which river is the longest in the world?","A: Nile; B: Amazon; C: Yangtze; D: Mississippi","A","https://example.com/nile.jpg","examId123"
+"Who is the author of 'To Kill a Mockingbird'?","A: Jane Austen; B: Harper Lee; C: George Orwell; D: J.K. Rowling","B","https://example.com/harper-lee.jpg","examId123"
+"What is the largest ocean on Earth?","A: Pacific; B: Atlantic; C: Indian; D: Arctic","A","https://example.com/pacific.jpg","examId123"
+"How many sides does a hexagon have?","A: Four; B: Six; C: Eight; D: Ten","B","","examId123"

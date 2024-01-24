@@ -1,0 +1,11 @@
+text,options,correctAnswer,image,examId
+"What is JSX in React?","A: JavaScript XML; B: JSON Syntax Extension; C: JavaScript Extension; D: XML Syntax for JavaScript","A","","examId123"
+"How does React handle data binding?","A: Two-way binding; B: One-way binding; C: Data binding not supported; D: Three-way binding","B","","examId123"
+"What is the purpose of ReactDOM in React?","A: Manage state; B: Render components to the DOM; C: Handle events; D: Handle routing","B","","examId123"
+"What is the significance of the 'key' attribute in React lists?","A: Unique identifier for elements; B: Display order; C: Styling identifier; D: Unused in React","A","","examId123"
+"Explain the concept of lifting state up in React.","A: Passing data from parent to child components; B: Passing data from child to parent components; C: Managing state in the parent component; D: Lifting components off the DOM","C","","examId123"
+"How can you optimize performance in React applications?","A: Use class components; B: Avoid using shouldComponentUpdate; C: Minimize state usage; D: Use inline styles","B","","examId123"
+"What is React Router used for?","A: State management; B: Server-side rendering; C: Routing in React applications; D: Form handling","C","","examId123"
+"What is the purpose of useEffect in React?","A: Fetching data; B: Lifecycle methods; C: Handling side effects; D: Form validation","C","","examId123"
+"Explain the virtual DOM in React.","A: Physical representation of the DOM; B: In-memory representation of the DOM; C: Backup DOM; D: Unused in React","B","","examId123"
+"What is a Higher-Order Component (HOC) in React?","A: Component with higher priority; B: Component used for code splitting; C: Reusable component logic; D: Unused in React","C","","examId123"
