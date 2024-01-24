@@ -1,0 +1,67 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Question {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  text          String
+  options       Json
+  correctAnswer String
+  image         String?
+  createdAt     DateTime @default(now())
+  exam          Exam     @relation(fields: [examId], references: [id])
+  examId        String   @db.ObjectId
+}
+
+model Exam {
+  id              String           @id @default(auto()) @map("_id") @db.ObjectId
+  questions       Question[]
+  durationMinutes Int
+  subject         String
+  examResults     ExamResult[]
+  examsInProgress ExamInProgress[]
+}
+
+model Student {
+  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  registrationNumber String       @unique
+  department         String
+  examsTaken         ExamResult[]
+  createdAt          DateTime     @default(now())
+}
+
+model ExamResult {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  student   Student  @relation(fields: [studentId], references: [id])
+  exam      Exam     @relation(fields: [examId], references: [id])
+  score     Int
+  createdAt DateTime @default(now())
+  status    String
+  studentId String   @db.ObjectId
+  examId    String   @db.ObjectId
+}
+
+model Candidate {
+  id                 String           @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  registrationNumber String           @unique
+  department         String
+  examsInProgress    ExamInProgress[]
+}
+
+model ExamInProgress {
+  id                   String    @id @default(auto()) @map("_id") @db.ObjectId
+  candidate            Candidate @relation(fields: [candidateId], references: [id])
+  exam                 Exam      @relation(fields: [examId], references: [id])
+  candidateId          String    @db.ObjectId
+  examId               String    @db.ObjectId
+  currentQuestionIndex Int
+  startTime            DateTime  @default(now())
+  endTime              DateTime?
+}
