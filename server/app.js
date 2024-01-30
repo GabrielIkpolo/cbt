@@ -9,6 +9,9 @@ import questionRoutes from './routes/questionRoutes.js';
 import csvRoutes from './routes/csvRoute.js';
 import examRoutes from './routes/examRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
+import examResultRoutes from './routes/examResultRoutes.js';
+import candidateRoutes from './routes/candidateRoutes.js';
+import examInProgressRoutes from './routes/examInProgressRoutes.js';
 
 
 
@@ -36,6 +39,10 @@ app.use('/api', questionRoutes );
 app.use('/api', csvRoutes );
 app.use('/api/exams', examRoutes);
 app.use('/api', studentRoutes);
+app.use('/api', examResultRoutes);
+app.use('/api', candidateRoutes);
+app.use('/api', examInProgressRoutes);
+
 
 
 

@@ -35,6 +35,8 @@ const createExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
+    }finally {
+        await prisma.$disconnect();
     }
 
 }
@@ -106,6 +108,8 @@ const createExamFromCSV = async (req, res) => {
     } catch (err) {
         console.error('Error creating exam:', err);
         res.status(500).json({ err: 'Internal Server Error' });
+    }finally {
+        await prisma.$disconnect();
     }
 };
 
@@ -128,6 +132,8 @@ const getExamById = async (req, res) => {
     } catch (err) {
         console.error("Error getting exam by ID", err);
         res.status(500).json({ error: "Internal server error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 
@@ -159,6 +165,8 @@ const updateExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal server error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 
@@ -173,6 +181,8 @@ const deleteQuestionsForExam = async (examId) => {
     } catch (error) {
         console.error(`Error deleting questions for Exam ${examId}:`, error);
         throw error;
+    }finally {
+        await prisma.$disconnect();
     }
 };
 
@@ -201,6 +211,8 @@ const deleteExam = async (req, res) => {
         console.error('Error deleting exam:', err);
 
         return res.status(500).json({ error: "Internal Server Error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 

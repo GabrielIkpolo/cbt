@@ -22,6 +22,8 @@ const createStudent = async (req, res) => {
         console.error({ error });
         return res.status(500).json({ error: "Internal Server Error" });
 
+    }finally {
+        await prisma.$disconnect();
     }
 
 }
@@ -45,6 +47,8 @@ const getStudentById = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).res.json({ error: "Internal server Error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 
@@ -73,6 +77,8 @@ const updateStudent = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
+    }finally {
+        await prisma.$disconnect();
     }
 
 }
