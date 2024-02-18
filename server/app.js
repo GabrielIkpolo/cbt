@@ -12,6 +12,9 @@ import studentRoutes from './routes/studentRoutes.js';
 import examResultRoutes from './routes/examResultRoutes.js';
 import candidateRoutes from './routes/candidateRoutes.js';
 import examInProgressRoutes from './routes/examInProgressRoutes.js';
+import userRoutes from "./routes/userRoutes.js";
+import registrationRoutes from "./routes/registrationRoutes.js";
+import loginRoutes from './routes/loginRoutes.js';
 
 
 
@@ -42,7 +45,9 @@ app.use('/api', studentRoutes);
 app.use('/api', examResultRoutes);
 app.use('/api', candidateRoutes);
 app.use('/api', examInProgressRoutes);
-
+app.use('/api', userRoutes);
+app.use('/api', registrationRoutes);
+app.use('/api', loginRoutes);
 
 
 

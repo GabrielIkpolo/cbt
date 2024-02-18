@@ -29,6 +29,7 @@ morgan
 slugify
 express-formidable
 bson-objectid
+email-validator
 
 
 =============
@@ -103,6 +104,16 @@ model ExamInProgress {
   endTime              DateTime?
 }
 
+model User {
+  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  email              String       @unique
+  password           String
+  registrationNumber String?      @unique
+  department         String?
+  role               Int          @default(0)
+  createdAt          DateTime     @default(now())
+}
 
 
 ===================
@@ -112,3 +123,22 @@ model ExamInProgress {
 1. impliment the Question model by performing CRUD and bulk csv upload
 2. Impliment exam model for CRUD and bulk exam upload
 3. impliment Student model for CRUD and bulk csv upload 
+
+
+
+
+
+--------------------
+1.  Authentication and Authorization: Implement user authentication and authorization to ensure that only authorized users can access certain endpoints or perform specific actions.
+
+2.  Endpoints for Exam Management: Create endpoints to handle the creation, retrieval, updating, and deletion of exams. You may also implement endpoints to assign exams to students or candidates.
+
+3.  Endpoints for Exam Results: Develop endpoints to manage exam results, such as retrieving a student's exam results, calculating scores, and providing feedback.
+
+4.  Exam Taking Interface: Build an interface for students or candidates to take exams. This could involve displaying questions, capturing answers, and submitting the exam for grading.
+
+5.  Real-time Feedback and Grading: Provide real-time feedback during the exam-taking process, such as indicating whether an answer is correct or incorrect. Implement logic to calculate scores and provide immediate results upon exam submission.
+
+6.  Reporting and Analytics: Develop features to generate reports and analytics based on exam results. This could include generating performance summaries, identifying areas for improvement, and tracking progress over time.
+
+7.  Enhancements and Refinements: Continuously iterate on your application by adding new features, improving existing functionality, and addressing any bugs or issues that arise during testing.

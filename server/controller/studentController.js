@@ -101,6 +101,8 @@ const deleteStudent = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 
@@ -118,6 +120,8 @@ const getAllStudents = async (req, res) => {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
 
+    }finally {
+        await prisma.$disconnect();
     }
 
 }
@@ -136,6 +140,8 @@ const deleteAllStudents = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
+    }finally {
+        await prisma.$disconnect();
     }
 }
 

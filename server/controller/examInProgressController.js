@@ -82,10 +82,65 @@ const updateExamInProgress = async (req, res) => {
 }
 
 
+// Delete Exam in Progress ny Id   
+const deleteExamInProgress = async (req, res) => {
+    const examInProgressId = req.params.id;
+    try {
+
+        await prisma.$transaction(async (prisma) => {
+
+            const deletedExamInProgress = await prisma.examInProgress.delete({
+                where: { id: examInProgressId },
+
+            });
+
+            if (!deletedExamInProgress) {
+                console.error(error);
+                return res.status(404).json({ error: "Exam in Progress not Found" });
+            }
+
+            return res.status(200).json(deletedExamInProgress);
+
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+
+// Get all Exam in Progress 
+const getAllExamInProgress = async (req, res) => {
+
+    try {
+        await prisma.$transaction(async (prisma) => {
+            const allExamsInProgress = await prisma.examInProgress.findMany({
+                include: {
+                    candidate: true,
+                    exam: true,
+                },
+            });
+            
+            if(! allExamsInProgress){
+                return res.status(404).json({Error:"No ExamInProgress Found"});
+            }
+
+            return res.status(200).json(allExamsInProgress);
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+}
 
 
 
 export default {
     createExamInProgress, getExamInProgressById,
-    updateExamInProgress
+    updateExamInProgress, deleteExamInProgress, getAllExamInProgress,
 }

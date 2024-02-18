@@ -65,3 +65,14 @@ model ExamInProgress {
   startTime            DateTime  @default(now())
   endTime              DateTime?
 }
+
+model User {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  email              String   @unique
+  password           String
+  registrationNumber String?  @unique
+  department         String?
+  role               Int      @default(0)
+  createdAt          DateTime @default(now())
+}
