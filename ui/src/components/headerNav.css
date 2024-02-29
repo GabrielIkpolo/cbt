@@ -1,0 +1,48 @@
+.headers{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /* background-color: blueviolet; */
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-row: 1;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+}
+
+/* .nav {
+  display: flex;
+  justify-content: center;
+} */
+
+.navListParent {
+  display: flex;
+  justify-content: center;
+}
+
+.listItems {
+  margin-right:20px;
+  list-style: none;
+  padding-top: 30px;
+}
+
+.navLink {
+  text-decoration: none;
+  color: brown;
+}
+
+.loginButton {
+  border-radius: 10px;
+  background-color: rgb(247, 15, 15);
+  width: 150px; /* Set width to auto */
+  height: 40px; /* Set height to auto */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  overflow: hidden;
+}

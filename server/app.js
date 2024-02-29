@@ -27,12 +27,13 @@ const app = express();
 // Activates dotenv for use
 dotenv.config();
 const port = process.env.PORT || 5000;
+const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 // delcared some middleware used 
 app.use([express.json(), morgan("dev")]);
 
 app.use(cors({
-    origin: ["http://localhost:5000", "*"]
+    origin: [allowedOrigins,"http://localhost:5173"]
 }));
 
 

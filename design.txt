@@ -9,6 +9,7 @@
  react-timer-countdown
  @rpldy/uploady    // file uploader
  react-router-dom
+ react-hot-toast
 
 axios
 

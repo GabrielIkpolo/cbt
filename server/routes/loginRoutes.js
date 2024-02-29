@@ -6,7 +6,7 @@ import authMiddleware from '../helpers/authMiddleware.js';
 // Initialise the router 
 const router = express.Router();
 
-router.post('/login', authMiddleware.requireSignin, authMiddleware.isAdmin, registrationController.login);
+router.post('/login', registrationController.login);
 
 
 export default router;

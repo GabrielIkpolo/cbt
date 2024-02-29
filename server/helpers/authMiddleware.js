@@ -5,18 +5,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 
-// const requireSignin = (req, res, next) => {
-//     try {
-//         const decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRETE);
-//         req.user = decoded;
-//         next();
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(401).json(error);
-//     }
-// }
-
-
 const requireSignin = async (req, res, next) => {
     try {
         // Extract the token from the Authorization header
