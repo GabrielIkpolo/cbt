@@ -6,3 +6,9 @@ body{
 .wrapper{
   min-height: 100vh;
 }
+
+@media(max-width:600px){
+  .wrapper{
+    min-height: 240vh;
+  }
+}
