@@ -28,11 +28,13 @@
   margin-right:20px;
   list-style: none;
   padding-top: 30px;
+  
 }
 
 .navLink {
   text-decoration: none;
   color: brown;
+  /* font-size: 16px; */
 }
 
 .loginButton {
@@ -45,4 +47,7 @@
   margin-top: auto;
   margin-bottom: auto;
   overflow: hidden;
+  border: none;
+  font-size: 16px; 
+  color: white;
 }

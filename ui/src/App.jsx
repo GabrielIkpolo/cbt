@@ -12,21 +12,20 @@ import {
 import ErrorPage from "./pages/ErrorPage.jsx";
 import HeaderNav from "./components/HeaderNav.jsx";
 import FooterNav from "./components/FooterNav.jsx";
-
+import Login from "./components/Login.jsx";
+import toast, { Toaster } from "react-hot-toast";
+import ExamPage from './pages/ExamPage.jsx';
 
 const Wrapper = ({ children }) => {
-    return (
-      <div className="wrapper"> 
-        {children}
-      </div>
-    );
-  };
+  return <div className="wrapper">{children}</div>;
+};
 
 const HeaderAndFooter = () => {
   return (
     <>
       <HeaderNav />
       <Wrapper className="wrapper">
+        <Toaster />
         <Outlet />
       </Wrapper>
       <FooterNav />
@@ -39,7 +38,8 @@ const guide = createBrowserRouter([
     path: "/",
     element: <HeaderAndFooter />,
     children: [
-      // { path: "/", element: <FirstTest /> },
+      { path: "/", element: <Login /> },
+      {path: "/exam", element: <ExamPage />},
       { path: "*", element: <ErrorPage /> },
     ],
   },
@@ -57,6 +57,7 @@ function App() {
       {/* <FirstTest /> */}
 
       <RouterProvider router={guide} />
+     
     </>
   );
 }

@@ -1,4 +1,3 @@
-// api.js
 import axios from 'axios';
 
 const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;

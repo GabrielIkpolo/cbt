@@ -1,0 +1,71 @@
+.login{
+    width: 400px;
+    margin: auto;
+    border: 1px solid black;
+    margin-top: 100px;
+    border-radius: 10px;
+}
+
+
+h2{
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.errorMessage{
+    text-align: center;
+    color: red;
+}
+
+.inputes{
+    text-align: center;
+    padding: 15px;
+}
+
+input{
+    padding: 10px;
+    width: 300px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.submitBtn{
+    width: 300px;
+    height:35px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(247, 15, 15);
+    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    cursor:pointer;
+
+
+  transition: background-color 0.3s ease; /* Add transition for smooth effect */
+  display: block; /* make the button a block element for centering */
+  text-align: center; /* Center the text horizontally */ 
+  color: white;  
+  font-size: 16px; 
+}
+
+.submitBtn:hover{
+    background-color: #ff3333; /* Change background color on hover */
+    transform: translateY(-2px); /* Add a slight lift effect on hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow on hover for depth */
+}
+
+@media(max-width:536px){
+
+    .login{
+        width: 400px;
+        /* height:auto; */
+        margin-left: 30%;
+        margin-right:30%;
+        border: 1px solid black;
+        margin-top: 100px;
+        border-radius: 10px;
+    }
+}
