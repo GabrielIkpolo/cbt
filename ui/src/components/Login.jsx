@@ -25,13 +25,13 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const {data} = await axiosInstance.post("/api/login", formData);
+      const { data } = await axiosInstance.post("/api/login", formData);
 
-      if(data.error){
-      console.error(data.error);
-      setError(data.error);
-      toast.error(data.error);
-      return; // Stop execution if there's an error
+      if (data.error) {
+        console.error(data.error);
+        setError(data.error);
+        toast.error(data.error);
+        return; // Stop execution if there's an error
       }
 
       // Assuming the server returns a token upon sucessfull login
@@ -40,6 +40,9 @@ const Login = () => {
       // Store the token in local storage
       localStorage.setItem("token", token);
 
+      const isLogedIn = data;
+      console.log("isLogedIn ===>", isLogedIn.user.role);
+      
       toast.success("Login Successful");
 
       // redirect to the exam page
@@ -52,35 +55,42 @@ const Login = () => {
 
   return (
     <>
-      <div className="login">
-        <h2>Login</h2>
-        {error && <p className="errorMessage">{error}</p>}
-        <form className="loginForm" onSubmit={handleSubmit}>
-          <div className="inputes">
-            <input
-              
-              type="email"
-              name="email"
-              placeholder=" Enter email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="inputes">
-            <input
-              type="password"
-              
-              placeholder="Enter password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <button className="submitBtn" type="submit">Login</button>
-        </form>
-        
+      <div className="parrentDiv">
+
+        <div className="cbtTitle">
+          <h1>Computer Base Testing, CBT</h1>
+        </div>
+
+        <div className="login">
+          <h2>Login</h2>
+          {error && <p className="errorMessage">{error}</p>}
+          <form className="loginForm" onSubmit={handleSubmit}>
+            <div className="inputes">
+              <input
+
+                type="email"
+                name="email"
+                placeholder=" Enter email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="inputes">
+              <input
+                type="password"
+
+                placeholder="Enter password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button className="submitBtn" type="submit">Login</button>
+          </form>
+
+        </div>
       </div>
     </>
   );

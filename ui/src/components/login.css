@@ -1,4 +1,17 @@
-.login{
+/* .parrentDiv{
+  
+} */
+
+.cbtTitle {
+    text-align: center;
+    font-size: 12px;
+    font-weight: lighter;
+    margin-top: 10px;
+    width:400px;
+    margin: auto
+}
+
+.login {
     width: 400px;
     margin: auto;
     border: 1px solid black;
@@ -7,65 +20,83 @@
 }
 
 
-h2{
+h2 {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
-.errorMessage{
+.errorMessage {
     text-align: center;
     color: red;
 }
 
-.inputes{
+.inputes {
     text-align: center;
     padding: 15px;
 }
 
-input{
+input {
     padding: 10px;
     width: 300px;
     border-radius: 10px;
     border-width: 1px;
 }
 
-.submitBtn{
-    width: 300px;
-    height:35px;
+.submitBtn {
+    width: 320px;
+    height: 35px;
     padding: 10px;
     border: none;
     border-radius: 10px;
     background-color: rgb(247, 15, 15);
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     margin-right: auto;
     margin-left: auto;
-    cursor:pointer;
+    cursor: pointer;
 
 
-  transition: background-color 0.3s ease; /* Add transition for smooth effect */
-  display: block; /* make the button a block element for centering */
-  text-align: center; /* Center the text horizontally */ 
-  color: white;  
-  font-size: 16px; 
+    transition: background-color 0.3s ease;
+    /* Add transition for smooth effect */
+    display: block;
+    /* make the button a block element for centering */
+    text-align: center;
+    /* Center the text horizontally */
+    color: white;
+    font-size: 16px;
 }
 
-.submitBtn:hover{
-    background-color: #ff3333; /* Change background color on hover */
-    transform: translateY(-2px); /* Add a slight lift effect on hover */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow on hover for depth */
+.submitBtn:hover {
+    background-color: #ff3333;
+    /* Change background color on hover */
+    transform: translateY(-2px);
+    /* Add a slight lift effect on hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* Add shadow on hover for depth */
 }
 
-@media(max-width:536px){
+@media(max-width:536px) {
 
-    .login{
+    .login {
         width: 400px;
-        /* height:auto; */
         margin-left: 30%;
-        margin-right:30%;
+        margin-right: 30%;
         border: 1px solid black;
         margin-top: 100px;
         border-radius: 10px;
     }
+
+    .cbtTitle {
+        text-align: center;
+        font-size: 12px;
+        font-weight: lighter;
+        margin-top: 10px;
+        width:400px;
+        margin: auto;
+
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    
 }
