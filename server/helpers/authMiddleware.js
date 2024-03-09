@@ -38,7 +38,7 @@ const requireSignin = async (req, res, next) => {
     }
 }
 
-// Not tested yet   
+ 
 const isLecturer = async (req, res, next) => {
 
     try {
@@ -46,8 +46,8 @@ const isLecturer = async (req, res, next) => {
             where: { email: req.user.email },
         });
 
-        if (user.role !== 0) {
-            return res.status(401).json("Unathorised");
+        if (user.role == 0) {
+            return res.json("Not Authorised to see resource");
         }
         next();
 
@@ -58,13 +58,14 @@ const isLecturer = async (req, res, next) => {
 }
 
 const isAdmin = async (req, res, next) => {
+
     try {
         const user = await prisma.user.findUnique({
             where: { email: req.user.email },
         });
 
         if (user.role !== 2) {
-            return res.status(401).json("Unathorized");
+            return res.json("Unathorized");
         }
 
         next();

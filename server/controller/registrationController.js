@@ -90,7 +90,7 @@ const login = async (req, res) => {
 
         // If user not found or password incorrect, return error 
         if (!user || !(await authHelpers.comparePassword(password, user.password))) {
-            return res.status(401).json({ error: "Invalid email or password" });
+            return res.json({ error: "Invalid email or password" });
         }
 
         // Generate JWT token 
