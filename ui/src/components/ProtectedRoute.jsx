@@ -11,7 +11,7 @@ const ProtectedRoute = ({ role, children }) => {
         return < Navigate to="/" replace />;
     }
 
-    console.log(user.user.role);
+    // console.log(user.user.role);
 
     if (!role.includes(user.user.role)) {
         return <p>Unauthorized: Insufficient permission</p>;
