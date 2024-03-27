@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./protectedRoute.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate, Outlet } from 'react-router-dom';
+import { AuthContext } from "../utils/AuthContext.jsx";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ role, children }) => {
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const { token, user } = useContext(AuthContext);
 
-    // Check if user is loggedIn
-
-    if (!token) {
-        // redirect to login page
-        return navigate("/login");
+    if (!token || !user) {
+        return < Navigate to="/" replace />;
     }
 
-    // if logged in, render the children component
+    console.log(user.user.role);
+
+    if (!role.includes(user.user.role)) {
+        return <p>Unauthorized: Insufficient permission</p>;
+    }
+
     return children;
 }
 

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import axiosInstance from "../utils/authenticationContext.jsx";
+import axiosInstance from "../utils/AxiosInstance.jsx";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const { handleLogin } = useContext(AuthContext); // I added this
 
   const [formData, setFormData] = useState({
     email: "",
@@ -34,19 +37,12 @@ const Login = () => {
         return; // Stop execution if there's an error
       }
 
-      // Assuming the server returns a token upon sucessfull login
-      const token = data?.token;
+      handleLogin(data?.token, data);
 
-      // Store the token in local storage
-      localStorage.setItem("token", token);
-
-      const isLogedIn = data;
-      console.log("isLogedIn ===>", isLogedIn.user.role);
-      
       toast.success("Login Successful");
 
       // redirect to the exam page
-      navigate("/exam");
+      navigate("/select-exam");
     } catch (error) {
       console.error(error);
       toast.error("Login failed");
