@@ -90,16 +90,16 @@ mongo --port 27017 ( Or just type mongo)
 
 Then, initiate the replica set by running the rs.initiate() command:
 
-rs.initiate(
-   {
-      _id: "rs0",
-      members: [
-         { _id: 0, host : "localhost:27017" },
-         { _id: 1, host : "localhost:27018" },
-         { _id: 2, host : "localhost:27019" }
-      ]
-   }
-)
+   ` rs.initiate(
+    {
+        _id: "rs0",
+        members: [
+            { _id: 0, host : "localhost:27017" },
+            { _id: 1, host : "localhost:27018" },
+            { _id: 2, host : "localhost:27019" }
+        ]
+    }
+    )`
 This command will configure the replica set with the specified members.
 
 rs.initiate()
