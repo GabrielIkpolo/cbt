@@ -33,7 +33,7 @@ In the root directory of server, also add a .env file and modify your configurat
 
 
 
-# For the Window users, here is a basic steps to install setup and stat a replicaset locally
+### For the Window users, here is a basic steps to install setup and stat a replicaset locally
 
 Step 1: Install MongoDB
 
@@ -65,13 +65,13 @@ MongoDB will start, and you should see it listening on a specific port.
 
 Step 4: Install MongoDB Compass
 
-# Download MongoDB Compass from the MongoDB download page: https://www.mongodb.com/try/download/compass
+### Download MongoDB Compass from the MongoDB download page: https://www.mongodb.com/try/download/compass
 
 Run the installer and follow the installation instructions.
 
 Step 5: Configure Replica Set
 
-# create these directory in C:\data\db1, C:\data\db2, C:\data\db3
+### create these directory in C:\data\db1, C:\data\db2, C:\data\db3
 
 Open a new Command Prompt
 
@@ -81,7 +81,7 @@ mongod --dbpath C:\data\db1 --port 27017 --replSet rs0
 mongod --dbpath C:\data\db2 --port 27018 --replSet rs0
 mongod --dbpath C:\data\db3 --port 27019 --replSet rs0
 
-# 3 replica set is the standared, but you can trauncate it to 2 or 1 in your dev environment.
+### 3 replica set is the standared, but you can trauncate it to 2 or 1 in your dev environment.
 
 Initialize Replica Set: Connect to one of the MongoDB instances (e.g., on port 27017) using the MongoDB shell:
 
@@ -108,7 +108,7 @@ Verify Replica Set Status: You can verify the status of the replica set by runni
 
 rs.status()
 
-# to start up mongodb on windows with replicaset enabled run this on cmd:
+## To start up mongodb on windows with replicaset enabled run this on cmd:
 
 mongod --dbpath C:\data\db1 --port 27017 --replSet rs0
 
