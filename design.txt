@@ -10,8 +10,7 @@
  @rpldy/uploady    // file uploader
  react-router-dom
  react-hot-toast
-
-axios
+ axios
 
  #Libraries Installed for Nodejs
  ==============================
