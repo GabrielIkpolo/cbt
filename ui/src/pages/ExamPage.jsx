@@ -4,7 +4,7 @@ import "./examPage.css";
 import axiosInstance from "../utils/AxiosInstance.jsx";
 
 
-const ExamPage = () => {
+const ExamPage = ({SelectExam}) => {
   const [examId, setExamId] = useState("65fecdd493a40342a646f770");
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

@@ -11,6 +11,7 @@
  react-router-dom
  react-hot-toast
  axios
+ antd
 
  #Libraries Installed for Nodejs
  ==============================

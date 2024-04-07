@@ -1,3 +1,107 @@
-.selectExam{
-    /* background-color: yellow; */
+.selectExam {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    grid-gap: 20px;
+
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 900;
+    font-style: inherit;
+    color: rgb(28, 26, 26);
 }
+
+.userDetails {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.userPassport {
+    display: block;
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 180px;
+    height: 200px;
+}
+
+.examDescription {
+    margin-left: 20px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.examInstruction {
+    padding-top: 20px;
+    font-size: 12px;
+}
+
+.examOptions {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.examOptions .customSelectOptions {
+    width: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.customSelectOptions:hover {
+    cursor: pointer;
+}
+
+.startExam{
+    display: flex;
+    justify-content: center;
+}
+
+.startBtn{
+    width: 50%;
+    padding: 15px;
+    margin-top: 90px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+
+    background-color: #f80b0b;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-size: 16px;
+}
+
+@media(max-width: 576px) {
+    .selectExam {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 50px;
+        overflow: hidden;
+        width: 100%;
+
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+
+    .examDescription {
+        text-align: left;
+        width: 300px;
+
+    }
+
+    .userPassport {
+        width: 300px;
+    }
+
+    .examOptions .customSelectOptions {
+        width: 300px;
+    }
+
+    /* The Buttom area */
+    .startBtn{
+        width:100%;
+        margin-left: 45%;
+    }
+}
+
+

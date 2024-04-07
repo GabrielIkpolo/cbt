@@ -35,7 +35,7 @@ const createExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 
@@ -108,7 +108,7 @@ const createExamFromCSV = async (req, res) => {
     } catch (err) {
         console.error('Error creating exam:', err);
         res.status(500).json({ err: 'Internal Server Error' });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 };
@@ -132,7 +132,7 @@ const getExamById = async (req, res) => {
     } catch (err) {
         console.error("Error getting exam by ID", err);
         res.status(500).json({ error: "Internal server error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
@@ -165,7 +165,7 @@ const updateExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal server error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
@@ -181,7 +181,7 @@ const deleteQuestionsForExam = async (examId) => {
     } catch (error) {
         console.error(`Error deleting questions for Exam ${examId}:`, error);
         throw error;
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 };
@@ -195,14 +195,14 @@ const deleteExam = async (req, res) => {
 
         // Delete associated questions
         await deleteQuestionsForExam(examId);
-        
+
         const deletedExam = await prisma.exam.delete({
             where: { id: examId },
             include: { questions: true }, // Include associated questions
         });
 
         if (!deletedExam) {
-            return res.status(404).json({ Error: "Exam not found" });
+            return res.json({ Error: "Exam not found" });
         }
 
         return res.status(200).json(deletedExam);
@@ -211,11 +211,36 @@ const deleteExam = async (req, res) => {
         console.error('Error deleting exam:', err);
 
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
 
 
-export default { createExam, parseCSV, createExamFromCSV, getExamById, updateExam, deleteExam }
+const getAllExams = async (req, res) => {
+
+    try {
+        const exams = await prisma.exam.findMany({
+            include: {
+                questions: true,
+            }
+        });
+
+        if (!exams || exams.length === 0) {
+            return res.json({ Error: "No Exam was found" });
+        }
+
+        return res.json(exams);
+    } catch (error) {
+        console.error("Error fetching exams", error);
+        res.status(500).json({ Error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+export default {
+    createExam, parseCSV, createExamFromCSV, getExamById,
+    updateExam, deleteExam, getAllExams,
+}
 

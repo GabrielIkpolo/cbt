@@ -1,6 +1,7 @@
 import express from 'express';
 import examController from '../controller/examController.js';
 import multer from 'multer';
+import authMiddleware from '../helpers/authMiddleware.js';
 
 
 
@@ -14,9 +15,11 @@ const upload = multer({ storage: storage });
 
 // Defined routes 
 router.post('/raw-post', examController.createExam);
+router.get('/', examController.getAllExams);   
 router.get('/:id', examController.getExamById);
 router.put('/:id', examController.updateExam);
 router.delete('/:id', examController.deleteExam);
+
 
 // To create exam form file uplaod
 router.post('/upload', upload.single(nameOfFileToBeUploaded), async (req, res) => {
