@@ -2,27 +2,28 @@ import { useEffect } from "react";
 import React, { useState } from 'react'
 import "./examPage.css";
 import axiosInstance from "../utils/AxiosInstance.jsx";
+import defaultPic from "../assets/img/defaultPic.png";
 
 
-const ExamPage = ({SelectExam}) => {
+const ExamPage = () => {
   const [examId, setExamId] = useState("65fecdd493a40342a646f770");
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userResponses, setUserResponses] = useState({});
   const [timer, setTimer] = useState(0);
 
-// Function to start exam  
-const StartExam = (examId)=>{
-  setExamId(examId);
-}  
+  // Function to end exam  
+  const endExam = (examId) => {
+
+  }
 
   useEffect(() => {
     // Fetch exam question from backend API
-    const fetchQuestions = async () => {
+    const fetchExam = async () => {
 
       try {
-        const response = await axiosInstance.get(`/api/exams/${examId}`);
-        setQuestions(response.data)
+        const { data } = await axiosInstance.get(`/api/exams/${examId}`);
+        setQuestions(data)
 
       } catch (error) {
         console.error("Error fetching request", error);
@@ -30,20 +31,32 @@ const StartExam = (examId)=>{
 
     }
 
-    fetchQuestions();
 
-  }, [examId]);
 
-  
+  }, []);
 
-  return (<>
-    <div>
-      <h1>Welcome to the Exam Page</h1>
-      {console.log(questions)}
 
-      <button onClick={()=> StartExam()}>Start Exam</button>
-    </div>
-  </>)
+
+  return (
+    <>
+      <div className="theExam">
+
+        <div className='userDetails'>Welcome,
+          {/* Welcome, {user.user.name} */}
+          <img className='userPassport' src={defaultPic} alt="User passport" />
+        </div>
+
+
+        <div className="mainExam">
+          Exam main
+        </div>
+
+        <div className="timeNotification">
+          Timmer Notification
+        </div>
+
+      </div>
+    </>)
 }
 
 export default ExamPage

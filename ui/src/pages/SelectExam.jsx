@@ -6,6 +6,7 @@ import defaultPic from "../assets/img/defaultPic.png";
 import axiosInstance from '../utils/AxiosInstance.jsx';
 // import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 
 const SelectExam = () => {
@@ -14,11 +15,17 @@ const SelectExam = () => {
     const { user, setSelectedExam } = useContext(AuthContext); // Access selectedexam from AuthContext.
     // console.log(user.user.name);
     const [exams, setExams] = useState([]);
-
     const [selectedValue, setSelectedValue] = useState("");
+    const [examInfo, setExamInfo] = useState({ totalQuestions: 0, durationMinutes: 0 });
 
     const handleExamSelection = (event) => {
         setSelectedValue(event.target.value);
+        const selectedExam = exams.find((exam) => exam.id === event.target.value);
+        if (selectedExam) {
+            setExamInfo({ totalQuestions: selectedExam.questions.length, durationMinutes: selectedExam.durationMinutes });
+        } else {
+            setExamInfo({ totalQuestions: 0, durationMinutes: 0 });
+        }
     }
 
     useEffect(() => {
@@ -41,9 +48,12 @@ const SelectExam = () => {
 
     const startExam = () => {
         if (selectedValue) {
-            setSelectedExam(selectedValue); // updates selected exam state
+            setSelectedExam(selectedValue); // updates selectedExam state
             navigate("/exam");
+        } else {
+            toast.error("You have to select an exam");
         }
+
 
     }
 
@@ -74,8 +84,18 @@ const SelectExam = () => {
                             {exam.subject}
                         </option>
                     ))}
-
                 </select>
+
+                {/* Exam detail notification  */}
+                <div className="timeAndNumber">
+                    <div>
+                        To Take Questions: <span>{examInfo.totalQuestions}</span> 
+                    </div>
+                    <div>
+                        Duration in Minutes: <span>{examInfo.durationMinutes}</span>
+                    </div>
+                </div>
+
             </div>
         </div>
 

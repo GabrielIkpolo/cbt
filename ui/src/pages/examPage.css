@@ -1,0 +1,17 @@
+.theExam {
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
+    grid-gap: 1rem; */
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    grid-gap: 20px;
+
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 900;
+    font-style: inherit;
+    color: #3d3434;
+}
+
