@@ -15,3 +15,34 @@
     color: #3d3434;
 }
 
+.examImage{
+    width: 500px;
+    height: 300px;
+    display: block;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.question{
+    margin-top: 15px;
+}
+
+form label{
+    background: red;
+}
+
+/* input{
+    margin: 0px;
+    padding: 0px;
+    background-color: red;
+} */
+
+/* Adjustments for radio buttons */
+/* form label {
+    display: flex;
+    align-items: center;
+}
+
+form input[type="radio"] {
+    margin-right:0px; 
+} */
