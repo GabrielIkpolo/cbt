@@ -97,6 +97,8 @@ const login = async (req, res) => {
         const token = jwt.sign({userId: user.id}, process.env.JWT_SECRETE, {expiresIn: '1d'});
 
         // Return the token and user information 
+        // return res.status(200).json({token, user});
+        delete user.password
         return res.status(200).json({token, user});
 
     } catch (error) {
