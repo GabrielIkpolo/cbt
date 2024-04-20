@@ -10,10 +10,9 @@ const ProtectedRoute = ({ role, children }) => {
     if (!token || !user) {
         return < Navigate to="/" replace />;
     }
+    // console.log("ProtectedUser===>",user);
 
-    // console.log(user.user.role);
-
-    if (!role.includes(user.user.role)) {
+    if (!role.includes(user.role)) {
         return <p>Unauthorized: Insufficient permission</p>;
     }
 

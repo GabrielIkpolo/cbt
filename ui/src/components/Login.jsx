@@ -37,7 +37,13 @@ const Login = () => {
         return; // Stop execution if there's an error
       }
 
-      handleLogin(data?.token, data);
+      // Destructure the user token and user detail from data 
+      const { token, user } = data;
+
+      // Ommit password from User Object before storing in local Storage
+      delete user.password;
+
+      handleLogin(token, user);
 
       toast.success("Login Successful");
 

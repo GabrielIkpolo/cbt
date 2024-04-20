@@ -1,48 +1,91 @@
 .theExam {
-    /* display: grid;
+  /* display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
     grid-gap: 1rem; */
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 40px;
-    grid-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 40px;
+  grid-gap: 20px;
 
-    font-size: large;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: 900;
-    font-style: inherit;
-    color: #3d3434;
+  font-size: large;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 900;
+  font-style: inherit;
+  color: #3d3434;
 }
 
-.examImage{
-    width: 500px;
-    height: 300px;
-    display: block;
-    border-radius: 15px;
-    background-color: white;
+.examImage {
+  margin-top: 40px;
+  width: 500px;
+  height: 300px;
+  display: block;
+  border-radius: 15px;
+  background-color: white;
 }
 
-.question{
-    margin-top: 15px;
+.question {
+  margin-top: 15px;
 }
 
-form label{
-    background: red;
+.firstR {
+  display: flex;
+  align-items: center;
 }
 
-/* input{
-    margin: 0px;
-    padding: 0px;
-    background-color: red;
-} */
-
-/* Adjustments for radio buttons */
-/* form label {
-    display: flex;
-    align-items: center;
+.firstR input[type="radio"] {
+  margin-right: 0px;
+  margin-left: -115px;
 }
 
-form input[type="radio"] {
-    margin-right:0px; 
-} */
+.firstR span {
+  margin-left: -120px;
+}
+
+
+.navigationButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.prev,
+.next {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  width: 5rem;
+  cursor: pointer;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: bisque;
+}
+
+
+.endExam {
+  display: flex;
+  justify-content: center;
+}
+
+.endExamBtn {
+  margin-top: 20rem;
+  margin-bottom: 1rem;
+  width: 20rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.endExamBtn:hover {
+  background-color: #f80b0b;
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.redTimer{
+  color: red;
+}

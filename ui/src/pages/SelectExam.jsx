@@ -4,7 +4,6 @@ import { useContext } from 'react';
 import "./selectExam.css";
 import defaultPic from "../assets/img/defaultPic.png";
 import axiosInstance from '../utils/AxiosInstance.jsx';
-// import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -12,8 +11,7 @@ import toast from 'react-hot-toast';
 const SelectExam = () => {
     const navigate = useNavigate();
 
-    const { user, setSelectedExam } = useContext(AuthContext); // Access selectedexam from AuthContext.
-    // console.log(user.user.name);
+    const { user,  setSelectedExam } = useContext(AuthContext); // Access selectedexam from AuthContext.
     const [exams, setExams] = useState([]);
     const [selectedValue, setSelectedValue] = useState("");
     const [examInfo, setExamInfo] = useState({ totalQuestions: 0, durationMinutes: 0 });
@@ -53,14 +51,13 @@ const SelectExam = () => {
         } else {
             toast.error("You have to select an exam");
         }
-
-
     }
 
+    // console.log(user.name, "The selected exam");
     return (<>
         <div className='selectExam'>
             <div className='userDetails'>
-                Welcome, {user.user.name}
+                Welcome, {user.name}
                 <img className='userPassport' src={defaultPic} alt="User passport" />
             </div>
 
@@ -89,7 +86,7 @@ const SelectExam = () => {
                 {/* Exam detail notification  */}
                 <div className="timeAndNumber">
                     <div>
-                        To Take Questions: <span>{examInfo.totalQuestions}</span> 
+                        To Take Questions: <span>{examInfo.totalQuestions}</span>
                     </div>
                     <div>
                         Duration in Minutes: <span>{examInfo.durationMinutes}</span>

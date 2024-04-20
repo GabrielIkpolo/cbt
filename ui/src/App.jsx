@@ -1,5 +1,5 @@
 import { useState } from "react";
-import  {AuthProvider}  from "./utils/AuthContext.jsx";
+import { AuthProvider } from "./utils/AuthContext.jsx";
 import "./App.css";
 import FirstTest from "./pages/FirstTest.jsx";
 import {
@@ -16,6 +16,8 @@ import toast, { Toaster } from "react-hot-toast";
 import ExamPage from './pages/ExamPage.jsx';
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SelectExam from "./pages/SelectExam.jsx";
+import ExamResult from "./pages/ExamResult.jsx";
+import { useEffect } from "react";
 
 const Wrapper = ({ children }) => {
   return (
@@ -59,8 +61,15 @@ const guide = createBrowserRouter([
 
       {
         path: "/exam", element: (
-          <ProtectedRoute role={allowedRolesThree}>
+          <ProtectedRoute role={allowedRoles}>
             <ExamPage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/exam-result", element: (
+          <ProtectedRoute role={allowedRoles}>
+            <ExamResult />
           </ProtectedRoute>
         )
       },
@@ -71,6 +80,32 @@ const guide = createBrowserRouter([
 ]);
 
 function App() {
+
+
+  // useEffect(() => {
+  //   const handleBeforeUnload = (event) => {
+  //     // This message will be shown in the confirmation dialog when the user tries to leave the page
+  //    return event.preventDefault();
+  //     event.returnValue = 'exam-result'; // For modern browsers
+  //     return 'exam-result'; // For legacy browsers
+  //   };
+
+  //   const handleKeyDown = (event) => {
+  //     if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+  //       event.preventDefault(); // Prevent refresh
+  //     }
+  //   };
+
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+  //   window.addEventListener('keydown', handleKeyDown);
+
+  //   return () => {
+  //     window.removeEventListener('beforeunload', handleBeforeUnload);
+  //     window.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, []);
+
+
 
   return (
     <>
