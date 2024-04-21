@@ -117,30 +117,33 @@ const ExamPage = () => {
   useEffect(() => {
     const handleBeforeUnload = (event) => {
 
-      if (user.takenExam === 1) {
+      if (true) {
         console.log("Hi there");
         event.preventDefault();
         event.returnValue = "You have already taken your exam. Are you sure you want to leave?";
+        navigate("/exam-result");
+        return;
       }
     };
 
-      const handlePopstate = () => {
-        if (user.takenExam === 1) {
-          navigate("/exam-result");
-        }
-      };
+    const handlePopstate = () => {
+      if (true) {
+        navigate("/exam-result");
+        return;
+      }
+    };
 
-      // const handleKeyDown = (event) => {
-      //   if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
-      //     event.preventDefault(); // Prevent refresh
-      //   }
-      // };
+    // const handleKeyDown = (event) => {
+    //   if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+    //     event.preventDefault(); // Prevent refresh
+    //   }
+    // };
 
-      window.addEventListener('beforeunload', handleBeforeUnload);
-      window.addEventListener('popstate', handlePopstate);
-      // window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopstate);
+    // window.addEventListener('keydown', handleKeyDown);
 
-     
+
   }, []);
 
 
@@ -149,8 +152,6 @@ const ExamPage = () => {
 
   return (
     <>
-      {/* {ifTakenExam()} { } */}
-
       <div className="theExam">
 
 
