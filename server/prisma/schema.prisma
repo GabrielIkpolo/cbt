@@ -74,5 +74,6 @@ model User {
   registrationNumber String?  @unique
   department         String?
   role               Int      @default(0)
+  takenExam          Int      @default(0)
   createdAt          DateTime @default(now())
 }

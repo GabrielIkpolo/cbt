@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 // Registers a User
 const register = async (req, res) => {
-    const { name, email, password, registrationNumber, department, role } = req.body;
+    const { name, email, password, registrationNumber, department, role, takenExam } = req.body;
 
     try {
         // Perform input validations
@@ -54,6 +54,7 @@ const register = async (req, res) => {
                 registrationNumber,
                 department,
                 role,
+                takenExam,
             },
         });
 

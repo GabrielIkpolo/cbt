@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 // Create a User 
 const createUser = async (req, res) => {
-    const { name, email, password, registrationNumber, department, role } = req.body;
+    const { name, email, password, registrationNumber, department, role, takenExam } = req.body;
 
     try {
         await prisma.$transaction(async (prisma) => {
@@ -57,6 +57,7 @@ const createUser = async (req, res) => {
                     registrationNumber,
                     department,
                     role,
+                    takenExam,
                 },
             });
 
@@ -80,7 +81,7 @@ const getUserById = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(404).json({ error: "User not found!" });
+            return res.json({ error: "User not found!" });
         }
 
         return res.status(200).json(user);
@@ -94,7 +95,7 @@ const getUserById = async (req, res) => {
 // Update a User 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { name, email, registrationNumber, department, role } = req.body;
+    const { name, email, registrationNumber, department, role, takenExam } = req.body;
     try {
         const updatedUser = await prisma.user.update({
             where: { id: userId },
@@ -103,7 +104,8 @@ const updateUser = async (req, res) => {
                 email,
                 registrationNumber,
                 department,
-                role
+                role,
+                takenExam
             },
         });
 
@@ -139,13 +141,24 @@ const deleteUser = async (req, res) => {
 const getAllUsers = async(req, res)=>{
     try{
 
-        const allUsers = await prisma.user.findMany();
+        const allUsers = await prisma.user.findMany({
+            select:{
+                id: true,
+                name: true,
+                email: true,
+                registrationNumber: true,
+                department: true,
+                role: true,
+                takenExam: true,
+                createdAt: true
+            }, // Specified the fileds that I wanted. I omitted password.
+        });
 
         if(!allUsers){
-            return res.status(404).json({Error: "No user was found"});
+            return res.json({Error: "No user was found"});
         }
 
-        return res.status(200).json(allUsers);
+        return res.json(allUsers);
 
     }catch(error){
         console.error(error);
