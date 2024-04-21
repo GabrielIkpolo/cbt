@@ -5,7 +5,7 @@ import axiosInstance from "../utils/AxiosInstance.jsx";
 import newPic from "../assets/img/newPic.png";
 import { useContext } from "react";
 import { AuthContext } from "../utils/AuthContext.jsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const ExamPage = () => {
@@ -36,7 +36,6 @@ const ExamPage = () => {
 
     fetchQuestions();
 
-    //check if takenExam is ===1. if so return <p> "You have already taken your exam. contact the server admin" </p>
   }, [selectedExam]);
 
 
@@ -68,7 +67,7 @@ const ExamPage = () => {
       sessionStorage.setItem("timeRemaining", timeRemaining.toString()); // Store timeRemaining in sessionStorage
     }; // Cleanup on unmount
 
-  }, [ examDetail.durationMinutes]);
+  }, [examDetail.durationMinutes]);
 
   // examDetail.durationMinutes
 
@@ -114,41 +113,44 @@ const ExamPage = () => {
   // console.log("This is your Exam ID =>", selectedExam);
   // console.log("Your Questions =>", questions,"Hi", questions[currentQuestionIndex].text);
 
-  
-
-// Page refresh issue 
+  // Page refresh issue 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = '';
-      return;
-    };
-  
-    const handleKeyDown = (event) => {
-          if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
-            event.preventDefault(); // Prevent refresh
-          }
-        };
 
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('keydown', handleKeyDown);
-  
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('keydown', handleKeyDown);
-    
+      if (user.takenExam === 1) {
+        console.log("Hi there");
+        event.preventDefault();
+        event.returnValue = "You have already taken your exam. Are you sure you want to leave?";
+      }
     };
 
+      const handlePopstate = () => {
+        if (user.takenExam === 1) {
+          navigate("/exam-result");
+        }
+      };
+
+      // const handleKeyDown = (event) => {
+      //   if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+      //     event.preventDefault(); // Prevent refresh
+      //   }
+      // };
+
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      window.addEventListener('popstate', handlePopstate);
+      // window.addEventListener('keydown', handleKeyDown);
+
+     
   }, []);
 
 
 
-
-
+  //=============================================================
 
   return (
     <>
+      {/* {ifTakenExam()} { } */}
+
       <div className="theExam">
 
 

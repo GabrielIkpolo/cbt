@@ -4,7 +4,7 @@ export const AuthContext = createContext({
     token: null,
     user: null,
     setToken: () => { },
-    setUser: () => { },
+    setUser: (userData) => { },
 
     handleLogin: () => { },
     handleLogout: () => { },
@@ -44,11 +44,13 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.removeItem("timeRemaining");
     }
 
+    
+
     useEffect(() => {
         sessionStorage.setItem("selectedExam", JSON.stringify(selectedExam));
     }, [selectedExam]);
 
-    const value = { token, user, handleLogin, handleLogout, selectedExam, setSelectedExam }
+    const value = { token, user, handleLogin, handleLogout, selectedExam, setSelectedExam, setUser }
 
     return (
         <AuthContext.Provider value={value}>

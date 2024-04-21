@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 const SelectExam = () => {
     const navigate = useNavigate();
 
-    const { user,  setSelectedExam } = useContext(AuthContext); // Access selectedexam from AuthContext.
+    const { user, setSelectedExam, setUser } = useContext(AuthContext); // Access selectedexam from AuthContext.
     const [exams, setExams] = useState([]);
     const [selectedValue, setSelectedValue] = useState("");
     const [examInfo, setExamInfo] = useState({ totalQuestions: 0, durationMinutes: 0 });
@@ -44,9 +44,35 @@ const SelectExam = () => {
 
     }, []);
 
-    const startExam = () => {
+    const startExam = async () => {
         if (selectedValue) {
             setSelectedExam(selectedValue); // updates selectedExam state
+
+        //    Check if the loggedin user have tried to write the exam before 
+            try {
+                const { data } = await axiosInstance.get(`/api/the-users/${user.id}`);
+
+                if (!data) {
+                    console.log("presntUserExamStatus detail not found");
+                }
+
+                if (data?.takenExam === 1) {
+                    navigate("/contact-server-admin");
+                    return;
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+
+
+            // Update the user for takenExam to be 1 so we can track them
+            console.log("TheLogged in user detail", user.id, user.takenExam);
+            try {
+                await axiosInstance.put(`/api/the-users/${user.id}`, { takenExam: 1 });
+            } catch (error) {
+                console.error(error);
+            }
             navigate("/exam");
         } else {
             toast.error("You have to select an exam");

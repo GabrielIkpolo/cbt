@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SelectExam from "./pages/SelectExam.jsx";
 import ExamResult from "./pages/ExamResult.jsx";
 import { useEffect } from "react";
+import AlreadyTakenExam from "./pages/AlreadyTakenExam.jsx";
 
 const Wrapper = ({ children }) => {
   return (
@@ -66,11 +67,18 @@ const guide = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+
       {
         path: "/exam-result", element: (
           <ProtectedRoute role={allowedRoles}>
             <ExamResult />
           </ProtectedRoute>
+        )
+      },
+
+      {
+        path: "/contact-server-admin", element:(
+          <AlreadyTakenExam />
         )
       },
 
@@ -80,32 +88,6 @@ const guide = createBrowserRouter([
 ]);
 
 function App() {
-
-
-  // useEffect(() => {
-  //   const handleBeforeUnload = (event) => {
-  //     // This message will be shown in the confirmation dialog when the user tries to leave the page
-  //    return event.preventDefault();
-  //     event.returnValue = 'exam-result'; // For modern browsers
-  //     return 'exam-result'; // For legacy browsers
-  //   };
-
-  //   const handleKeyDown = (event) => {
-  //     if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
-  //       event.preventDefault(); // Prevent refresh
-  //     }
-  //   };
-
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-  //   window.addEventListener('keydown', handleKeyDown);
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //     window.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, []);
-
-
 
   return (
     <>
