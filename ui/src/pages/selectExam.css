@@ -35,6 +35,10 @@
     font-size: 12px;
 }
 
+.examInstruction p{
+    color: red;
+}
+
 .examOptions {
     margin-left: 20px;
     margin-right: 20px;

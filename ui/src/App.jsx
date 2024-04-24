@@ -19,6 +19,7 @@ import SelectExam from "./pages/SelectExam.jsx";
 import ExamResult from "./pages/ExamResult.jsx";
 import { useEffect } from "react";
 import AlreadyTakenExam from "./pages/AlreadyTakenExam.jsx";
+import Admin from "./pages/Admin.jsx";
 
 const Wrapper = ({ children }) => {
   return (
@@ -79,6 +80,14 @@ const guide = createBrowserRouter([
       {
         path: "/contact-server-admin", element:(
           <AlreadyTakenExam />
+        )
+      },
+
+      {
+        path: "/admin", element:(
+          <ProtectedRoute role={allowedRolesThree} >
+            <Admin />
+          </ProtectedRoute>
         )
       },
 

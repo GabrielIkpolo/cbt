@@ -1,0 +1,85 @@
+.admin {
+    /* background-color: cadetblue; */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(11.25rem, 100%), 1fr));
+    grid-gap: 1rem; */
+}
+
+.userManagement {
+    margin-right: 2rem;
+    padding: rem;
+}
+
+.userManagement h3 {
+    text-align: center;
+}
+
+.searchQuery {
+    width: 100%;
+    border: none;
+    margin-bottom: 1rem;
+}
+
+
+
+.takenExamBtn {
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 8px;
+}
+
+.takenExamBtn:hover {
+    background-color: red;
+    cursor: pointer;
+    color: white;
+}
+
+.resetAllBtn {
+    margin-top: 3rem;
+    padding: 10px 20px;
+    background-color: #fb0e0e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 100%;
+}
+
+.resetAllBtn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Styling the table   */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #ac9a9a;
+}
+
+tr:hover {
+    background-color: #c3baba;
+}
+
+
+/* The section view  */
+.selection {
+    color: #1a1818;
+    font-size: 1rem;
+    font-weight: 400;
+}

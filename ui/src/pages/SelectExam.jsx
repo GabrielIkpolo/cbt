@@ -48,7 +48,7 @@ const SelectExam = () => {
         if (selectedValue) {
             setSelectedExam(selectedValue); // updates selectedExam state
 
-        //    Check if the loggedin user have tried to write the exam before 
+            //    Check if the loggedin user have tried to write the exam before 
             try {
                 const { data } = await axiosInstance.get(`/api/the-users/${user.id}`);
 
@@ -92,7 +92,12 @@ const SelectExam = () => {
                 <div className='examInstruction'>
                     Answer all questions. Click on the check box the most that appropriately
                     answers the questions. And click on the next button to navigate to the next
-                    question. on completion of the exam, click on the "End Exam" button.
+                    question. On completion of the exam, click on the "End Exam" button.
+
+                    <p>Note. Once you click on "start Exam" button, you are not allowed to  refresh the page or use the browser's
+                        back and forward button. If you do, your scores will be submitted immediately, and you cannot
+                        take the exam again untill you contact the Server Admin.
+                    </p>
                 </div>
             </div>
 

@@ -98,10 +98,7 @@ const ExamPage = () => {
 
   // Function to end exam  
   const endExam = () => {
-    console.log("End Exam====>", "Exam Ended")
     setTimeRemaining(0);
-
-    // Add a code to paste to the data base user account that the user has written Exam.{wrttenExam: 1}
     navigate("/exam-result");
   }
 
