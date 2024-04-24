@@ -47,6 +47,7 @@ app.use('/api', examResultRoutes);
 app.use('/api', candidateRoutes);
 app.use('/api', examInProgressRoutes);
 app.use('/api', userRoutes);
+app.use('/api/resetAllExam', userRoutes);  // for the reset takenExam
 app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
 

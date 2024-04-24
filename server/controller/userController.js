@@ -138,11 +138,11 @@ const deleteUser = async (req, res) => {
 
 
 //Get All Users
-const getAllUsers = async(req, res)=>{
-    try{
+const getAllUsers = async (req, res) => {
+    try {
 
         const allUsers = await prisma.user.findMany({
-            select:{
+            select: {
                 id: true,
                 name: true,
                 email: true,
@@ -154,17 +154,33 @@ const getAllUsers = async(req, res)=>{
             }, // Specified the fileds that I wanted. I omitted password.
         });
 
-        if(!allUsers){
-            return res.json({Error: "No user was found"});
+        if (!allUsers) {
+            return res.json({ Error: "No user was found" });
         }
 
         return res.json(allUsers);
 
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        return res.status(500).json({error: "Internal Server Error"});
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+// Reset all Exams 
+const resetAllExams = async (req, res) => {
+
+    try {
+        await prisma.user.updateMany({
+            data: { takenExam: 0 },
+        });
+        return res.status(200).json({ message: "All exams reset sucessfully" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
     }
 }
 
 
-export default { createUser, getUserById, updateUser, deleteUser, getAllUsers }
+export default { createUser, getUserById, updateUser, deleteUser, getAllUsers, resetAllExams }

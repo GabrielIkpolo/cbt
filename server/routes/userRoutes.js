@@ -14,6 +14,8 @@ router.put('/the-users/:id', userController.updateUser);
 router.delete('/the-users/:id', userController.deleteUser);
 router.get('/the-users', userController.getAllUsers);
 
+// Endpoint to resset all exams 
+router.put('/', userController.resetAllExams);
 
 
 
