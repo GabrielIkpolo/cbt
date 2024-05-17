@@ -14,6 +14,9 @@ router.put('/exam-in-progress/:id', examInProgressController.updateExamInProgres
 router.delete('/exam-in-progress/:id', examInProgressController.deleteExamInProgress);
 router.get('/exam-in-progress', authMiddleware.requireSignin, examInProgressController.getAllExamInProgress);
 
+router.put('/', examInProgressController.checkAnswer);
+router.post('/', examInProgressController.saveUserResponse);
+
 
 export default router;
 

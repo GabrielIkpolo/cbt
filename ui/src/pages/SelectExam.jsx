@@ -67,12 +67,24 @@ const SelectExam = () => {
 
 
             // Update the user for takenExam to be 1 so we can track them
-            console.log("TheLogged in user detail", user.id, user.takenExam);
             try {
                 await axiosInstance.put(`/api/the-users/${user.id}`, { takenExam: 1 });
             } catch (error) {
                 console.error(error);
             }
+
+             // send a request to create examInprogressRecord
+            try{
+            const response = await axiosInstance.post("/api/exam-in-progress", {
+                userId: user.id,
+                examId: selectedValue,
+                currentQuestionIndex: 1, // if the initial question index is 0
+            });
+                console.log(response.data);
+            }catch(error){
+                console.log("Error creating Exam in progress",error)
+            }
+
             navigate("/exam");
         } else {
             toast.error("You have to select an exam");

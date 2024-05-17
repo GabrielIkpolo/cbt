@@ -26,7 +26,7 @@ const createExamResult = async (req, res) => {
     } catch (error) {
         console.error({ error });
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 
@@ -51,7 +51,7 @@ const getExamResultById = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
@@ -79,7 +79,7 @@ const updateExamResult = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
@@ -103,7 +103,7 @@ const deleteExamResult = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server error" });
-    }finally {
+    } finally {
         await prisma.$disconnect();
     }
 }
@@ -111,26 +111,44 @@ const deleteExamResult = async (req, res) => {
 
 // Get all ExamResult 
 
-const getAllExamResults = async (req, res)=>{
-    try{
+const getAllExamResults = async (req, res) => {
+    try {
         const allExamResults = await prisma.examResult.findMany();
 
-        if (! allExamResults){
-            return res.status(404).json({error: "ExamResults not found"});
+        if (!allExamResults) {
+            return res.status(404).json({ error: "ExamResults not found" });
         }
 
         return res.status(200).json(allExamResults);
 
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        return res.status(500).json({error: "Internal Server Error"});
-    }finally {
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
         await prisma.$disconnect();
     }
 
 }
 
+// Submit exam results
+const submitExamResult = async () => {
+    const { userId, examId, userResponses, score } = req.body;
+
+    try {
+
+        // Calculate score and update ExamResult record
+        // Store userResponses in the database along with the ExamResult record
+        // You can customize this logic based on your requirements
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
 export default {
     createExamResult, getExamResultById, updateExamResult,
-    deleteExamResult, getAllExamResults,
+    deleteExamResult, getAllExamResults, submitExamResult,
 }

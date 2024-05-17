@@ -15,6 +15,7 @@ router.delete('/exam-results/:id', examResultController.deleteExamResult);
 router.get('/exam-results', examResultController.getAllExamResults);
 
 
+router.put('/', examResultController.submitExamResult);
 
 
 

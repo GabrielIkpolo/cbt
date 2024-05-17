@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./admin.css";
 import axiosInstance from '../utils/AxiosInstance';
+import toast from 'react-hot-toast';
 
 const Admin = () => {
 
@@ -40,6 +41,8 @@ const Admin = () => {
                 ...user,
                 takenExam: 0
             } : user));
+            toast.success("Exam resetted for candidate");
+
         } catch (error) {
             console.error("Error resetting takenExam", error);
         }
@@ -49,15 +52,18 @@ const Admin = () => {
     const resetAllExam = async () => {
         try {
 
-            await axiosInstance.put(`/api/resetAllExam`, {takenExam: 0});
+            await axiosInstance.put(`/api/resetAllExam`, { takenExam: 0 });
             // update users state after resetting all exams
-            setUsers((prevUsers)=> prevUsers.map((user)=>({
+            setUsers((prevUsers) => prevUsers.map((user) => ({
                 ...user,
                 takenExam: 0
             })));
         } catch (error) {
             console.error("Error resseting all exams", error);
         }
+
+        // add toast functionalist
+        toast.success("takenExam resetted");
     }
 
     return (

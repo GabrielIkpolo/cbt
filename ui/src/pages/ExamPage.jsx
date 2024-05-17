@@ -6,14 +6,12 @@ import newPic from "../assets/img/newPic.png";
 import { useContext } from "react";
 import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
-
+import toast from 'react-hot-toast';
 
 const ExamPage = () => {
-
   const navigate = useNavigate();
-
   const { user, selectedExam } = useContext(AuthContext);
-  const [examDetail, setExamDetail] = useState("");
+  const [examDetail, setExamDetail] = useState({});
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userResponses, setUserResponses] = useState({});
@@ -21,41 +19,35 @@ const ExamPage = () => {
   const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
-    // Fetch exam question from backend API
+    // Fetch exam questions from backend API
     const fetchQuestions = async () => {
-
       try {
         const { data } = await axiosInstance.get(`/api/exams/${selectedExam}`);
         setExamDetail(data);
         setQuestions(data.questions);
-        setTimeRemaining(data.durationMinutes * 60); // Converts minutes to seconds
+        setTimeRemaining(data.durationMinutes * 60); // Convert minutes to seconds
       } catch (error) {
-        console.error("Error fetching request", error);
+        console.error("Error fetching questions", error);
       }
-    }
+    };
 
     fetchQuestions();
-
   }, [selectedExam]);
 
-
-  // Start timer when component mounts 
+  // Start timer when component mounts
   useEffect(() => {
-
     const storedTimeRemaining = sessionStorage.getItem("timeRemaining");
     if (storedTimeRemaining) {
       setTimeRemaining(parseInt(storedTimeRemaining));
     } else {
-      // Set timeRemaining to the initial duration (minutes * 60)
       setTimeRemaining(examDetail.durationMinutes * 60 || 0);
     }
 
     const timer = setInterval(() => {
-
       setTimeRemaining(prevTime => {
         if (prevTime <= 0) {
           clearInterval(timer); // Stop the timer when time runs out
-          endExam(); // Ends the exam when the time runs to 0.
+          endExam(); // End the exam when time runs out
           return 0;
         }
         return prevTime - 1;
@@ -66,56 +58,85 @@ const ExamPage = () => {
       clearInterval(timer);
       sessionStorage.setItem("timeRemaining", timeRemaining.toString()); // Store timeRemaining in sessionStorage
     }; // Cleanup on unmount
-
   }, [examDetail.durationMinutes]);
-
-  // examDetail.durationMinutes
-
-  // Function handling option selection 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-    setUserResponses({
-      ...userResponses,
-      [currentQuestionIndex]: event.target.value,
-    });
-  }
-
-  // Function to navigate to next question 
-  const goToNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-    }
-    setSelectedOption("");
-  }
-
-  // Function to navigate to previous question 
-  const goToPreviousQuestion = () => {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
-    }
-    setSelectedOption("");
-  }
-
-  // Function to end exam  
-  const endExam = () => {
-    setTimeRemaining(0);
-    navigate("/exam-result");
-  }
 
   // Update sessionStorage whenever timeRemaining changes
   useEffect(() => {
     sessionStorage.setItem("timeRemaining", timeRemaining);
   }, [timeRemaining]);
 
-  // console.log("This is your Exam ID =>", selectedExam);
-  // console.log("Your Questions =>", questions,"Hi", questions[currentQuestionIndex].text);
+  // Handle option change
+  const handleOptionChange = (event) => {
+    const selectedOption = event.target.value;
+    setSelectedOption(selectedOption);
+  };
 
-  // Page refresh issue 
+  // Function handling option submission
+  const handleAnswerSubmit = async () => {
+    const questionId = questions[currentQuestionIndex].id;
+    try {
+      const response = await axiosInstance.post('/api/save-user-response', {
+        userId: user.id,
+        examId: selectedExam,
+        questionId: questionId,
+        selectedOption: selectedOption,
+      });
+
+      toast.success('Answer saved successfully');
+
+      const newScore = response.data.score;
+      console.log('Current score:', newScore);
+
+      // Update userResponses state
+      setUserResponses({
+        ...userResponses,
+        [currentQuestionIndex]: selectedOption,
+      });
+    } catch (error) {
+      console.error("Error saving answer", error);
+      toast.error("Failed to save answer");
+    }
+  };
+
+  // Function to navigate to next question
+  const goToNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      handleAnswerSubmit().then(() => {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedOption(userResponses[currentQuestionIndex + 1] || "");
+      });
+    }
+  };
+
+  // Function to navigate to previous question
+  const goToPreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      handleAnswerSubmit().then(() => {
+        setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+        setSelectedOption(userResponses[currentQuestionIndex - 1] || "");
+      });
+    }
+  };
+
+  // Function to end exam
+  const endExam = () => {
+    setTimeRemaining(0);
+    navigate("/exam-result");
+  };
+
+  // Handle question navigation
+  const handleQuestionNavigation = (direction) => {
+    if (direction === "next") {
+      goToNextQuestion();
+    } else if (direction === "previous") {
+      goToPreviousQuestion();
+    }
+  };
+
+  // Handle page refresh issue
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-
       if (true) {
-        console.log("Hi there");
         event.preventDefault();
         event.returnValue = "You have already taken your exam. Are you sure you want to leave?";
         navigate("/exam-result");
@@ -130,91 +151,65 @@ const ExamPage = () => {
       }
     };
 
-    // const handleKeyDown = (event) => {
-    //   if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
-    //     event.preventDefault(); // Prevent refresh
-    //   }
-    // };
-
     window.addEventListener('beforeunload', handleBeforeUnload);
     window.addEventListener('popstate', handlePopstate);
-    // window.addEventListener('keydown', handleKeyDown);
-
-
   }, []);
 
-
-
-  //=============================================================
-
   return (
-    <>
-      <div className="theExam">
-
-
-        <div className='userDetails'>
-          <div className="totalQInfo">
-            {currentQuestionIndex + 1} of {questions.length} Questions
-          </div>
-          Welcome, {user.name}
-          <img className='userPassport' src={newPic} alt="User passport" />
+    <div className="theExam">
+      <div className='userDetails'>
+        <div className="totalQInfo">
+          {currentQuestionIndex + 1} of {questions.length} Questions
         </div>
-
-        {/* The main exam section */}
-        <div className="mainExam">
-          {examDetail.subject}
-          <img className="examImage" src={newPic} alt="Exam image if any" />
-
-          <div className="question">
-            <p className="theQuestion">
-              {currentQuestionIndex < questions.length &&
-                questions[currentQuestionIndex].text}
-            </p>
-            <form>
-              {currentQuestionIndex < questions.length &&
-                questions[currentQuestionIndex].options.map((option, index) => (
-                  <div className="firstR" key={index}>
-                    <input
-                      type="radio"
-                      value={option}
-                      checked={selectedOption === option}
-                      onChange={handleOptionChange}
-                    />
-                    <span>{option}</span>
-                  </div>
-                ))}
-            </form>
-            <p>The Selected Option: {selectedOption}</p>
-          </div>
-
-
-
-          {/* Question Nabigation Button  */}
-          <div className="navigationButtons">
-            {currentQuestionIndex > 0 && (
-              <button className="prev" onClick={goToPreviousQuestion}>Previous</button>
-            )}
-            {currentQuestionIndex < questions.length - 1 && (
-              <button className="next" onClick={goToNextQuestion}>Next</button>
-            )}
-          </div>
-
-          <div className="endExam">
-            <button className="endExamBtn" onClick={endExam}>End Exam</button>
-          </div>
-
-        </div>
-
-
-        {/* The Timer section  */}
-        <div className={`timeNotification  ${timeRemaining < 300 ? 'redTimer' : ""}`}>
-          Time Remaining: {Math.floor(timeRemaining / 60)}:{('0' + (timeRemaining % 60)).slice(-2)}
-        </div>
-
+        Welcome, {user.name}
+        <img className='userPassport' src={newPic} alt="User passport" />
       </div>
 
+      <div className="mainExam">
+        {examDetail.subject}
+        <img className="examImage" src={newPic} alt="Exam image if any" />
 
-    </>)
-}
+        <div className="question">
+          <p className="theQuestion">
+            {currentQuestionIndex < questions.length &&
+              questions[currentQuestionIndex].text}
+          </p>
+          <form>
+            {currentQuestionIndex < questions.length &&
+              questions[currentQuestionIndex].options.map((option, index) => (
+                <div className="firstR" key={index}>
+                  <input
+                    type="radio"
+                    value={option}
+                    checked={selectedOption === option}
+                    onChange={handleOptionChange}
+                  />
+                  <span>{option}</span>
+                </div>
+              ))}
+          </form>
+          <p>The Selected Option: {selectedOption}</p>
+        </div>
 
-export default ExamPage
+        <div className="navigationButtons">
+          {currentQuestionIndex > 0 && (
+            <button className="prev" onClick={() => handleQuestionNavigation("previous")}>Previous</button>
+          )}
+          {currentQuestionIndex < questions.length - 1 && (
+            <button className="next" onClick={() => handleQuestionNavigation("next")}>Next</button>
+          )}
+        </div>
+
+        <div className="endExam">
+          <button className="endExamBtn" onClick={endExam}>End Exam</button>
+        </div>
+      </div>
+
+      <div className={`timeNotification ${timeRemaining < 300 ? 'redTimer' : ""}`}>
+        Time Remaining: {Math.floor(timeRemaining / 60)}:{('0' + (timeRemaining % 60)).slice(-2)}
+      </div>
+    </div>
+  );
+};
+
+export default ExamPage;

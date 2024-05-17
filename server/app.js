@@ -16,9 +16,6 @@ import userRoutes from "./routes/userRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import loginRoutes from './routes/loginRoutes.js';
 
-
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -32,9 +29,11 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 // delcared some middleware used 
 app.use([express.json(), morgan("dev")]);
 
-app.use(cors({
-    origin: [allowedOrigins,"http://localhost:5173"]
-}));
+// app.use(cors({
+//     origin: [allowedOrigins,"http://localhost:5173"]
+// }));
+
+app.use(cors("*"));
 
 
 // Running the routes 
@@ -44,12 +43,15 @@ app.use('/api', csvRoutes );
 app.use('/api/exams', examRoutes);
 app.use('/api', studentRoutes);
 app.use('/api', examResultRoutes);
+app.use('/api/submit-exam-result', examResultRoutes);
 app.use('/api', candidateRoutes);
 app.use('/api', examInProgressRoutes);
+app.use('/api/check-answer', examInProgressRoutes); // special route for checking answer
 app.use('/api', userRoutes);
 app.use('/api/resetAllExam', userRoutes);  // for the reset takenExam
 app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
+app.use('/api/save-user-response', examInProgressRoutes ); // special route for saving examInProgress
 
 
 

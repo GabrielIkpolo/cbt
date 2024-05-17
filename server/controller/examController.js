@@ -239,8 +239,10 @@ const getAllExams = async (req, res) => {
     }
 }
 
+
+
 export default {
     createExam, parseCSV, createExamFromCSV, getExamById,
-    updateExam, deleteExam, getAllExams,
+    updateExam, deleteExam, getAllExams, 
 }
 
