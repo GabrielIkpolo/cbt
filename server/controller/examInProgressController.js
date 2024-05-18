@@ -214,7 +214,7 @@ const checkAnswer = async (req, res) => {
 }
 
 
-// Modify the saveUserResponse function to ensure proper score calculation and prevent duplicate submissions
+// saveUserResponse function to ensure proper score calculation and prevent duplicate submissions
 const saveUserResponse = async (req, res) => {
     try {
       await prisma.$transaction(async (prisma) => {

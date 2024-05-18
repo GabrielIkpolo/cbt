@@ -15,9 +15,10 @@ router.delete('/exam-results/:id', examResultController.deleteExamResult);
 router.get('/exam-results', examResultController.getAllExamResults);
 
 
-router.put('/', examResultController.submitExamResult);
+router.post('/', examResultController.submitExamResult);
+router.post('/', examResultController.getExamResultBySelectedUserIdAndExamId );
 
-
+//router.get()examreslult by userid and selectedExam
 
 
 

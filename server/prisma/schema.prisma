@@ -107,6 +107,7 @@ model UserExamResult {
   score         Int
   userResponses Json
   createdAt     DateTime @default(now())
+  status        String?
   userId        String   @db.ObjectId
   examId        String   @db.ObjectId
 }

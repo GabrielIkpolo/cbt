@@ -43,7 +43,7 @@ app.use('/api', csvRoutes );
 app.use('/api/exams', examRoutes);
 app.use('/api', studentRoutes);
 app.use('/api', examResultRoutes);
-app.use('/api/submit-exam-result', examResultRoutes);
+app.use('/api/submit-final-exam-result', examResultRoutes);
 app.use('/api', candidateRoutes);
 app.use('/api', examInProgressRoutes);
 app.use('/api/check-answer', examInProgressRoutes); // special route for checking answer
@@ -52,7 +52,7 @@ app.use('/api/resetAllExam', userRoutes);  // for the reset takenExam
 app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
 app.use('/api/save-user-response', examInProgressRoutes ); // special route for saving examInProgress
-
+app.use('/api/user-exam-result',examResultRoutes );
 
 
 

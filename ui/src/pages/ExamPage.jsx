@@ -119,9 +119,35 @@ const ExamPage = () => {
   };
 
   // Function to end exam
-  const endExam = () => {
-    setTimeRemaining(0);
-    navigate("/exam-result");
+  const endExam = async () => {
+    try {
+      const questionId = questions[currentQuestionIndex].id;
+
+      // This saves to the examInProgress modal /api/save-user-response
+      const response = await axiosInstance.post('/api/save-user-response', {
+        userId: user.id,
+        examId: selectedExam,
+        questionId,
+        selectedOption,
+      });
+
+      // Submit the final exam result
+      const { data } = await axiosInstance.post('/api/submit-final-exam-result', {
+        userId: user.id,
+        examId: selectedExam,
+        userResponses: Object.values(userResponses), // Pass userResponses to backend
+      });
+
+
+      toast.success('Final result submitted successfully');
+
+      // Redirect to exam result page
+      setTimeRemaining(0);
+      navigate("/exam-result");
+    } catch (error) {
+      console.error("Error submitting final result", error);
+      toast.error("Failed to submit final result");
+    }
   };
 
   // Handle question navigation
