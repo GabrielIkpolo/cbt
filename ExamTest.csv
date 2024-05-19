@@ -1,0 +1,10 @@
+"subject","durationMinutes","text","options","correctAnswer","image","examId"
+"Logical Exam",15,"What is 2 + 2?","A: 3; B: 4;  C: 5; D: 6","B","https://example.com/math-question.jpg","examId123"
+"Logical Exam",15,"Who was the first president of the United States?","A: Thomas Jefferson; B: George Washington; C: Abraham Lincoln; D: John Adams ","B","https://example.com/history-question.jpg","examId123"
+"Logical Exam",15,"What is the Capital of Delta state?","A:Asaba; B: Abuja; C: Awka; D: Enugu","A",,"examId124"
+"Logical Exam",15,"How many branches doe the letter “Y” have?","A: 1; B: 2; C: 3; D : 4","B",,"examId124"
+"Logical Exam",15,"In terms of the newly AI craze, what does LLM stand for?","A: Large Language model; B: Logarithmic logistic Model; C Lego Lego Movement; D: none of the above ","A",,
+"Logical Exam",15,,,,,
+"Logical Exam",15,,,,,
+"Logical Exam",15,,,,,
+"Logical Exam",15,,,,,

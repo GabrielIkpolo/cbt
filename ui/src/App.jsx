@@ -20,6 +20,7 @@ import ExamResult from "./pages/ExamResult.jsx";
 import { useEffect } from "react";
 import AlreadyTakenExam from "./pages/AlreadyTakenExam.jsx";
 import Admin from "./pages/Admin.jsx";
+import RegistrationComponent from "./components/RegistrationComponent.jsx";
 
 const Wrapper = ({ children }) => {
   return (
@@ -52,6 +53,8 @@ const guide = createBrowserRouter([
     element: <HeaderAndFooter />,
     children: [
       { path: "/", element: <Login /> },
+
+      {path: "/register", element: <RegistrationComponent />},
 
       {
         path: "/select-exam", element: (

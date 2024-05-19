@@ -20,6 +20,7 @@ router.post('/', examResultController.getExamResultBySelectedUserIdAndExamId );
 
 //router.get()examreslult by userid and selectedExam
 
-
+router.delete('/', examResultController.deleteAllUserExamResults);
+router.delete('/', examResultController.deleteUserExamResultById);
 
 export default router;

@@ -15,6 +15,7 @@ import examInProgressRoutes from './routes/examInProgressRoutes.js';
 import userRoutes from "./routes/userRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import loginRoutes from './routes/loginRoutes.js';
+import answerdQuestionsRoutes from "./routes/answeredQuestionsRoutes.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,6 +54,10 @@ app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
 app.use('/api/save-user-response', examInProgressRoutes ); // special route for saving examInProgress
 app.use('/api/user-exam-result',examResultRoutes );
+app.use('/api/delete-all-user-exam-results', examResultRoutes);
+app.use('/api/user-exam-results/:id', examResultRoutes);
+app.use('/api/delete-all-exam-in-progress', examInProgressRoutes);
+app.use('/api', answerdQuestionsRoutes);
 
 
 

@@ -305,9 +305,44 @@ const getExamResultBySelectedUserIdAndExamId = async (req, res) => {
 };
 
 
+// Delete All User Exam Results
+const deleteAllUserExamResults = async (req, res) => {
+    try {
+        await prisma.userExamResult.deleteMany();
+        return res.status(200).json({ message: "All user exam results deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
+// Delete User Exam Result by ID
+const deleteUserExamResultById = async (req, res) => {
+    const userExamResultId = req.params.id;
+
+    try {
+        const deletedUserExamResult = await prisma.userExamResult.delete({
+            where: { id: userExamResultId },
+        });
+
+        if (!deletedUserExamResult) {
+            return res.status(404).json({ error: "User exam result not found" });
+        }
+
+        return res.status(200).json(deletedUserExamResult);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+};
 
 export default {
-    createExamResult, getExamResultById, updateExamResult,
+    createExamResult, getExamResultById, updateExamResult, deleteUserExamResultById,
     deleteExamResult, getAllExamResults, submitExamResult,
-    getExamResultBySelectedUserIdAndExamId,
+    getExamResultBySelectedUserIdAndExamId, deleteAllUserExamResults,
 }

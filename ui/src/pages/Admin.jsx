@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import "./admin.css";
 import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
+import AnsweredQuestionsManager from '../components/AnsweredQuestionsManager.jsx';
+import UploadCSV from './UploadCSV.jsx';
 
 const Admin = () => {
 
@@ -110,6 +112,15 @@ const Admin = () => {
                     </table>
                     <button className="resetAllBtn" onClick={resetAllExam} > Reset All Exam</button>
                 </div>
+            </div>
+
+            <div className='answeredQuestionsReset'>
+                <h2>Answered Questions Reset Options</h2>
+                <AnsweredQuestionsManager />
+            </div>
+
+            <div className="fileUpload">
+                <UploadCSV />
             </div>
         </>
 

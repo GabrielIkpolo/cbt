@@ -14,11 +14,11 @@ const createUser = async (req, res) => {
         await prisma.$transaction(async (prisma) => {
 
             // Perform some validations
-            if (!name.trim) {
+            if (!name) {
                 return res.json({ error: "Name is required" });
             }
 
-            if (!email.trim || !validate(email)) {
+            if (!email || !validate(email)) {
                 return res.json({ error: "Email required and must follow the email partern" });
             }
 
@@ -183,4 +183,7 @@ const resetAllExams = async (req, res) => {
 }
 
 
-export default { createUser, getUserById, updateUser, deleteUser, getAllUsers, resetAllExams }
+export default {
+    createUser, getUserById, updateUser, deleteUser,
+    getAllUsers, resetAllExams
+}

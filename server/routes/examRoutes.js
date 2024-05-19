@@ -9,6 +9,7 @@ import authMiddleware from '../helpers/authMiddleware.js';
 const router = express.Router();
 
 const nameOfFileToBeUploaded = 'examFile';
+// let nameOfFileToBeUploaded;
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });

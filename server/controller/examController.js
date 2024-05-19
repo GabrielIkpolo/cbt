@@ -41,7 +41,7 @@ const createExam = async (req, res) => {
 
 }
 
-// Pases the csv file 
+// Parses the csv file 
 const parseCSV = async (buffer) => {
     try {
         const exams = [];

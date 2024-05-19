@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 
-
-
 // Initialise Prisma client 
 const prisma = new PrismaClient();
 
@@ -83,8 +81,8 @@ const updateExamInProgress = async (req, res) => {
 }
 
 
-// Delete Exam in Progress ny Id   
-const deleteExamInProgress = async (req, res) => {
+// Delete Exam in Progress by Id   
+const deleteExamInProgressById = async (req, res) => {
     const examInProgressId = req.params.id;
     try {
 
@@ -102,7 +100,7 @@ const deleteExamInProgress = async (req, res) => {
 
             return res.status(200).json(deletedExamInProgress);
 
-        }, { timeout: 30000 });
+        }, { timeout: 60000 });
 
     } catch (error) {
         console.error(error);
@@ -303,7 +301,22 @@ const saveUserResponse = async (req, res) => {
     }
   };
 
+
+  // Delete All Exam In Progress
+const deleteAllExamInProgress = async (req, res) => {
+    try {
+        await prisma.examInProgress.deleteMany();
+        return res.status(200).json({ message: "All exams in progress deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
 export default {
     createExamInProgress, getExamInProgressById, checkAnswer, saveUserResponse,
-    updateExamInProgress, deleteExamInProgress, getAllExamInProgress,
+    updateExamInProgress, deleteExamInProgressById, getAllExamInProgress,
+    deleteAllExamInProgress,
 }

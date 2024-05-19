@@ -123,13 +123,17 @@ const ExamPage = () => {
     try {
       const questionId = questions[currentQuestionIndex].id;
 
-      // This saves to the examInProgress modal /api/save-user-response
-      const response = await axiosInstance.post('/api/save-user-response', {
-        userId: user.id,
-        examId: selectedExam,
-        questionId,
-        selectedOption,
-      });
+
+      if (selectedOption) {
+        //Saves to the examInProgress model (including the last checked option) /api/save-user-response
+        const response = await axiosInstance.post('/api/save-user-response', {
+          userId: user.id,
+          examId: selectedExam,
+          questionId,
+          selectedOption,
+        });
+      }
+
 
       // Submit the final exam result
       const { data } = await axiosInstance.post('/api/submit-final-exam-result', {
