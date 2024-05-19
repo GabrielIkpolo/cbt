@@ -19,7 +19,7 @@ const UploadCSV = () => {
         setError(null);
 
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('examFile', file);
 
         try {
             const {data} = await axiosInstance.post('/api/exams/upload', formData, {

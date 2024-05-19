@@ -9,7 +9,6 @@ import authMiddleware from '../helpers/authMiddleware.js';
 const router = express.Router();
 
 const nameOfFileToBeUploaded = 'examFile';
-// let nameOfFileToBeUploaded;
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -25,6 +24,7 @@ router.delete('/:id', examController.deleteExam);
 // To create exam form file uplaod
 router.post('/upload', upload.single(nameOfFileToBeUploaded), async (req, res) => {
     try {
+        // const originalFileName = req.file.originalname;
         const examsBuffer = req.file.buffer;
         console.log('Parsed exams (before create):', await examController.parseCSV(examsBuffer));
         await examController.createExamFromCSV(req, res);
