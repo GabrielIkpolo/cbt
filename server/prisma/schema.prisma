@@ -49,6 +49,8 @@ model ExamResult {
   status        String
   studentId     String   @db.ObjectId
   examId        String   @db.ObjectId
+  user          User?    @relation(fields: [userId], references: [id])
+  userId        String?  @db.ObjectId
 }
 
 model Candidate {
@@ -81,12 +83,14 @@ model User {
   password           String
   registrationNumber String?          @unique
   department         String?
+  level              String?
   role               Int              @default(0)
   takenExam          Int              @default(0)
   totalExamsTaken    Int              @default(0)
   createdAt          DateTime         @default(now())
-  UserExamResult     UserExamResult[]
+  userExamResults    ExamResult[]
   examInProgress     ExamInProgress[]
+  UserExamResult     UserExamResult[]
 }
 
 model AnsweredQuestion {

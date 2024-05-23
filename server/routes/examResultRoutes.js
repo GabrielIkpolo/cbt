@@ -23,4 +23,11 @@ router.post('/', examResultController.getExamResultBySelectedUserIdAndExamId );
 router.delete('/', examResultController.deleteAllUserExamResults);
 router.delete('/', examResultController.deleteUserExamResultById);
 
+//Get All users with their exam result
+router.get('/', examResultController.getAllUsersWithExamScores);
+
+//Get single User and exam result 
+router.get('/collate-single-user-result/:id', examResultController.getUserDetailsWithExamScores)
+
+
 export default router;

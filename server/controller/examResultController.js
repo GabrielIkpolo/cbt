@@ -222,18 +222,23 @@ const submitExamResult = async (req, res) => {
 
         // Calculate the final score based on userResponses and totalQuestions
         const totalQuestions = examInProgress.exam.questions.length;
-        let finalScore = 0;
-        for (const response of examInProgress.answeredQuestions) {
-            if (response.isCorrect) {
-                finalScore += 1;
-            }
-        }
+        let finalScore = examInProgress.answeredQuestions.filter(q => q.isCorrect).length;
+
         finalScore = (finalScore / totalQuestions) * 100;
 
-        // Fetch the existing userExamResult if it exists
+        // Increment totalExamsTaken in User model
+
+        console.log("Was update user called");
+        await prisma.user.update({
+            where: { id: userId },
+            data: { totalExamsTaken: { increment: 1 } }, //This increment is not registering in db
+        });
+        console.log("update user called");
+
+        // Fetch the existing UserExamResult if it exists
         const existingUserExamResult = await prisma.userExamResult.findFirst({
             where: {
-                userId: userId, // Ensure these field names match your schema
+                userId: userId,
                 examId: examId
             }
         });
@@ -261,6 +266,7 @@ const submitExamResult = async (req, res) => {
             });
         }
 
+        // Return the updated user exam result with final score
         return res.status(200).json({ message: "Final result submitted successfully", userExamResult });
     } catch (error) {
         console.error(error);
@@ -269,6 +275,114 @@ const submitExamResult = async (req, res) => {
         await prisma.$disconnect();
     }
 };
+
+
+// Fetch user details with exam scores UserExamResult is in Pascal Case.
+const getUserDetailsWithExamScores = async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        // Fetch user details
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            include: { UserExamResult: { select: { id: true, score: true, exam: { select: { subject: true } } } } },
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Map exam results to include exam name/subject
+        const examResults = user.UserExamResult.map(result => ({
+            ...result,
+            examName: result.exam.subject
+        }));
+
+        // Return user details with exam scores
+        return res.status(200).json({
+            name: user.name,
+            email: user.email,
+            registrationNumber: user.registrationNumber,
+            department: user.department,
+            level: user.level,
+            examResults: examResults
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
+// const getUserDetailsWithExamScores = async (req, res) => {
+//     try {
+//       const userId = req.params.id;
+  
+//       const userWithExamResults = await prisma.user.findUnique({
+//         where: { id: userId },
+//         include: { userExamResults: true },
+//       });
+  
+//       if (!userWithExamResults) {
+//         return res.status(404).json({ error: "User not found" });
+//       }
+  
+//       res.json(userWithExamResults);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: "An error occurred while fetching user details with exam results." });
+//     }
+//   };
+  
+
+
+//Get all user details ans their exam scores The UserExamResult Model is in Pascal Case
+const getAllUsersWithExamScores = async (req, res) => {
+    try {
+        // Fetch all users with their exam results
+        const users = await prisma.user.findMany({
+            include: {
+                UserExamResult: {
+                    select: {
+                        id: true,
+                        score: true,
+                        exam: { select: { subject: true } },
+                    },
+                },
+            },
+        });
+
+        if (!users.length) {
+            return res.status(404).json({ error: "No users found" });
+        }
+
+        // Map the results to a user-friendly format
+        const usersWithScores = users.map(user => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            registrationNumber: user.registrationNumber,
+            department: user.department,
+            level: user.level,
+            totalExamsTaken: user.totalExamsTaken,
+            examResults: user.UserExamResult.map(result => ({
+                id: result.id,
+                score: result.score,
+                examName: result.exam.subject,
+            })),
+        }));
+
+        // Return all users with their exam scores
+        return res.status(200).json(usersWithScores);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal server error" });
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
 
 
 // Get exam result by user ID and selected exam ID
@@ -292,7 +406,7 @@ const getExamResultBySelectedUserIdAndExamId = async (req, res) => {
             return res.status(404).json({ error: "Exam result not found" });
         }
 
-        
+
 
         // Return the exam result
         return res.status(200).json(userExamResult);
@@ -343,6 +457,6 @@ const deleteUserExamResultById = async (req, res) => {
 
 export default {
     createExamResult, getExamResultById, updateExamResult, deleteUserExamResultById,
-    deleteExamResult, getAllExamResults, submitExamResult,
-    getExamResultBySelectedUserIdAndExamId, deleteAllUserExamResults,
+    deleteExamResult, getAllExamResults, submitExamResult, getUserDetailsWithExamScores,
+    getExamResultBySelectedUserIdAndExamId, deleteAllUserExamResults, getAllUsersWithExamScores,
 }

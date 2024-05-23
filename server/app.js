@@ -58,6 +58,10 @@ app.use('/api/delete-all-user-exam-results', examResultRoutes);
 app.use('/api/user-exam-results/:id', examResultRoutes);
 app.use('/api/delete-all-exam-in-progress', examInProgressRoutes);
 app.use('/api', answerdQuestionsRoutes);
+app.use('/api/collate-all-users-result', examResultRoutes); // gets all users and their result
+app.use('/api', examResultRoutes); // gets single user result
+
+
 
 
 
