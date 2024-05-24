@@ -88,7 +88,7 @@ const RegistrationComponent = () => {
                 </div>
             ) : (
 
-                <form onSubmit={handleSubmit}>
+                <form className='registerForm' onSubmit={handleSubmit}>
                     {error && <p>{error}</p>}
 
                     <input className='registerInputes'

@@ -1,9 +1,9 @@
-.userRehistration {
+ .userRehistration {
     text-align: center;
     margin: 3rem;
 }
 
-form {
+.registerForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,7 +13,7 @@ form {
 
 .registerInputes {
     padding: 10px;
-    width: 96%;
+    width: 97%;
     margin: 10px;
     border-radius: 15px;
     border: none;
@@ -67,7 +67,7 @@ form {
     text-align: center;
 }
 
-form p{
+.registerForm p{
     text-align: center;
     color: red;
-}
+} 
