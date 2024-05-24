@@ -4,6 +4,7 @@ import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
 import AnsweredQuestionsManager from '../components/AnsweredQuestionsManager.jsx';
 import UploadCSV from './UploadCSV.jsx';
+import ExamResultsTable from '../components/ExamResultsTable.jsx';
 
 const Admin = () => {
 
@@ -34,7 +35,7 @@ const Admin = () => {
         user.email.toLowerCase().includes(searchQuery.toLocaleLowerCase())
     );
 
-    // Function to resent takenExam value to 0 for a user
+    // Function to reset takenExam value to 0 for a user
     const resetExam = async (userId) => {
         try {
             await axiosInstance.put(`/api/the-users/${userId}`, { takenExam: 0 });
@@ -114,13 +115,20 @@ const Admin = () => {
                 </div>
             </div>
 
+            {/* Answerd Questions Reset option  */}
             <div className='answeredQuestionsReset'>
                 <h2>Answered Questions Reset Options</h2>
                 <AnsweredQuestionsManager />
             </div>
 
+            {/* File Upload here  */}
             <div className="fileUpload">
                 <UploadCSV />
+            </div>
+
+            {/* The ExamResultsTable here   */}
+            <div className='examResultsTable'>
+                <ExamResultsTable />
             </div>
         </>
 

@@ -131,69 +131,6 @@ const getAllExamResults = async (req, res) => {
 }
 
 
-// Submit exam result
-// const submitExamResult = async (req, res) => {
-//     const { userId, examId, userResponses } = req.body;
-
-//     try {
-//         // Fetch the examInProgress record to get the current score
-//         const examInProgress = await prisma.examInProgress.findFirst({
-//             where: { userId, examId },
-//             include: { answeredQuestions: true, exam: { include: { questions: true } } },
-//         });
-
-//         if (!examInProgress) {
-//             return res.status(404).json({ error: "Exam in Progress not Found" });
-//         }
-
-//         // Calculate the final score based on userResponses and totalQuestions
-//         const totalQuestions = examInProgress.exam.questions.length;
-//         let finalScore = 0;
-//         for (const response of examInProgress.answeredQuestions) {
-//             if (response.isCorrect) {
-//                 finalScore += 1;
-//             }
-//         }
-//         finalScore = (finalScore / totalQuestions) * 100;
-
-//         // Fetch the existing ExamResult if it exists
-//         const existingExamResult = await prisma.examResult.findFirst({
-//             where: {
-//                 userId: userId,
-//                 examId: examId,
-//             }
-//         });
-
-//         // If the exam result exists, update it. Otherwise, create a new one.
-//         let examResult;
-//         if (existingExamResult) {
-//             examResult = await prisma.examResult.update({
-//                 where: {
-//                     id: existingExamResult.id
-//                 },
-//                 data: {
-//                     score: finalScore,
-//                     status: "completed"
-//                 }
-//             });
-//         } else {
-//             examResult = await prisma.examResult.create({
-//                 data: {
-//                     student: { connect: { id: userId } },
-//                     exam: { connect: { id: examId } },
-//                     score: finalScore,
-//                     status: "completed",
-//                 }
-//             });
-//         }
-//         return res.status(200).json({ message: "Final result submitted successfully", examResult });
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ error: "Internal server error" });
-//     } finally {
-//         await prisma.$disconnect();
-//     }
-// };
 
 //================ Using UserExamResultModel here ==================
 
@@ -317,7 +254,7 @@ const getUserDetailsWithExamScores = async (req, res) => {
 
 
 
-//Get all user details ans their exam scores The UserExamResult Model is in Pascal Case
+//Get all user details and their exam scores The UserExamResult Model is in Pascal Case
 const getAllUsersWithExamScores = async (req, res) => {
     try {
         // Fetch all users with their exam results
