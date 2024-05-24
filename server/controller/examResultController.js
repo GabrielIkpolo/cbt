@@ -315,26 +315,6 @@ const getUserDetailsWithExamScores = async (req, res) => {
     }
 };
 
-// const getUserDetailsWithExamScores = async (req, res) => {
-//     try {
-//       const userId = req.params.id;
-  
-//       const userWithExamResults = await prisma.user.findUnique({
-//         where: { id: userId },
-//         include: { userExamResults: true },
-//       });
-  
-//       if (!userWithExamResults) {
-//         return res.status(404).json({ error: "User not found" });
-//       }
-  
-//       res.json(userWithExamResults);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: "An error occurred while fetching user details with exam results." });
-//     }
-//   };
-  
 
 
 //Get all user details ans their exam scores The UserExamResult Model is in Pascal Case
