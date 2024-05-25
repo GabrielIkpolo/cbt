@@ -19,7 +19,9 @@ const SelectExam = () => {
     const handleExamSelection = (event) => {
         setSelectedValue(event.target.value);
         const selectedExam = exams.find((exam) => exam.id === event.target.value);
+
         if (selectedExam) {
+
             setExamInfo({ totalQuestions: selectedExam.questions.length, durationMinutes: selectedExam.durationMinutes });
         } else {
             setExamInfo({ totalQuestions: 0, durationMinutes: 0 });
@@ -47,6 +49,7 @@ const SelectExam = () => {
     const startExam = async () => {
         if (selectedValue) {
             setSelectedExam(selectedValue); // updates selectedExam state
+            // console.log("This is the selected Exam==>",selectedValue);
 
             //    Check if the loggedin user have tried to write the exam before 
             try {
@@ -73,16 +76,16 @@ const SelectExam = () => {
                 console.error(error);
             }
 
-             // send a request to create examInprogressRecord
-            try{
-            const response = await axiosInstance.post("/api/exam-in-progress", {
-                userId: user.id,
-                examId: selectedValue,
-                currentQuestionIndex: 1, // if the initial question index is 0
-            });
+            // send a request to create examInprogressRecord
+            try {
+                const response = await axiosInstance.post("/api/exam-in-progress", {
+                    userId: user.id,
+                    examId: selectedValue,
+                    currentQuestionIndex: 1, // if the initial question index is 0
+                });
                 console.log(response.data);
-            }catch(error){
-                console.log("Error creating Exam in progress",error)
+            } catch (error) {
+                console.log("Error creating Exam in progress", error)
             }
 
             navigate("/exam");
