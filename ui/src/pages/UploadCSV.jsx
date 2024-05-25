@@ -45,7 +45,7 @@ const UploadCSV = () => {
 
     return (
         <div>
-            <h1>File Upload</h1>
+            <h1>Questions Upload</h1>
 
             {uploadSuccess ? (
                 <div>

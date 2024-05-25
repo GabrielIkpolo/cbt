@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import AnsweredQuestionsManager from '../components/AnsweredQuestionsManager.jsx';
 import UploadCSV from './UploadCSV.jsx';
 import ExamResultsTable from '../components/ExamResultsTable.jsx';
+import ImageUpload from '../components/ImageUpload.jsx';
 
 const Admin = () => {
 
@@ -130,6 +131,10 @@ const Admin = () => {
             <div className='examResultsTable'>
                 <ExamResultsTable />
             </div>
+
+            {/* The Image Upload here  */}
+            <ImageUpload />
+
         </>
 
     )

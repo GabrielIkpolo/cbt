@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { shuffle } from 'lodash/shuffle';
 
 const ExamPage = () => {
   const navigate = useNavigate();
@@ -24,6 +25,11 @@ const ExamPage = () => {
       try {
         const { data } = await axiosInstance.get(`/api/exams/${selectedExam}`);
         setExamDetail(data);
+
+        //Shuffle the question array
+        // const shuffledQuestions = shuffle(data.questions);
+        // setQuestions(shuffledQuestions);
+
         setQuestions(data.questions);
         setTimeRemaining(data.durationMinutes * 60); // Convert minutes to seconds
       } catch (error) {

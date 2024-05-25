@@ -1,0 +1,32 @@
+.image-upload {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .image-upload h2 {
+    margin-bottom: 10px;
+  }
+  
+  .image-upload form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .preview {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
