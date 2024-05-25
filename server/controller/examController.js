@@ -59,7 +59,7 @@ const parseCSV = async (buffer) => {
                 text: row.text,
                 options: row.options.split(';').map(option => option.trim()),
                 correctAnswer: row.correctAnswer,
-                image: row.image,
+                image: row.image || null, 
             };
 
             examData.questions.push(question);

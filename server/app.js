@@ -16,6 +16,7 @@ import userRoutes from "./routes/userRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import loginRoutes from './routes/loginRoutes.js';
 import answerdQuestionsRoutes from "./routes/answeredQuestionsRoutes.js"
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,16 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 // delcared some middleware used 
 app.use([express.json(), morgan("dev")]);
+
+
+// Static files configuration
+const imageStoragePath = path.join(__dirname, 'fileStorage', 'images');
+
+// Ensure the directory exists
+
+if (!fs.existsSync(imageStoragePath)) {
+    fs.mkdirSync(imageStoragePath, { recursive: true });
+}
 
 // app.use(cors({
 //     origin: [allowedOrigins,"http://localhost:5173"]
@@ -62,6 +73,8 @@ app.use('/api/collate-all-users-result', examResultRoutes); // gets all users an
 app.use('/api', examResultRoutes); // gets single user result
 
 
+// Serve static image files
+app.use('/api/images', express.static(imageStoragePath));
 
 
 

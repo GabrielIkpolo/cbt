@@ -197,7 +197,9 @@ const ExamPage = () => {
 
       <div className="mainExam">
         {examDetail.subject}
-        <img className="examImage" src={newPic} alt="Exam image if any" />
+        <img className="examImage"
+          src={questions[currentQuestionIndex]?.image ? `/api/images/${questions[currentQuestionIndex].image}` : newPic}
+          alt="Exam image if any" />
 
         <div className="question">
           <p className="theQuestion">
