@@ -88,7 +88,7 @@ const ExamPage = () => {
         selectedOption: selectedOption,
       });
 
-      toast.success('Answer saved successfully');
+      // toast.success('Answer saved successfully');
 
       const newScore = response.data.score;
       console.log('Current score:', newScore);
@@ -100,7 +100,7 @@ const ExamPage = () => {
       });
     } catch (error) {
       console.error("Error saving answer", error);
-      toast.error("Failed to save answer");
+      // toast.error("Failed to save answer");
     }
   };
 
@@ -222,11 +222,11 @@ const ExamPage = () => {
                     checked={selectedOption === option}
                     onChange={handleOptionChange}
                   />
-                  <span>{option}</span>
+                    <span>{option}</span>
                 </div>
               ))}
           </form>
-          <p>The Selected Option: {selectedOption}</p>
+          {/* <p>The Selected Option: {selectedOption}</p> */}
         </div>
 
         <div className="navigationButtons">
