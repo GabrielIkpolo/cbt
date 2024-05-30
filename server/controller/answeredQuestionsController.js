@@ -1,7 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-// Initialise Prisma client 
-const prisma = new PrismaClient();
+import prisma from "../helpers/prisma.js";
 
 
 // Delete All Answered Questions
@@ -12,9 +9,7 @@ const deleteAllAnsweredQuestions = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 
@@ -36,9 +31,7 @@ const deleteAnsweredQuestionsByExamInProgressId = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 

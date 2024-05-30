@@ -1,12 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import * as fastcsv from 'fast-csv';
 import pkg from 'bson-objectid';
 
 const { default: ObjectId } = pkg; // Alias the default export as ObjectId
-
-
-// Initialize the prisma client 
-const prisma = new PrismaClient();
 
 // Function for parsing csv
 const parseCSV = async (buffer) => {

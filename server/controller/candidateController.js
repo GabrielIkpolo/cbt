@@ -1,13 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import pkg from 'bson-objectid';
 import { json } from "express";
 const { default: ObjectId } = pkg;
-
-
-// Initialize prisma 
-
-const prisma = new PrismaClient();
-
 
 
 const createCandidate = async (req, res) => {
@@ -43,9 +37,7 @@ const createCandidate = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -69,10 +61,7 @@ const getCandidateById = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
-
 }
 
 
@@ -101,10 +90,7 @@ const updateCandidate = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
-
 }
 
 
@@ -125,8 +111,6 @@ const deleteCandidate = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -146,8 +130,6 @@ const getALLCandidates = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 
 }
@@ -167,8 +149,6 @@ const deleteAllCandidates = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 

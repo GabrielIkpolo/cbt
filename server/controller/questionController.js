@@ -1,10 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import pkg from 'bson-objectid';
 const { default: ObjectId } = pkg; // Alias the default export as ObjectId
 
-
-// Initialises the prisma client 
-const prisma = new PrismaClient();
 
 // generate a bson-ojectId (mongodb id) for usage: 
 const generatedId = new ObjectId().toHexString();
@@ -29,8 +26,6 @@ const createQuestion = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({ err: "Internal Server error" });
-    }finally {
-        await prisma.$disconnect();
     }
 
 }
@@ -43,8 +38,6 @@ const getQuestions = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -70,8 +63,6 @@ const updateQuestion = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -87,8 +78,6 @@ const deleteQuestion = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ err: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -103,8 +92,6 @@ const deleteAllQuestions = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ err: "internal server error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 

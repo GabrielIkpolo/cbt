@@ -1,10 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import pkg from 'bson-objectid';
 import * as fastcsv from 'fast-csv';
 const { default: ObjectId } = pkg;
-
-// Initialise Prisma 
-const prisma = new PrismaClient();
 
 
 const createStudent = async (req, res) => {
@@ -22,8 +19,6 @@ const createStudent = async (req, res) => {
         console.error({ error });
         return res.status(500).json({ error: "Internal Server Error" });
 
-    }finally {
-        await prisma.$disconnect();
     }
 
 }
@@ -47,8 +42,6 @@ const getStudentById = async (req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).res.json({ error: "Internal server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -77,8 +70,6 @@ const updateStudent = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 
 }
@@ -101,8 +92,6 @@ const deleteStudent = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 
@@ -120,8 +109,6 @@ const getAllStudents = async (req, res) => {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
 
-    }finally {
-        await prisma.$disconnect();
     }
 
 }
@@ -140,8 +127,6 @@ const deleteAllStudents = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    }finally {
-        await prisma.$disconnect();
     }
 }
 

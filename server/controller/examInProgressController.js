@@ -1,7 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-// Initialise Prisma client 
-const prisma = new PrismaClient();
+import prisma from "../helpers/prisma.js";
 
 
 //Create ExamInProgress 
@@ -23,9 +20,7 @@ const createExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 // Get Exam in Progress by id
@@ -48,9 +43,7 @@ const getExamInProgressById = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 // Update exam in Progress
@@ -75,9 +68,7 @@ const updateExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ Error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -105,9 +96,7 @@ const deleteExamInProgressById = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -132,9 +121,7 @@ const getAllExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -296,9 +283,7 @@ const saveUserResponse = async (req, res) => {
     } catch (error) {
       console.error('Error saving user response:', error);
       return res.status(500).json({ error: 'Internal server error' });
-    } finally {
-      await prisma.$disconnect();
-    }
+    } 
   };
 
 
@@ -310,9 +295,7 @@ const deleteAllExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 export default {

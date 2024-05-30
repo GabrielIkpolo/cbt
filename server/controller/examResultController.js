@@ -1,13 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import pkg from 'bson-objectid';
 const { default: ObjectId } = pkg;
-
-
-
-
-// Iniializes the prisma client 
-const prisma = new PrismaClient();
-
 
 // Create exam result 
 const createExamResult = async (req, res) => {
@@ -26,9 +19,7 @@ const createExamResult = async (req, res) => {
     } catch (error) {
         console.error({ error });
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 
 }
 
@@ -51,9 +42,7 @@ const getExamResultById = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 // Update ExamResult 
@@ -79,9 +68,7 @@ const updateExamResult = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -103,9 +90,7 @@ const deleteExamResult = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -124,9 +109,7 @@ const getAllExamResults = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 
 }
 
@@ -208,9 +191,7 @@ const submitExamResult = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 
@@ -247,9 +228,7 @@ const getUserDetailsWithExamScores = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 
@@ -295,9 +274,7 @@ const getAllUsersWithExamScores = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 
@@ -330,9 +307,7 @@ const getExamResultBySelectedUserIdAndExamId = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 
@@ -344,9 +319,7 @@ const deleteAllUserExamResults = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 // Delete User Exam Result by ID
@@ -367,9 +340,7 @@ const deleteUserExamResultById = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 export default {

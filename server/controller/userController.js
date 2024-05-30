@@ -1,10 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import authHelpers from '../helpers/authHelpers.js'
 import { validate } from 'email-validator';
 
-
-// Initializes the prisma client 
-const prisma = new PrismaClient();
 
 // Create a User 
 const createUser = async (req, res) => {
@@ -66,9 +63,7 @@ const createUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 
 }
 
@@ -177,9 +172,7 @@ const resetAllExams = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 

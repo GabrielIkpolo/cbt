@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "../helpers/prisma.js";
 import jwt from "jsonwebtoken";
 import authHelpers from "../helpers/authHelpers.js";
 import { validate } from "email-validator";
 
-// Initialise Prisma 
-const prisma = new PrismaClient();
 
 // Registers a User
 const register = async (req, res) => {
