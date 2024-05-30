@@ -7,6 +7,7 @@ import UploadCSV from './UploadCSV.jsx';
 import ExamResultsTable from '../components/ExamResultsTable.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
 import DeleteUploadedExam from '../components/DeleteUploadedExam.jsx';
+import DeleteUserComponent from '../components/DeleteUserComponent.jsx';
 
 const Admin = () => {
 
@@ -142,6 +143,11 @@ const Admin = () => {
             {/* Delete Uploaded Exam  */}
             <div className="delUploadedExam">
                 <DeleteUploadedExam />
+            </div>
+
+            {/* Delete User */}
+            <div className="delUser">
+                <DeleteUserComponent />
             </div>
 
         </>

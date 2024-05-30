@@ -161,31 +161,133 @@ const updateExam = async (req, res) => {
 
 
 //Delete associated questions
+// const deleteQuestionsForExam = async (examId) => {
+//     try {
+
+//         await prisma.answeredQuestion.deleteMany({
+//             where: {examInProgressId: examId },
+//         });
+
+//         await prisma.question.deleteMany({
+//             where: { examId: examId },
+//         });
+
+//         console.log(`Questions for Exam ${examId} deleted successfully`);
+//     } catch (error) {
+//         console.error(`Error deleting questions for Exam ${examId}:`, error);
+//         throw error;
+//     } 
+// };
+
 const deleteQuestionsForExam = async (examId) => {
     try {
+        // First, find all questions for the exam
+        const questions = await prisma.question.findMany({
+            where: { examId: examId },
+        });
+
+        const questionIds = questions.map(question => question.id);
+
+        // Delete all AnsweredQuestions related to the found questions
+        await prisma.answeredQuestion.deleteMany({
+            where: {
+                questionId: { in: questionIds }
+            }
+        });
+
+        // Now delete the questions themselves
         await prisma.question.deleteMany({
             where: { examId: examId },
         });
-        console.log(`Questions for Exam ${examId} deleted successfully`);
+
+        console.log(`Questions and related AnsweredQuestions for Exam ${examId} deleted successfully`);
     } catch (error) {
         console.error(`Error deleting questions for Exam ${examId}:`, error);
         throw error;
-    } 
+    }
 };
 
 
+const deleteExamInProgressForExam = async (examId) => {
+    try {
+        // Delete all ExamInProgress records related to the exam
+        await prisma.examInProgress.deleteMany({
+            where: {
+                examId: examId,
+            },
+        });
+
+        console.log(`ExamInProgress records for Exam ${examId} deleted successfully`);
+    } catch (error) {
+        console.error(`Error deleting ExamInProgress records for Exam ${examId}:`, error);
+        throw error;
+    }
+};
+
+
+
+const deleteUserExamResultsForExam = async (examId) => {
+    try {
+        // Delete all UserExamResult records related to the exam
+        await prisma.userExamResult.deleteMany({
+            where: {
+                examId: examId,
+            },
+        });
+
+        console.log(`UserExamResult records for Exam ${examId} deleted successfully`);
+    } catch (error) {
+        console.error(`Error deleting UserExamResult records for Exam ${examId}:`, error);
+        throw error;
+    }
+};
+
+
+
+
 // Delete an exam by Id 
+// const deleteExam = async (req, res) => {
+//     const examId = req.params.id;
+//     console.log(examId);
+//     try {
+
+//         // Delete associated questions
+//         await deleteQuestionsForExam(examId);
+
+//         const deletedExam = await prisma.exam.delete({
+//             where: { id: examId },
+//             include: { questions: true }, // Include associated questions
+//         });
+
+//         if (!deletedExam) {
+//             return res.json({ Error: "Exam not found" });
+//         }
+
+//         return res.status(200).json(deletedExam);
+
+//     } catch (err) {
+//         console.error('Error deleting exam:', err);
+
+//         return res.status(500).json({ error: "Internal Server Error" });
+//     } 
+// }
+
 const deleteExam = async (req, res) => {
     const examId = req.params.id;
     console.log(examId);
     try {
+         // Delete associated questions (and their answered questions)
+         await deleteQuestionsForExam(examId);
 
-        // Delete associated questions
-        await deleteQuestionsForExam(examId);
+          // Delete associated ExamInProgress records
+        await deleteExamInProgressForExam(examId);
 
+        // Delete associated UserExamResult records
+        await deleteUserExamResultsForExam(examId);
+
+        // Delete the exam itself
         const deletedExam = await prisma.exam.delete({
             where: { id: examId },
-            include: { questions: true }, // Include associated questions
         });
 
         if (!deletedExam) {
@@ -196,10 +298,11 @@ const deleteExam = async (req, res) => {
 
     } catch (err) {
         console.error('Error deleting exam:', err);
-
         return res.status(500).json({ error: "Internal Server Error" });
     } 
-}
+};
+
+
 
 
 const getAllExams = async (req, res) => {

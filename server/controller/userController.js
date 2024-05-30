@@ -115,21 +115,35 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const userId = req.params.id;
     try {
-        const deletedUser = await prisma.user.delete({
-            where: { id: userId },
+        await prisma.$transaction(async (prisma) => {
+            // Delete related AnsweredQuestion records
+            await prisma.answeredQuestion.deleteMany({
+                where: { examInProgress: { userId: userId } },
+            });
+
+            // Delete related ExamInProgress records
+            await prisma.examInProgress.deleteMany({
+                where: { userId: userId },
+            });
+
+            // Delete related UserExamResult records
+            await prisma.userExamResult.deleteMany({
+                where: { userId: userId },
+            });
+
+            // Delete the user
+            const deletedUser = await prisma.user.delete({
+                where: { id: userId },
+            });
+
+            return res.status(200).json(deletedUser);
         });
-
-        if (!deleteUser) {
-            return res.status(404).json({ Error: "User not found" });
-        }
-
-        return res.status(200).json(deletedUser);
-
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
+
 
 
 //Get All Users
