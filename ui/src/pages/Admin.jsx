@@ -6,6 +6,7 @@ import AnsweredQuestionsManager from '../components/AnsweredQuestionsManager.jsx
 import UploadCSV from './UploadCSV.jsx';
 import ExamResultsTable from '../components/ExamResultsTable.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
+import DeleteUploadedExam from '../components/DeleteUploadedExam.jsx';
 
 const Admin = () => {
 
@@ -60,7 +61,8 @@ const Admin = () => {
             // update users state after resetting all exams
             setUsers((prevUsers) => prevUsers.map((user) => ({
                 ...user,
-                takenExam: 0
+                takenExam: 0,
+                totalExamsTaken: 0,
             })));
         } catch (error) {
             console.error("Error resseting all exams", error);
@@ -133,7 +135,14 @@ const Admin = () => {
             </div>
 
             {/* The Image Upload here  */}
-            <ImageUpload />
+            <div className="imageUpload">
+                <ImageUpload />
+            </div>
+
+            {/* Delete Uploaded Exam  */}
+            <div className="delUploadedExam">
+                <DeleteUploadedExam />
+            </div>
 
         </>
 

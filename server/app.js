@@ -1,3 +1,24 @@
+// Error handling for uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.error('There was an uncaught error', err);
+    // Optionally, you might want to exit the process after handling the error
+    process.exit(1); // Exiting the process is often recommended to avoid undefined behavior
+  });
+  
+  // Error handling for unhandled promise rejections
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Optionally, you might want to exit the process after handling the rejection
+    process.exit(1); // Exiting the process is often recommended to avoid undefined behavior
+  });
+  
+  // Graceful shutdown
+  process.on('SIGTERM', () => {
+    console.log('Process terminated');
+    // Perform clean-up tasks here if necessary
+    process.exit(0);
+  });
+
 import express from "express";
 import path from 'path';
 import { fileURLToPath } from 'url';
