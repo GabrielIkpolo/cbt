@@ -20,7 +20,7 @@ const register = async (req, res) => {
             return res.json({ Error: "Real email required" });
         }
 
-        if (!password|| password.trim().length < 6) {
+        if (!password|| password.length < 6) {
             return res.json({ error: "Passsword must be at least 6 characters long" });
         }
 
