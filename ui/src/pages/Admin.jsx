@@ -96,7 +96,7 @@ const Admin = () => {
 
                         <li>
                             <a className={`menuItem ${activeComponent === 'fileUpload' && 'active'}`} onClick={() => setActiveComponent("fileUpload")}>
-                                Uplaod Exam
+                                Upload Exam
                             </a>
                         </li>
 

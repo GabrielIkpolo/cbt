@@ -10,15 +10,15 @@ const register = async (req, res) => {
 
     try {
         // Perform input validations
-        if (!name.trim) {
+        if (!name) {
             return res.json({ Error: "Name is required" });
         }
 
-        if (!email.trim || !validate(email)) {
+        if (!email || !validate(email)) {
             return res.json({ Error: "Real email required" });
         }
 
-        if (!password.trim || password.trim().length < 6) {
+        if (!password || password.trim().length < 6) {
             return res.json({ error: "Passsword must be at least 6 characters long" });
         }
 
@@ -74,7 +74,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         // Validate the inputs 
-        if (!email.trim || !validate(email)) {
+        if (!email || !validate(email)) {
             return res.json({ error: "email is required" });
         }
 
