@@ -151,7 +151,8 @@ const submitExamResult = async (req, res) => {
         console.log("Was update user called");
         await prisma.user.update({
             where: { id: userId },
-            data: { totalExamsTaken: { increment: 1 } }, //This increment is not registering in db
+            data:{totalExamsTaken:1},
+            // data: { totalExamsTaken: { increment: 1 } }, It is registering now, but called 3 times
         });
         console.log("update user called");
 
