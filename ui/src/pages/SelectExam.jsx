@@ -6,7 +6,7 @@ import defaultPic from "../assets/img/defaultPic.png";
 import axiosInstance from '../utils/AxiosInstance.jsx';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-
+import { useDebouncedCallback} from 'use-debounce';
 
 const SelectExam = () => {
     const navigate = useNavigate();
@@ -56,7 +56,7 @@ const SelectExam = () => {
                 const { data } = await axiosInstance.get(`/api/the-users/${user.id}`);
 
                 if (!data) {
-                    console.log("presntUserExamStatus detail not found");
+                    console.log("presentUserExamStatus detail not found");
                 }
 
                 if (data?.takenExam === 1) {
@@ -93,6 +93,8 @@ const SelectExam = () => {
             toast.error("You have to select an exam");
         }
     }
+
+    const debouncedStartExam = useDebouncedCallback(startExam, 1000); 
 
     // console.log(user.name, "The selected exam");
     return (<>
@@ -143,7 +145,7 @@ const SelectExam = () => {
         </div>
 
         <div className='startExam'>
-            <button className='startBtn' onClick={startExam}>Start Exam</button>
+            <button className='startBtn' onClick={debouncedStartExam}>Start Exam</button>
         </div>
 
     </>

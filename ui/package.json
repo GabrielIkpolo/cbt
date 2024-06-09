@@ -25,7 +25,8 @@
     "react-hook-form": "^7.49.2",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.21.0",
-    "react-timer-countdown": "^1.0.0"
+    "react-timer-countdown": "^1.0.0",
+    "use-debounce": "^10.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

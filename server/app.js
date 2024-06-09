@@ -1,3 +1,31 @@
+
+import prisma from "./helpers/prisma.js";
+
+// Error handling for uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('There was an uncaught error', err);
+  process.exit(1); // Exiting the process is often recommended to avoid undefined behavior
+});
+
+// Error handling for unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1); // Exiting the process is often recommended to avoid undefined behavior
+});
+
+// When ctrl C is presses to terminate the application 
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('Process terminated');
+  await prisma.$disconnect(); // Perform clean-up tasks here if necessary
+  process.exit(0);
+});
+
 import express from "express";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -38,7 +66,7 @@ const imageStoragePath = path.join(__dirname, 'fileStorage', 'images');
 // Ensure the directory exists
 
 if (!fs.existsSync(imageStoragePath)) {
-    fs.mkdirSync(imageStoragePath, { recursive: true });
+  fs.mkdirSync(imageStoragePath, { recursive: true });
 }
 
 // app.use(cors({
@@ -50,8 +78,8 @@ app.use(cors("*"));
 
 // Running the routes 
 app.use('/api', testRoute);
-app.use('/api', questionRoutes );
-app.use('/api', csvRoutes );
+app.use('/api', questionRoutes);
+app.use('/api', csvRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api', studentRoutes);
 app.use('/api', examResultRoutes);
@@ -63,8 +91,8 @@ app.use('/api', userRoutes);
 app.use('/api/resetAllExam', userRoutes);  // for the reset takenExam
 app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
-app.use('/api/save-user-response', examInProgressRoutes ); // special route for saving examInProgress
-app.use('/api/user-exam-result',examResultRoutes );
+app.use('/api/save-user-response', examInProgressRoutes); // special route for saving examInProgress
+app.use('/api/user-exam-result', examResultRoutes);
 app.use('/api/delete-all-user-exam-results', examResultRoutes);
 app.use('/api/user-exam-results/:id', examResultRoutes);
 app.use('/api/delete-all-exam-in-progress', examInProgressRoutes);
@@ -80,13 +108,13 @@ app.use('/api/images', express.static(imageStoragePath));
 
 // Return 404 for non accounted routes
 app.all('*', (req, res) => {
-    res.status(404).json({
-        msg: "Requested resource does not exist"
-    });
+  res.status(404).json({
+    msg: "Requested resource does not exist"
+  });
 });
 
 app.listen(port, () => {
-    console.log(`app is running on ${port}`);
+  console.log(`app is running on ${port}`);
 });
 
 

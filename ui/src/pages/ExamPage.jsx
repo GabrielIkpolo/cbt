@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import React, { useState } from 'react'
 import "./examPage.css";
 import axiosInstance from "../utils/AxiosInstance.jsx";
@@ -8,6 +8,8 @@ import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { shuffle } from 'lodash/shuffle';
+import { useDebouncedCallback} from 'use-debounce';
+
 
 const ExamPage = () => {
   const navigate = useNavigate();
@@ -128,8 +130,6 @@ const ExamPage = () => {
   const endExam = async () => {
     try {
       const questionId = questions[currentQuestionIndex].id;
-
-
       if (selectedOption) {
         //Saves to the examInProgress model (including the last checked option) /api/save-user-response
         const response = await axiosInstance.post('/api/save-user-response', {
@@ -140,14 +140,12 @@ const ExamPage = () => {
         });
       }
 
-
       // Submit the final exam result
       const { data } = await axiosInstance.post('/api/submit-final-exam-result', {
         userId: user.id,
         examId: selectedExam,
         userResponses: Object.values(userResponses), // Pass userResponses to backend
       });
-
 
       toast.success('Final result submitted successfully');
 
@@ -160,14 +158,27 @@ const ExamPage = () => {
     }
   };
 
+
+  const debouncedEndExam = useDebouncedCallback(endExam, 500);
+
   // Handle question navigation
-  const handleQuestionNavigation = (direction) => {
+  // const handleQuestionNavigation = (direction) => {
+  //   if (direction === "next") {
+  //     goToNextQuestion();
+  //   } else if (direction === "previous") {
+  //     goToPreviousQuestion();
+  //   }
+  // };
+
+  const handleQuestionNavigation = useDebouncedCallback((direction) => {
     if (direction === "next") {
       goToNextQuestion();
     } else if (direction === "previous") {
       goToPreviousQuestion();
     }
-  };
+  }, 500);
+
+
 
   // Handle page refresh issue
   useEffect(() => {
@@ -222,7 +233,7 @@ const ExamPage = () => {
                     checked={selectedOption === option}
                     onChange={handleOptionChange}
                   />
-                    <span>{option}</span>
+                  <span>{option}</span>
                 </div>
               ))}
           </form>
@@ -239,7 +250,7 @@ const ExamPage = () => {
         </div>
 
         <div className="endExam">
-          <button className="endExamBtn" onClick={endExam}>End Exam</button>
+          <button className="endExamBtn" onClick={debouncedEndExam}>End Exam</button>
         </div>
       </div>
 

@@ -1,13 +1,9 @@
-/* .parrentDiv{
-  
-} */
-
 .cbtTitle {
     text-align: center;
     font-size: 12px;
     font-weight: lighter;
     margin-top: 10px;
-    width:400px;
+    width: 400px;
     margin: auto
 }
 
@@ -92,11 +88,11 @@ input {
         font-size: 12px;
         font-weight: lighter;
         margin-top: 10px;
-        width:400px;
+        width: 400px;
         margin: auto;
 
         margin-left: 30%;
         margin-right: 30%;
     }
-    
+
 }

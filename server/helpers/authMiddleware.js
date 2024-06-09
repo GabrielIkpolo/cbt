@@ -1,8 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
-
-// Initialize Prisma 
-const prisma = new PrismaClient();
+import prisma from './prisma.js';
 
 
 const requireSignin = async (req, res, next) => {

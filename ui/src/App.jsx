@@ -52,7 +52,7 @@ const guide = createBrowserRouter([
     path: "/",
     element: <HeaderAndFooter />,
     children: [
-      { path: "/", element: <Login /> },
+      { path: "/", element: <Login />  },
 
       {path: "/register", element: <RegistrationComponent />},
 

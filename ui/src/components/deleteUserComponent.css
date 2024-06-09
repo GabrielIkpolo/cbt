@@ -1,0 +1,42 @@
+.deleteUserComponent {
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.searchBox {
+    margin-bottom: 20px;
+    padding: 8px;
+    width: 300px;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.deleteButton {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    background-color: #c9302c;
+}

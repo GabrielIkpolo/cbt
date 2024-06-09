@@ -1,10 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from '../helpers/prisma.js';
 import pkg from 'bson-objectid';
 const { default: ObjectId } = pkg;
 import * as fastcsv from 'fast-csv';
-
-// Initialize prisma client 
-const prisma = new PrismaClient();
 
 // Generate a BSON-ObjectID (MongoDB ID) for usage
 const generatedId = new ObjectId().toHexString();
@@ -35,9 +32,7 @@ const createExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 
 }
 
@@ -108,9 +103,7 @@ const createExamFromCSV = async (req, res) => {
     } catch (err) {
         console.error('Error creating exam:', err);
         res.status(500).json({ err: 'Internal Server Error' });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 };
 
 //Get an Exam by its Id
@@ -132,9 +125,7 @@ const getExamById = async (req, res) => {
     } catch (err) {
         console.error("Error getting exam by ID", err);
         res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
@@ -165,40 +156,138 @@ const updateExam = async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
 
 
 //Delete associated questions
+// const deleteQuestionsForExam = async (examId) => {
+//     try {
+
+//         await prisma.answeredQuestion.deleteMany({
+//             where: {examInProgressId: examId },
+//         });
+
+//         await prisma.question.deleteMany({
+//             where: { examId: examId },
+//         });
+
+//         console.log(`Questions for Exam ${examId} deleted successfully`);
+//     } catch (error) {
+//         console.error(`Error deleting questions for Exam ${examId}:`, error);
+//         throw error;
+//     } 
+// };
+
 const deleteQuestionsForExam = async (examId) => {
     try {
+        // First, find all questions for the exam
+        const questions = await prisma.question.findMany({
+            where: { examId: examId },
+        });
+
+        const questionIds = questions.map(question => question.id);
+
+        // Delete all AnsweredQuestions related to the found questions
+        await prisma.answeredQuestion.deleteMany({
+            where: {
+                questionId: { in: questionIds }
+            }
+        });
+
+        // Now delete the questions themselves
         await prisma.question.deleteMany({
             where: { examId: examId },
         });
-        console.log(`Questions for Exam ${examId} deleted successfully`);
+
+        console.log(`Questions and related AnsweredQuestions for Exam ${examId} deleted successfully`);
     } catch (error) {
         console.error(`Error deleting questions for Exam ${examId}:`, error);
         throw error;
-    } finally {
-        await prisma.$disconnect();
     }
 };
 
 
+const deleteExamInProgressForExam = async (examId) => {
+    try {
+        // Delete all ExamInProgress records related to the exam
+        await prisma.examInProgress.deleteMany({
+            where: {
+                examId: examId,
+            },
+        });
+
+        console.log(`ExamInProgress records for Exam ${examId} deleted successfully`);
+    } catch (error) {
+        console.error(`Error deleting ExamInProgress records for Exam ${examId}:`, error);
+        throw error;
+    }
+};
+
+
+
+const deleteUserExamResultsForExam = async (examId) => {
+    try {
+        // Delete all UserExamResult records related to the exam
+        await prisma.userExamResult.deleteMany({
+            where: {
+                examId: examId,
+            },
+        });
+
+        console.log(`UserExamResult records for Exam ${examId} deleted successfully`);
+    } catch (error) {
+        console.error(`Error deleting UserExamResult records for Exam ${examId}:`, error);
+        throw error;
+    }
+};
+
+
+
+
 // Delete an exam by Id 
+// const deleteExam = async (req, res) => {
+//     const examId = req.params.id;
+//     console.log(examId);
+//     try {
+
+//         // Delete associated questions
+//         await deleteQuestionsForExam(examId);
+
+//         const deletedExam = await prisma.exam.delete({
+//             where: { id: examId },
+//             include: { questions: true }, // Include associated questions
+//         });
+
+//         if (!deletedExam) {
+//             return res.json({ Error: "Exam not found" });
+//         }
+
+//         return res.status(200).json(deletedExam);
+
+//     } catch (err) {
+//         console.error('Error deleting exam:', err);
+
+//         return res.status(500).json({ error: "Internal Server Error" });
+//     } 
+// }
+
 const deleteExam = async (req, res) => {
     const examId = req.params.id;
     console.log(examId);
     try {
+         // Delete associated questions (and their answered questions)
+         await deleteQuestionsForExam(examId);
 
-        // Delete associated questions
-        await deleteQuestionsForExam(examId);
+          // Delete associated ExamInProgress records
+        await deleteExamInProgressForExam(examId);
 
+        // Delete associated UserExamResult records
+        await deleteUserExamResultsForExam(examId);
+
+        // Delete the exam itself
         const deletedExam = await prisma.exam.delete({
             where: { id: examId },
-            include: { questions: true }, // Include associated questions
         });
 
         if (!deletedExam) {
@@ -209,12 +298,11 @@ const deleteExam = async (req, res) => {
 
     } catch (err) {
         console.error('Error deleting exam:', err);
-
         return res.status(500).json({ error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
-}
+    } 
+};
+
+
 
 
 const getAllExams = async (req, res) => {
@@ -234,11 +322,8 @@ const getAllExams = async (req, res) => {
     } catch (error) {
         console.error("Error fetching exams", error);
         res.status(500).json({ Error: "Internal Server Error" });
-    } finally {
-        await prisma.$disconnect();
-    }
+    } 
 }
-
 
 
 export default {
