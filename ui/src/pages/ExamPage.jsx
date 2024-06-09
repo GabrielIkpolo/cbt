@@ -8,7 +8,7 @@ import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { shuffle } from 'lodash/shuffle';
-import { useDebouncedCallback} from 'use-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 const ExamPage = () => {
@@ -107,21 +107,23 @@ const ExamPage = () => {
   };
 
   // Function to navigate to next question
-  const goToNextQuestion = () => {
+  const goToNextQuestion = (e) => {
     if (currentQuestionIndex < questions.length - 1) {
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedOption(userResponses[currentQuestionIndex + 1] || "");
+        e.target.disabled = false
       });
     }
   };
 
   // Function to navigate to previous question
-  const goToPreviousQuestion = () => {
+  const goToPreviousQuestion = (e) => {
     if (currentQuestionIndex > 0) {
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
         setSelectedOption(userResponses[currentQuestionIndex - 1] || "");
+        e.target.disabled = false
       });
     }
   };
@@ -170,13 +172,14 @@ const ExamPage = () => {
   //   }
   // };
 
-  const handleQuestionNavigation = useDebouncedCallback((direction) => {
+  const handleQuestionNavigation = (e, direction) => {
+    e.target.disabled= true; 
     if (direction === "next") {
-      goToNextQuestion();
+      goToNextQuestion(e);
     } else if (direction === "previous") {
-      goToPreviousQuestion();
+      goToPreviousQuestion(e);
     }
-  }, 500);
+  };
 
 
 
@@ -242,10 +245,10 @@ const ExamPage = () => {
 
         <div className="navigationButtons">
           {currentQuestionIndex > 0 && (
-            <button className="prev" onClick={() => handleQuestionNavigation("previous")}>Previous</button>
+            <button className="prev" onClick={(e) => handleQuestionNavigation(e, "previous")}>Previous</button>
           )}
           {currentQuestionIndex < questions.length - 1 && (
-            <button className="next" onClick={() => handleQuestionNavigation("next")}>Next</button>
+            <button className="next" onClick={(e) => handleQuestionNavigation(e, "next")}>Next</button>
           )}
         </div>
 
