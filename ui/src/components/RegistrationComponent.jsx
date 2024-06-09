@@ -26,6 +26,7 @@ const RegistrationComponent = () => {
         'Economics',
         'Electrical Electronics Engr',
         'Engineering',
+        'Finance',
         'Law',
         'LIS',
         'Mass Comm.',
@@ -46,6 +47,12 @@ const RegistrationComponent = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -92,7 +99,7 @@ const RegistrationComponent = () => {
                     {error && <p>{error}</p>}
 
                     <input className='registerInputes'
-                        type="text" placeholder='Enter name ...'
+                        type="text" placeholder='Enter Full name ... Eg. John Smith'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -103,14 +110,22 @@ const RegistrationComponent = () => {
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
-                    <input className='registerInputes'
+                    {/* <input className='registerInputes'
                         type="password" placeholder='Enter password ...'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    />
+                    /> */}
 
                     <input className='registerInputes'
-                        type="text" placeholder='Enter registration number ...'
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Enter password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onContextMenu={handleTogglePasswordVisibility} // for rightclick
+                    /> 
+
+                    <input className='registerInputes'
+                        type="text" placeholder='Enter Matriculation Number or Registration Number ...'
                         value={registrationNumber}
                         onChange={(e) => setRegistrationNumber(e.target.value)}
                     />
