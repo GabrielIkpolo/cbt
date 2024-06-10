@@ -6,7 +6,7 @@ import defaultPic from "../assets/img/defaultPic.png";
 import axiosInstance from '../utils/AxiosInstance.jsx';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useDebouncedCallback} from 'use-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 const SelectExam = () => {
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ const SelectExam = () => {
     const [exams, setExams] = useState([]);
     const [selectedValue, setSelectedValue] = useState("");
     const [examInfo, setExamInfo] = useState({ totalQuestions: 0, durationMinutes: 0 });
+    // const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const handleExamSelection = (event) => {
         setSelectedValue(event.target.value);
@@ -46,7 +47,63 @@ const SelectExam = () => {
 
     }, []);
 
-    const startExam = async () => {
+    // const startExam = async () => {
+    //     if (selectedValue) {
+    //         setSelectedExam(selectedValue); // updates selectedExam state
+    //         // console.log("This is the selected Exam==>",selectedValue);
+
+    //         //    Check if the loggedin user have tried to write the exam before 
+    //         try {
+    //             const { data } = await axiosInstance.get(`/api/the-users/${user.id}`);
+
+    //             if (!data) {
+    //                 console.log("presentUserExamStatus detail not found");
+    //             }
+
+    //             if (data?.takenExam === 1) {
+    //                 navigate("/contact-server-admin");
+    //                 return;
+    //             }
+
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+
+    //         // Update the user for takenExam to be 1 so we can track them
+    //         try {
+    //             await axiosInstance.put(`/api/the-users/${user.id}`, { takenExam: 1 });
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+
+    //         // send a request to create examInprogressRecord
+    //         try {
+    //             const response = await axiosInstance.post("/api/exam-in-progress", {
+    //                 userId: user.id,
+    //                 examId: selectedValue,
+    //                 currentQuestionIndex: 1, // if the initial question index is 0
+    //             });
+    //             console.log(response.data);
+    //         } catch (error) {
+    //             console.log("Error creating Exam in progress", error)
+    //         }
+
+    //         navigate("/exam");
+    //     } else {
+    //         toast.error("You have to select an exam");
+    //     }
+    // }
+
+
+    const startExam = async (e) => {
+        e.target.disabled = true;
+        e.target.disabled = true;
+
+        // setTimeout(() => {
+        //     console.log("waiting for 4 seconds");
+        // }, 10000);
+
+
         if (selectedValue) {
             setSelectedExam(selectedValue); // updates selectedExam state
             // console.log("This is the selected Exam==>",selectedValue);
@@ -66,14 +123,15 @@ const SelectExam = () => {
 
             } catch (error) {
                 console.error(error);
+                e.target.disabled = false;
             }
-
 
             // Update the user for takenExam to be 1 so we can track them
             try {
                 await axiosInstance.put(`/api/the-users/${user.id}`, { takenExam: 1 });
             } catch (error) {
                 console.error(error);
+                e.target.disabled = false;
             }
 
             // send a request to create examInprogressRecord
@@ -86,15 +144,18 @@ const SelectExam = () => {
                 console.log(response.data);
             } catch (error) {
                 console.log("Error creating Exam in progress", error)
+                e.target.disabled = false;
             }
 
             navigate("/exam");
         } else {
             toast.error("You have to select an exam");
+            e.target.disabled = false;
         }
     }
 
-    const debouncedStartExam = useDebouncedCallback(startExam, 1000); 
+
+    const debouncedStartExam = useDebouncedCallback(startExam, 1000);
 
     // console.log(user.name, "The selected exam");
     return (<>
@@ -145,7 +206,7 @@ const SelectExam = () => {
         </div>
 
         <div className='startExam'>
-            <button className='startBtn' onClick={debouncedStartExam}>Start Exam</button>
+            <button className='startBtn' onClick={startExam} >Start Exam</button>
         </div>
 
     </>
