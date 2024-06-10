@@ -129,7 +129,41 @@ const ExamPage = () => {
   };
 
   // Function to end exam
-  const endExam = async () => {
+  // const endExam = async () => {
+  //   try {
+  //     const questionId = questions[currentQuestionIndex].id;
+  //     if (selectedOption) {
+  //       //Saves to the examInProgress model (including the last checked option) /api/save-user-response
+  //       const response = await axiosInstance.post('/api/save-user-response', {
+  //         userId: user.id,
+  //         examId: selectedExam,
+  //         questionId,
+  //         selectedOption,
+  //       });
+  //     }
+
+  //     // Submit the final exam result
+  //     const { data } = await axiosInstance.post('/api/submit-final-exam-result', {
+  //       userId: user.id,
+  //       examId: selectedExam,
+  //       userResponses: Object.values(userResponses), // Pass userResponses to backend
+  //     });
+
+  //     toast.success('Final result submitted successfully');
+
+  //     // Redirect to exam result page
+  //     setTimeRemaining(0);
+  //     navigate("/exam-result");
+  //   } catch (error) {
+  //     console.error("Error submitting final result", error);
+  //     toast.error("Failed to submit final result");
+  //   }
+  // };
+
+
+  const endExam = async (e) => {
+    e.target.disabled = true;
+
     try {
       const questionId = questions[currentQuestionIndex].id;
       if (selectedOption) {
@@ -154,12 +188,14 @@ const ExamPage = () => {
       // Redirect to exam result page
       setTimeRemaining(0);
       navigate("/exam-result");
+
+      e.target.disabled= false;
     } catch (error) {
       console.error("Error submitting final result", error);
       toast.error("Failed to submit final result");
+      e.target.disabled = false;
     }
   };
-
 
   const debouncedEndExam = useDebouncedCallback(endExam, 500);
 
@@ -173,12 +209,12 @@ const ExamPage = () => {
   // };
 
   const handleQuestionNavigation = (e, direction) => {
-    e.target.disabled= true; 
-    if (direction === "next") {
-      goToNextQuestion(e);
-    } else if (direction === "previous") {
-      goToPreviousQuestion(e);
-    }
+    e.target.disabled = true;
+      if (direction === "next") {
+        goToNextQuestion(e);
+      } else if (direction === "previous") {
+        goToPreviousQuestion(e);
+      }
   };
 
 
@@ -253,7 +289,7 @@ const ExamPage = () => {
         </div>
 
         <div className="endExam">
-          <button className="endExamBtn" onClick={debouncedEndExam}>End Exam</button>
+          <button className="endExamBtn" onClick={(e)=>endExam(e)}>End Exam</button>
         </div>
       </div>
 

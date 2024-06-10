@@ -97,12 +97,6 @@ const SelectExam = () => {
 
     const startExam = async (e) => {
         e.target.disabled = true;
-        e.target.disabled = true;
-
-        // setTimeout(() => {
-        //     console.log("waiting for 4 seconds");
-        // }, 10000);
-
 
         if (selectedValue) {
             setSelectedExam(selectedValue); // updates selectedExam state
@@ -148,6 +142,7 @@ const SelectExam = () => {
             }
 
             navigate("/exam");
+            e.target.disabled = false;
         } else {
             toast.error("You have to select an exam");
             e.target.disabled = false;
@@ -206,7 +201,7 @@ const SelectExam = () => {
         </div>
 
         <div className='startExam'>
-            <button className='startBtn' onClick={startExam} >Start Exam</button>
+            <button className='startBtn' onClick={(e) => startExam(e)} >Start Exam</button>
         </div>
 
     </>
