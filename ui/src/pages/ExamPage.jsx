@@ -8,7 +8,7 @@ import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { shuffle } from 'lodash/shuffle';
-import { useDebouncedCallback} from 'use-debounce';
+import { useDebouncedCallback } from 'use-debounce';
 
 
 const ExamPage = () => {
@@ -55,7 +55,7 @@ const ExamPage = () => {
       setTimeRemaining(prevTime => {
         if (prevTime <= 0) {
           clearInterval(timer); // Stop the timer when time runs out
-          endExam(); // End the exam when time runs out
+          endExamWithoutEvent(); // End the exam when time runs out
           return 0;
         }
         return prevTime - 1;
@@ -107,27 +107,29 @@ const ExamPage = () => {
   };
 
   // Function to navigate to next question
-  const goToNextQuestion = () => {
+  const goToNextQuestion = (e) => {
     if (currentQuestionIndex < questions.length - 1) {
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedOption(userResponses[currentQuestionIndex + 1] || "");
+        e.target.disabled = false
       });
     }
   };
 
   // Function to navigate to previous question
-  const goToPreviousQuestion = () => {
+  const goToPreviousQuestion = (e) => {
     if (currentQuestionIndex > 0) {
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
         setSelectedOption(userResponses[currentQuestionIndex - 1] || "");
+        e.target.disabled = false
       });
     }
   };
 
-  // Function to end exam
-  const endExam = async () => {
+  // Function to end exam without event 
+  const endExamWithoutEvent = async () => {
     try {
       const questionId = questions[currentQuestionIndex].id;
       if (selectedOption) {
@@ -159,6 +161,42 @@ const ExamPage = () => {
   };
 
 
+  const endExam = async (e) => {
+    e.target.disabled = true;
+
+    try {
+      const questionId = questions[currentQuestionIndex].id;
+      if (selectedOption) {
+        //Saves to the examInProgress model (including the last checked option) /api/save-user-response
+        const response = await axiosInstance.post('/api/save-user-response', {
+          userId: user.id,
+          examId: selectedExam,
+          questionId,
+          selectedOption,
+        });
+      }
+
+      // Submit the final exam result
+      const { data } = await axiosInstance.post('/api/submit-final-exam-result', {
+        userId: user.id,
+        examId: selectedExam,
+        userResponses: Object.values(userResponses), // Pass userResponses to backend
+      });
+
+      toast.success('Final result submitted successfully');
+
+      // Redirect to exam result page
+      setTimeRemaining(0);
+      navigate("/exam-result");
+
+      e.target.disabled= false;
+    } catch (error) {
+      console.error("Error submitting final result", error);
+      toast.error("Failed to submit final result");
+      e.target.disabled = false;
+    }
+  };
+
   const debouncedEndExam = useDebouncedCallback(endExam, 500);
 
   // Handle question navigation
@@ -170,13 +208,14 @@ const ExamPage = () => {
   //   }
   // };
 
-  const handleQuestionNavigation = useDebouncedCallback((direction) => {
-    if (direction === "next") {
-      goToNextQuestion();
-    } else if (direction === "previous") {
-      goToPreviousQuestion();
-    }
-  }, 500);
+  const handleQuestionNavigation = (e, direction) => {
+    e.target.disabled = true;
+      if (direction === "next") {
+        goToNextQuestion(e);
+      } else if (direction === "previous") {
+        goToPreviousQuestion(e);
+      }
+  };
 
 
 
@@ -242,15 +281,15 @@ const ExamPage = () => {
 
         <div className="navigationButtons">
           {currentQuestionIndex > 0 && (
-            <button className="prev" onClick={() => handleQuestionNavigation("previous")}>Previous</button>
+            <button className="prev" onClick={(e) => handleQuestionNavigation(e, "previous")}>Previous</button>
           )}
           {currentQuestionIndex < questions.length - 1 && (
-            <button className="next" onClick={() => handleQuestionNavigation("next")}>Next</button>
+            <button className="next" onClick={(e) => handleQuestionNavigation(e, "next")}>Next</button>
           )}
         </div>
 
         <div className="endExam">
-          <button className="endExamBtn" onClick={debouncedEndExam}>End Exam</button>
+          <button className="endExamBtn" onClick={(e)=>endExam(e)}>End Exam</button>
         </div>
       </div>
 

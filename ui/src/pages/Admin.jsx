@@ -8,6 +8,7 @@ import ExamResultsTable from '../components/ExamResultsTable.jsx';
 import ImageUpload from '../components/ImageUpload.jsx';
 import DeleteUploadedExam from '../components/DeleteUploadedExam.jsx';
 import DeleteUserComponent from '../components/DeleteUserComponent.jsx';
+import SimpleButton from '../components/SimpleButton.jsx';
 
 const Admin = () => {
 
@@ -108,19 +109,19 @@ const Admin = () => {
 
                         <li>
                             <a className={`menuItem ${activeComponent === 'imageUpload' && 'active'}`} onClick={() => setActiveComponent("imageUpload")}>
-                               Upload Image for Exam Questions
+                                Upload Image for Exam Questions
                             </a>
                         </li>
 
                         <li>
                             <a className={`menuItem ${activeComponent === 'delUploadedExam' && 'active'}`} onClick={() => setActiveComponent("delUploadedExam")}>
-                               Delete Uploaded Exam
+                                Delete Uploaded Exam
                             </a>
                         </li>
 
                         <li>
                             <a className={`menuItem ${activeComponent === 'delUser' && 'active'}`} onClick={() => setActiveComponent("delUser")}>
-                              Delete User
+                                Delete User
                             </a>
                         </li>
 
@@ -221,6 +222,9 @@ const Admin = () => {
                     }
 
                 </div>
+
+
+                <SimpleButton />
 
             </div>
 
