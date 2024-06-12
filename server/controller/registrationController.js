@@ -18,11 +18,7 @@ const register = async (req, res) => {
             return res.json({ Error: "Real email required" });
         }
 
-<<<<<<< HEAD
-        if (!password|| password.length < 6) {
-=======
         if (!password || password.length < 6) {
->>>>>>> test-branch
             return res.json({ error: "Passsword must be at least 6 characters long" });
         }
 
