@@ -96,6 +96,7 @@ const SelectExam = () => {
 
 
     const startExam = async (e) => {
+        e.preventDefault();
         e.target.disabled = true;
 
         if (selectedValue) {
@@ -142,7 +143,6 @@ const SelectExam = () => {
             }
 
             navigate("/exam");
-            e.target.disabled = false;
         } else {
             toast.error("You have to select an exam");
             e.target.disabled = false;
@@ -150,7 +150,7 @@ const SelectExam = () => {
     }
 
 
-    const debouncedStartExam = useDebouncedCallback(startExam, 1000);
+    // const debouncedStartExam = useDebouncedCallback(startExam, 1000);
 
     // console.log(user.name, "The selected exam");
     return (<>
