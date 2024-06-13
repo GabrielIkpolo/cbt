@@ -17,6 +17,8 @@ router.get('/the-users', userController.getAllUsers);
 // Endpoint to resset all exams 
 router.put('/', userController.resetAllExams);
 
+// Endpoint to get users by email 
+router.get('/by-email', userController.getUserByEmail); //See app.js for route prefix
 
 
 

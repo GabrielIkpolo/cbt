@@ -85,6 +85,7 @@ model User {
   department         String?
   level              String?
   role               Int              @default(0)
+  enableUpdate       Boolean?         @default(false)
   takenExam          Int              @default(0)
   totalExamsTaken    Int              @default(0)
   createdAt          DateTime         @default(now())

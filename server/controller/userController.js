@@ -63,7 +63,7 @@ const createUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal server Error" });
-    } 
+    }
 
 }
 
@@ -86,11 +86,32 @@ const getUserById = async (req, res) => {
     }
 }
 
+// Get User by Email
+const getUserByEmail = async (req, res) => {
+    const { email } = req.query;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email: email },
+        });
+
+        if (!user) {
+            return res.json({ error: "User not found!" });
+        }
+
+        return res.status(200).json(user);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 
 // Update a User 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { name, email, registrationNumber, department, role, takenExam } = req.body;
+    const { name, email, registrationNumber, department, role, takenExam,
+        enableUpdate } = req.body;
     try {
         const updatedUser = await prisma.user.update({
             where: { id: userId },
@@ -100,7 +121,8 @@ const updateUser = async (req, res) => {
                 registrationNumber,
                 department,
                 role,
-                takenExam
+                takenExam,
+                enableUpdate
             },
         });
 
@@ -186,11 +208,11 @@ const resetAllExams = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 }
 
 
 export default {
     createUser, getUserById, updateUser, deleteUser,
-    getAllUsers, resetAllExams
+    getAllUsers, resetAllExams, getUserByEmail
 }

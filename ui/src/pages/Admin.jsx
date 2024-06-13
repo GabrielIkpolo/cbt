@@ -45,16 +45,39 @@ const Admin = () => {
         try {
             await axiosInstance.put(`/api/the-users/${userId}`, { takenExam: 0 });
             //Update the users state after resetting takenExam
-            setUsers((prevUsers) => prevUsers.map((user) => user.id === userId ? {
-                ...user,
-                takenExam: 0
-            } : user));
+            setUsers((prevUsers) =>
+                prevUsers.map((user) => user.id === userId ? {
+                    ...user,
+                    takenExam: 0
+                }
+                    : user)
+            );
             toast.success("Exam resetted for candidate");
 
         } catch (error) {
             console.error("Error resetting takenExam", error);
         }
     }
+
+    // function to enable user update 
+    const enableUserUpdate = async (userId) => {
+        try {
+            await axiosInstance.put(`/api/the-users/${userId}`, { enableUpdate: true });
+
+            // Updates the users state by mapping over the previous users (prevUsers) and 
+            // replacing the user with the matching id with an updated object that sets enableUpdate to true.
+
+            setUsers((prevUsers) =>
+                prevUsers.map((user) => user.id === userId ? { ...user, enableUpdate: true } : user)
+            );
+
+            toast.success("User is enabled for update.");
+        } catch (error) {
+            console.error("Error enabling user for update", error);
+            toast.error("Could not enable user for update");
+        }
+    }
+
 
     // Function to reset all 
     const resetAllExam = async () => {
@@ -74,6 +97,8 @@ const Admin = () => {
         // add toast functionalist
         toast.success("takenExam resetted");
     }
+
+
 
     return (
         <>
@@ -148,6 +173,7 @@ const Admin = () => {
                                             <th>Name</th>
                                             <th>Registration Number</th>
                                             <th>Action</th>
+                                            <th>Enable Update</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -156,9 +182,16 @@ const Admin = () => {
                                                 <td>{user.email}</td>
                                                 <td>{user.name}</td>
                                                 <td>{user.registrationNumber}</td>
-                                                <td><button className='takenExamBtn' onClick={() => resetExam(user.id)}>
-                                                    Reset Exam
-                                                </button>
+                                                <td>
+                                                    <button className='takenExamBtn' onClick={() => resetExam(user.id)}>
+                                                        Reset Exam
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    <button className="takenExamBtn" onClick={() => enableUserUpdate(user.id)} >
+                                                        Enable User Update
+                                                    </button>
                                                 </td>
                                             </tr>
                                         )
@@ -167,6 +200,7 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                                 <button className="resetAllBtn" onClick={resetAllExam} > Reset All Exam</button>
+
                             </div>
                         </div>
                     )}
@@ -223,7 +257,7 @@ const Admin = () => {
 
                 </div>
 
-
+                {/* Testing the disable button functionality */}
                 <SimpleButton />
 
             </div>

@@ -89,6 +89,8 @@ app.use('/api', examInProgressRoutes);
 app.use('/api/check-answer', examInProgressRoutes); // special route for checking answer
 app.use('/api', userRoutes);
 app.use('/api/resetAllExam', userRoutes);  // for the reset takenExam
+app.use('/api/get-the-users', userRoutes); // query route here. See userRoutes for surfix 
+
 app.use('/api', registrationRoutes);
 app.use('/api', loginRoutes);
 app.use('/api/save-user-response', examInProgressRoutes); // special route for saving examInProgress
