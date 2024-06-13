@@ -298,8 +298,47 @@ const deleteAllExamInProgress = async (req, res) => {
     } 
 };
 
+const nowGetAllExamInProgress = async (req, res) => {
+    try {
+        const allExamsInProgress = await prisma.examInProgress.findMany({
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        email: true,
+                    },
+                },
+                exam: {
+                    select: {
+                        id: true,
+                        subject: true,
+                    },
+                },
+            },
+        });
+
+        if (!allExamsInProgress.length) {
+            return res.json({ error: "No exams in progress found" });
+        }
+
+        const formattedExamsInProgress = allExamsInProgress.map(examInProgress => ({
+            id: examInProgress.id,
+            userId: examInProgress.user.id,
+            userEmail: examInProgress.user.email,
+            examId: examInProgress.exam.id,
+            examSubject: examInProgress.exam.subject,
+            score: examInProgress.score
+        }));
+
+        return res.status(200).json(formattedExamsInProgress);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 export default {
     createExamInProgress, getExamInProgressById, checkAnswer, saveUserResponse,
     updateExamInProgress, deleteExamInProgressById, getAllExamInProgress,
-    deleteAllExamInProgress,
+    deleteAllExamInProgress, nowGetAllExamInProgress 
 }
