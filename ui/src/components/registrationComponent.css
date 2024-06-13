@@ -1,73 +1,96 @@
- .userRehistration {
-    text-align: center;
-    margin: 3rem;
+ .selectionMode {
+     margin-top: 5px;
+     text-align: left;
+     margin-left: 1rem;
+ }
+
+ .theNavLink1,
+ .theNavLink2 {
+     background-color: initial;
+     text-decoration: none;
+     /* color: black; */
+ }
+
+ .theNavLink1:hover {
+    color: green;
 }
 
-.registerForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 60%;
-    margin: auto;
-}
+ .theNavLink2:hover {
+     color: red;
+ }
 
-.registerInputes {
-    padding: 10px;
-    width: 97%;
-    margin: 10px;
-    border-radius: 15px;
-    border: none;
-}
+ 
 
-.selectOption {
-    width: 100%;
-    margin: 10px;
-    padding: 10px;
-    border: none;
-    border-radius: 15px;
-}
+ .userRegistration {
+     text-align: center;
+     margin: 3rem;
+ }
 
-.registerBtn {
-    width: 100%;
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    border-radius: 15px;
-    background-color: red;
-    color: white;
-}
+ .registerForm {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     width: 60%;
+     margin: auto;
+ }
 
-.registerBtn:hover {
-    cursor: pointer;
-    background-color: rgb(238, 116, 116);
-}
+ .registerInputes {
+     padding: 10px;
+     width: 97%;
+     margin: 10px;
+     border-radius: 15px;
+     border: none;
+ }
 
-.sucessfulDivNotification {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 40%;
-    margin: auto;
-}
+ .selectOption {
+     width: 100%;
+     margin: 10px;
+     padding: 10px;
+     border: none;
+     border-radius: 15px;
+ }
 
-.registerAnother{
-    padding: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 15px;
-}
+ .registerBtn {
+     width: 100%;
+     padding: 10px;
+     margin: 10px;
+     border: none;
+     border-radius: 15px;
+     background-color: red;
+     color: white;
+ }
 
-.registerAnother:hover{
-    cursor: pointer;
-    background-color: rgb(236, 77, 77);
-}
+ .registerBtn:hover {
+     cursor: pointer;
+     background-color: rgb(238, 116, 116);
+ }
 
-.sucessfulDivNotification p{
-    text-align: center;
-}
+ .sucessfulDivNotification {
+     display: flex;
+     justify-content: center;
+     flex-direction: column;
+     width: 40%;
+     margin: auto;
+ }
 
-.registerForm p{
-    text-align: center;
-    color: red;
-} 
+ .registerAnother {
+     padding: 10px;
+     background-color: red;
+     color: white;
+     border: none;
+     border-radius: 15px;
+ }
+
+ .registerAnother:hover {
+     cursor: pointer;
+     background-color: rgb(236, 77, 77);
+ }
+
+ .sucessfulDivNotification p {
+     text-align: center;
+ }
+
+ .registerForm p {
+     text-align: center;
+     color: red;
+ }
