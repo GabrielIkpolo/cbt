@@ -19,6 +19,11 @@ router.post('/', examInProgressController.saveUserResponse);
 router.delete('/', examInProgressController.deleteAllExamInProgress);
 
 
+// The NowGetAllExam in progress other route
+router.get('/all-exams-in-progress', 
+    examInProgressController.nowGetAllExamInProgress);
+
+
 export default router;
 
 

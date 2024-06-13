@@ -9,6 +9,7 @@ import ImageUpload from '../components/ImageUpload.jsx';
 import DeleteUploadedExam from '../components/DeleteUploadedExam.jsx';
 import DeleteUserComponent from '../components/DeleteUserComponent.jsx';
 import SimpleButton from '../components/SimpleButton.jsx';
+import ExamInProgressComponent from '../components/ExamInProgressComponent.jsx';
 
 const Admin = () => {
 
@@ -123,6 +124,12 @@ const Admin = () => {
                         <li>
                             <a className={`menuItem ${activeComponent === 'fileUpload' && 'active'}`} onClick={() => setActiveComponent("fileUpload")}>
                                 Upload Exam
+                            </a>
+                        </li>
+
+                        <li>
+                            <a className={`menuItem ${activeComponent === 'examInProgress' && 'active'}`} onClick={() => setActiveComponent("examInProgress")}>
+                                Check Exam in Progress
                             </a>
                         </li>
 
@@ -254,6 +261,15 @@ const Admin = () => {
                             <DeleteUserComponent />
                         </div>
                     }
+
+                    {/* =========Exam in Progress ====== */}
+
+                    { activeComponent === 'examInProgress' &&
+                        <div className='examInProgress'>
+                            <ExamInProgressComponent />
+                        </div>
+                    }
+
 
                 </div>
 
