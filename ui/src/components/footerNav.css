@@ -1,18 +1,14 @@
 .footer {
-  background-color: black;
-  padding: 10px;
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  width: 100%;
-  overflow: hidden;
+  background-color: whitesmoke;
 }
 
-.paragraph {
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
-  /* text-align: center; */
+.copyright {
+  display: flex;
+  padding: 5px 20px;
+  justify-content: center;
+  color: gray;
+  font-family: Courier, monospace;
+  font-size: small;
 }
 
 /* Media query for small screens */

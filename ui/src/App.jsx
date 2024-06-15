@@ -22,24 +22,17 @@ import AlreadyTakenExam from "./pages/AlreadyTakenExam.jsx";
 import Admin from "./pages/Admin.jsx";
 import RegistrationComponent from "./components/RegistrationComponent.jsx";
 
-const Wrapper = ({ children }) => {
-  return (
-    <div className="wrapper">
-      {children}
-    </div>
-  );
-};
 
 const HeaderAndFooter = () => {
   return (
-    <>
+    <div className="wrapper-0">
       <HeaderNav />
-      <Wrapper className="wrapper">
+      <div className="content-space">
         <Toaster />
         <Outlet />
-      </Wrapper>
+      </div>
       <FooterNav />
-    </>
+    </div>
   );
 };
 

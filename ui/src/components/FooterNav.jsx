@@ -5,10 +5,12 @@ const FooterNav = () => {
   return (
     <>
       <div className="footer">
-        <p className="paragraph"> &copy; {new Date().getFullYear()} CBT</p>
-        <p className="paragraph">Powered by GIKPS</p>
-        
+        <div className="copyright">
+          <span>
+            &copy; {new Date().getFullYear()} <em>Gikps</em>
+          </span>
         </div>
+      </div>
     </>
   );
 };

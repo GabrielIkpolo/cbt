@@ -1,23 +1,9 @@
-.headers{
-  padding-top: 5px;
-  padding-bottom: 5px;
-  /* background-color: blueviolet; */
-
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-row: 1;
-}
-
-.logo {
-  width: 100px;
-  height: 100px;
-}
-
-/* .nav {
+.headers {
   display: flex;
-  justify-content: center;
-} */
+  padding: 5px 20px;
+  border-bottom: 1px solid lightgray;
+  margin: 0 5px;
+}
 
 .navListParent {
   display: flex;
