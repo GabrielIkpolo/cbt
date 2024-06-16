@@ -11,6 +11,7 @@ import { shuffle } from 'lodash/shuffle';
 import { useDebouncedCallback } from 'use-debounce';
 
 
+
 const ExamPage = () => {
   const navigate = useNavigate();
   const { user, selectedExam } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const ExamPage = () => {
   const [userResponses, setUserResponses] = useState({});
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Fetch exam questions from backend API
@@ -34,6 +36,7 @@ const ExamPage = () => {
 
         setQuestions(data.questions);
         setTimeRemaining(data.durationMinutes * 60); // Convert minutes to seconds
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching questions", error);
       }
@@ -44,6 +47,8 @@ const ExamPage = () => {
 
   // Start timer when component mounts
   useEffect(() => {
+    if (isLoading) return; // Skip timer setup if still loading
+
     const storedTimeRemaining = sessionStorage.getItem("timeRemaining");
     if (storedTimeRemaining) {
       setTimeRemaining(parseInt(storedTimeRemaining));
@@ -70,8 +75,11 @@ const ExamPage = () => {
 
   // Update sessionStorage whenever timeRemaining changes
   useEffect(() => {
-    sessionStorage.setItem("timeRemaining", timeRemaining);
-  }, [timeRemaining]);
+    if (!isLoading) {
+      sessionStorage.setItem("timeRemaining", timeRemaining);
+    }
+
+  }, [timeRemaining, isLoading]);
 
   // Handle option change
   const handleOptionChange = (event) => {
@@ -189,7 +197,7 @@ const ExamPage = () => {
       setTimeRemaining(0);
       navigate("/exam-result");
 
-      e.target.disabled= false;
+      e.target.disabled = false;
     } catch (error) {
       console.error("Error submitting final result", error);
       toast.error("Failed to submit final result");
@@ -199,47 +207,69 @@ const ExamPage = () => {
 
   const debouncedEndExam = useDebouncedCallback(endExam, 500);
 
-  // Handle question navigation
-  // const handleQuestionNavigation = (direction) => {
-  //   if (direction === "next") {
-  //     goToNextQuestion();
-  //   } else if (direction === "previous") {
-  //     goToPreviousQuestion();
-  //   }
-  // };
 
   const handleQuestionNavigation = (e, direction) => {
     e.target.disabled = true;
-      if (direction === "next") {
-        goToNextQuestion(e);
-      } else if (direction === "previous") {
-        goToPreviousQuestion(e);
-      }
+    if (direction === "next") {
+      goToNextQuestion(e);
+    } else if (direction === "previous") {
+      goToPreviousQuestion(e);
+    }
   };
 
 
 
   // Handle page refresh issue
-  useEffect(() => {
+   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      if (true) {
+      if (timeRemaining > 0) {
         event.preventDefault();
-        event.returnValue = "You have already taken your exam. Are you sure you want to leave?";
-        navigate("/exam-result");
-        return;
+        event.returnValue = "You have already taken your exam. Are you sure you want to leave?"; // Display a warning message
       }
     };
 
-    const handlePopstate = () => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+
+  }, [timeRemaining]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if ((event.ctrlKey && event.key === "r") || event.key === "F5") {
+        event.preventDefault();
+        toast.error("Refreshing the page is not allowed during the exam.");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const handlePopstate = (e) => {
       if (true) {
         navigate("/exam-result");
         return;
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('popstate', handlePopstate);
+    return () => {
+      window.addEventListener('popstate', handlePopstate);
+    }
   }, []);
+
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
 
   return (
     <div className="theExam">
@@ -289,7 +319,7 @@ const ExamPage = () => {
         </div>
 
         <div className="endExam">
-          <button className="endExamBtn" onClick={(e)=>endExam(e)}>End Exam</button>
+          <button className="endExamBtn" onClick={(e) => endExam(e)}>End Exam</button>
         </div>
       </div>
 
