@@ -15,7 +15,7 @@ const SelectExam = () => {
     const [exams, setExams] = useState([]);
     const [selectedValue, setSelectedValue] = useState("");
     const [examInfo, setExamInfo] = useState({ totalQuestions: 0, durationMinutes: 0 });
-    // const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const handleExamSelection = (event) => {
         setSelectedValue(event.target.value);
@@ -95,8 +95,64 @@ const SelectExam = () => {
     // }
 
 
+    // const startExam = async (e) => {
+    //     e.preventDefault();
+    //     e.target.disabled = true;
+
+    //     if (selectedValue) {
+    //         setSelectedExam(selectedValue); // updates selectedExam state
+    //         // console.log("This is the selected Exam==>",selectedValue);
+
+    //         //    Check if the loggedin user have tried to write the exam before 
+    //         try {
+    //             const { data } = await axiosInstance.get(`/api/the-users/${user.id}`);
+
+    //             if (!data) {
+    //                 console.log("presentUserExamStatus detail not found");
+    //             }
+
+    //             if (data?.takenExam === 1) {
+    //                 navigate("/contact-server-admin");
+    //                 return;
+    //             }
+
+    //         } catch (error) {
+    //             console.error(error);
+    //             e.target.disabled = false;
+    //         }
+
+    //         // Update the user for takenExam to be 1 so we can track them
+    //         try {
+    //             await axiosInstance.put(`/api/the-users/${user.id}`, { takenExam: 1 });
+    //         } catch (error) {
+    //             console.error(error);
+    //             e.target.disabled = false;
+    //         }
+
+    //         // send a request to create examInprogressRecord
+    //         try {
+    //             const response = await axiosInstance.post("/api/exam-in-progress", {
+    //                 userId: user.id,
+    //                 examId: selectedValue,
+    //                 currentQuestionIndex: 1, // if the initial question index is 0
+    //             });
+    //             console.log(response.data);
+    //         } catch (error) {
+    //             console.log("Error creating Exam in progress", error)
+    //             e.target.disabled = false;
+    //         }
+
+    //         navigate("/exam");
+    //     } else {
+    //         toast.error("You have to select an exam");
+    //         e.target.disabled = false;
+    //     }
+    // }
+
     const startExam = async (e) => {
         e.preventDefault();
+        if (isBtnDisabled) return;
+        setIsBtnDisabled(true);
         e.target.disabled = true;
 
         if (selectedValue) {
@@ -119,6 +175,7 @@ const SelectExam = () => {
             } catch (error) {
                 console.error(error);
                 e.target.disabled = false;
+                setIsBtnDisabled(false);
             }
 
             // Update the user for takenExam to be 1 so we can track them
@@ -127,6 +184,7 @@ const SelectExam = () => {
             } catch (error) {
                 console.error(error);
                 e.target.disabled = false;
+                setIsBtnDisabled(false);
             }
 
             // send a request to create examInprogressRecord
@@ -140,17 +198,21 @@ const SelectExam = () => {
             } catch (error) {
                 console.log("Error creating Exam in progress", error)
                 e.target.disabled = false;
+                setIsBtnDisabled(false);
             }
 
             navigate("/exam");
+
         } else {
             toast.error("You have to select an exam");
             e.target.disabled = false;
+            setIsBtnDisabled(false);
         }
     }
 
 
     // const debouncedStartExam = useDebouncedCallback(startExam, 1000);
+    const debouncedStartExam = useDebouncedCallback((e) => startExam(e), 500);
 
     // console.log(user.name, "The selected exam");
     return (<>
@@ -201,7 +263,11 @@ const SelectExam = () => {
         </div>
 
         <div className='startExam'>
-            <button className='startBtn' onClick={(e) => startExam(e)} >Start Exam</button>
+            {/* <button className='startBtn' onClick={(e) => startExam(e)} >Start Exam</button> */}
+            {/* <button className='startBtn' onClick={debouncedStartExam} >Start Exam</button> */}
+            <button className='startBtn' onClick={debouncedStartExam} disabled={isBtnDisabled} >
+                {isBtnDisabled ? "Processing" : "Start Exam"}
+            </button>
         </div>
 
     </>

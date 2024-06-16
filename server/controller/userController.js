@@ -120,7 +120,7 @@ const updateUser = async (req, res) => {
                 email,
                 registrationNumber,
                 department,
-                role,
+                // role,
                 takenExam,
                 enableUpdate
             },
