@@ -7,10 +7,17 @@ import { useContext } from "react";
 import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
-import { shuffle } from 'lodash/shuffle';
+// import { shuffle } from 'lodash/shuffle';
 import { useDebouncedCallback } from 'use-debounce';
 
-
+// Utility function to shuffle an array
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
 
 const ExamPage = () => {
   const navigate = useNavigate();
@@ -30,11 +37,11 @@ const ExamPage = () => {
         const { data } = await axiosInstance.get(`/api/exams/${selectedExam}`);
         setExamDetail(data);
 
-        //Shuffle the question array
-        // const shuffledQuestions = shuffle(data.questions);
-        // setQuestions(shuffledQuestions);
-
-        setQuestions(data.questions);
+        // Shuffle the question array
+        const shuffledQuestions = shuffleArray(data.questions);
+        
+        setQuestions(shuffledQuestions);
+        // setQuestions(data.questions);
         setTimeRemaining(data.durationMinutes * 60); // Convert minutes to seconds
         setIsLoading(false);
       } catch (error) {
