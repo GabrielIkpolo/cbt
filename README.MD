@@ -147,6 +147,6 @@ you can test the appliction by sending this on your rest client or postman:
     "role": 2
     }
 
-to `localhost:3000/api/register` with a most Method. If you get a response with token, you are good to go.
+to `localhost:3000/api/register` with a post request. If you get a response with token, you are good to go.
 
 
