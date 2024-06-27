@@ -274,7 +274,7 @@ const Admin = () => {
                 </div>
 
                 {/* Testing the disable button functionality */}
-                <SimpleButton />
+                {/* <SimpleButton /> */}
 
             </div>
 

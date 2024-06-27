@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { AuthContext } from "../utils/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
-// import { shuffle } from 'lodash/shuffle';
 import { useDebouncedCallback } from 'use-debounce';
 
 // Utility function to shuffle an array

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
+import './answeredQuestionsManager.css';
 
 const AnsweredQuestionsManager = () => {
     const [deleteAllAnsweredQuestions, setDeleteAllAnsweredQuestions] = useState(false);
@@ -9,6 +10,32 @@ const AnsweredQuestionsManager = () => {
     const [deleteExamInProgressById, setDeleteExamInProgressById] = useState(false);
     const [deleteAllUserExamResults, setDeleteAllUserExamResults] = useState(false);
     const [deleteUserExamResultById, setDeleteUserExamResultById] = useState(false);
+
+    const [userId, setUserId] = useState("");
+    const [deleteMessage, setDeleteMessage] = useState('');
+    const [isPending, setIsPending] = useState(false);
+
+    const removeSingleUserDetails = async () => {
+        setIsPending(true);
+
+        if (!userId) {
+            toast.error("User ID is required");
+            return;
+        }
+
+        try {
+            const { data } = await axiosInstance.delete(`/api/remove-user-exam-details/${userId}`);
+            setIsPending(false);
+            setDeleteMessage(data.message);
+            toast.success("User Exam record deleted");
+
+        } catch (error) {
+            console.error(error);
+            toast.error("failed to delete data", error);
+        }
+
+    }
+
 
     const handleDeleteAllAnsweredQuestions = async () => {
         try {
@@ -21,85 +48,25 @@ const AnsweredQuestionsManager = () => {
         }
     };
 
-    const handleDeleteAnsweredQuestionsById = async () => {
-        const examInProgressId = 'your-exam-in-progress-id'; // Replace with actual ID
-        try {
-            const { data } = await axiosInstance.delete(`/api/answered-questions/${examInProgressId}`);
-            setDeleteAnsweredQuestionsById(data.message);
-            toast.success(data.message);
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-    };
-
-    const handleDeleteAllExamInProgress = async () => {
-        try {
-            const { data } = await axiosInstance.delete('/api/delete-all-exam-in-progress');
-            setDeleteAllExamInProgress(data.message);
-            toast.success(data.message);
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-    };
-
-    const handleDeleteExamInProgressById = async () => {
-        const examInProgressId = 'your-exam-in-progress-id'; // Replace with actual ID
-        try {
-            const {data} = await axiosInstance.delete(`/api/exam-in-progress/${examInProgressId}`);
-            setDeleteExamInProgressById(data.message);
-            toast.success(data.message);
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-    };
-
-    const handleDeleteAllUserExamResults = async () => {
-        try {
-            const {data} = await axiosInstance.delete('/api/delete-all-user-exam-results');
-            setDeleteAllUserExamResults(data.message);
-            toast.success(data.message);
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-    };
-
-    const handleDeleteUserExamResultById = async () => {
-        const userExamResultId = 'your-user-exam-result-id'; // Replace with actual ID
-        try {
-            const {data} = await axiosInstance.delete(`/api/user-exam-results/${userExamResultId}`);
-            setDeleteUserExamResultById(data.message);
-        } catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-    };
-
     return (
-        <div>
-            <h1>Answer Questions Operations</h1>
-            <button onClick={handleDeleteAllAnsweredQuestions}>Delete All Answered Questions</button>
-            <p>{deleteAllAnsweredQuestions}</p>
+        <div className='qoperations'>
+            <h3>Answer Questions Operations</h3>
+            <div className='textFieldDiv'>
+                <input
+                    type="text"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    placeholder="Enter user ID"
+                />
 
-            <button onClick={handleDeleteAnsweredQuestionsById}>Delete Answered Questions by ID</button>
-            <p>{deleteAnsweredQuestionsById}</p>
+                <button className='singleUserDetails' onClick={removeSingleUserDetails} >Remove UserExamDetails</button>
+            </div>
 
-            <h1>Exam In Progress Operations</h1>
-            <button onClick={handleDeleteAllExamInProgress}>Delete All Exam In Progress</button>
-            <p>{deleteAllExamInProgress}</p>
+            <div className='warning'>
+                <span className='theSpan'>Use with caution as this will delete all exam results</span>
+                <button className='allUserDetails' onClick={handleDeleteAllAnsweredQuestions}>Delete All Answered Questions</button>
+            </div>
 
-            <button onClick={handleDeleteExamInProgressById}>Delete Exam In Progress by ID</button>
-            <p>{deleteExamInProgressById}</p>
-
-            <h1>User Exam Result Operations</h1>
-            <button onClick={handleDeleteAllUserExamResults}>Delete All User Exam Results</button>
-            <p>{deleteAllUserExamResults}</p>
-
-            <button onClick={handleDeleteUserExamResultById}>Delete User Exam Result by ID</button>
-            <p>{deleteUserExamResultById}</p>
         </div>
     );
 }
