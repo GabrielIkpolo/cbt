@@ -1,0 +1,42 @@
+.qoperations {
+    text-align: center;
+}
+
+.textFieldDiv {
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+
+.singleUserDetails {
+    display: inline;
+    margin-left: 6px;
+    padding: 9px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(75, 91, 240);
+    color: white;
+}
+
+.warning {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-content: center; */
+    align-items: center;
+}
+
+.theSpan{
+    color: red;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.allUserDetails {
+    padding: 9px;
+    border-radius: 15px;
+    border: none;
+    background-color:red;
+    color: white;
+    width: 40%;
+}

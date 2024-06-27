@@ -44,6 +44,7 @@ import userRoutes from "./routes/userRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import loginRoutes from './routes/loginRoutes.js';
 import answerdQuestionsRoutes from "./routes/answeredQuestionsRoutes.js"
+import oneUserManagementRoutes from "./routes/oneUserManagementRoutes.js";
 import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -68,10 +69,6 @@ const imageStoragePath = path.join(__dirname, 'fileStorage', 'images');
 if (!fs.existsSync(imageStoragePath)) {
   fs.mkdirSync(imageStoragePath, { recursive: true });
 }
-
-// app.use(cors({
-//     origin: [allowedOrigins,"http://localhost:5173"]
-// }));
 
 app.use(cors("*"));
 
@@ -101,6 +98,7 @@ app.use('/api/delete-all-exam-in-progress', examInProgressRoutes);
 app.use('/api', answerdQuestionsRoutes);
 app.use('/api/collate-all-users-result', examResultRoutes); // gets all users and their result
 app.use('/api', examResultRoutes); // gets single user result
+app.use('/api', oneUserManagementRoutes);
 
 
 // Serve static image files

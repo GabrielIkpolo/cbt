@@ -159,7 +159,7 @@ const deleteUser = async (req, res) => {
             });
 
             return res.status(200).json(deletedUser);
-        });
+        }, {timeout: 30000});
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
