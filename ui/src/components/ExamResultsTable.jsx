@@ -66,7 +66,8 @@ const ExamResultsTable = () => {
         </tbody>
       </table>
       {/* CSV Export */}
-      <CSVLink data={csvData} filename="exam_results.csv">
+      <CSVLink data={csvData}
+        filename={`exam_results_${new Date().toLocaleString().replace(',', '-').replace(' ', '_')}.csv`}>
         Export as CSV
       </CSVLink>
     </div>
