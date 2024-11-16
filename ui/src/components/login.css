@@ -47,7 +47,7 @@ input {
     border-radius: 10px;
     background-color: rgb(247, 15, 15);
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
     margin-right: auto;
     margin-left: auto;
     cursor: pointer;
@@ -72,7 +72,11 @@ input {
     /* Add shadow on hover for depth */
 }
 
-@media(max-width:536px) {
+@media(max-width:600px) {
+
+    .parrentDiv {
+        margin-top: 2rem;
+    }
 
     .login {
         width: 400px;
@@ -87,7 +91,7 @@ input {
         text-align: center;
         font-size: 12px;
         font-weight: lighter;
-        margin-top: 10px;
+        margin-top: 1rem;
         width: 400px;
         margin: auto;
 
@@ -95,4 +99,7 @@ input {
         margin-right: 30%;
     }
 
+    .submitBtn{
+        margin-bottom: 3rem;
+    }
 }

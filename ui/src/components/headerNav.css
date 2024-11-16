@@ -1,8 +1,6 @@
 .headers{
   padding-top: 5px;
   padding-bottom: 5px;
-  /* background-color: blueviolet; */
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;

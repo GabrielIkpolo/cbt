@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
-    "start": " node app.js"
+    "start": " node app.js",
+    "deploy":" npx prisma generate && npx prisma db push && pm2 start app.js -i max && pm2 log"
   },
   "keywords": [
     "computer based Testing",

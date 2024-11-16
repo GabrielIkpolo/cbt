@@ -107,7 +107,7 @@ const ExamPage = () => {
       // toast.success('Answer saved successfully');
 
       const newScore = response.data.score;
-      console.log('Current score:', newScore);
+      // console.log('Current score:', newScore);
 
       // Update userResponses state
       setUserResponses({

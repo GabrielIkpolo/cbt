@@ -13,7 +13,6 @@ body{
 @media(max-width:600px){
   .wrapper{
     min-height: 100vh;
-    margin-bottom: 13.5rem;
   }
 
  
