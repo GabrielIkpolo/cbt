@@ -110,14 +110,25 @@ const getUserByEmail = async (req, res) => {
 // Update a User 
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { name, email, registrationNumber, department, role, takenExam,
+    const { name, email, password, registrationNumber, department, role, takenExam,
         enableUpdate } = req.body;
     try {
+
+         // If password is provided, hash it
+        let hashedPassword = undefined;
+        if (password) {
+            if (password.length < 6) {
+                return res.json({ error: "Password must be at least 6 characters long" });
+            }
+            hashedPassword = await authHelpers.hashPassword(password);
+        }
+
         const updatedUser = await prisma.user.update({
             where: { id: userId },
             data: {
                 name,
                 email,
+                password: hashedPassword,
                 registrationNumber,
                 department,
                 role,
