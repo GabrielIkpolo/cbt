@@ -114,6 +114,9 @@ const updateUser = async (req, res) => {
         enableUpdate } = req.body;
     try {
 
+        await prisma.$transaction(async (prisma) => {
+
+
          // If password is provided, hash it
         let hashedPassword = undefined;
         if (password) {
@@ -138,6 +141,7 @@ const updateUser = async (req, res) => {
         });
 
         return res.status(200).json(updatedUser);
+    }, {timeout: 30000});
     } catch (error) {
         console.error(error);
         return res.status(500).json({ Error: "Internal Server Error" });
