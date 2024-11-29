@@ -1,15 +1,20 @@
 import prisma from "../helpers/prisma.js";
 
 
-// Delete All Answered Questions
+// Delete All examInProgress and Answered Questions
 const deleteAllAnsweredQuestions = async (req, res) => {
     try {
-        await prisma.answeredQuestion.deleteMany();
-        return res.status(200).json({ message: "All answered questions deleted successfully" });
+        await prisma.$transaction([
+            prisma.answeredQuestion.deleteMany(),
+            prisma.examInProgress.deleteMany(),
+            prisma.userExamResult.deleteMany()
+        ], {timeout: 300000});
+
+        return res.status(200).json({ message: "All answered questions and exams in progress deleted successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 };
 
 

@@ -291,7 +291,7 @@ const saveUserResponse = async (req, res) => {
 const deleteAllExamInProgress = async (req, res) => {
     try {
         await prisma.examInProgress.deleteMany();
-        return res.status(200).json({ message: "All exams in progress deleted successfully" });
+        return res.json({ message: "All exams in progress deleted successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });

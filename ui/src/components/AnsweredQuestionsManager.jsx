@@ -48,6 +48,18 @@ const AnsweredQuestionsManager = () => {
         }
     };
 
+    //Not working yet
+    // const handleDeleteAllAnsweredQuestions = async () => {
+    //     try {
+    //         const { data } = await axiosInstance.delete('/api/delete-all-exam-in-progress');
+    //         setDeleteAllAnsweredQuestions(data.message);
+    //         toast.success(data.message);
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error(error);
+    //     }
+    // };
+
     return (
         <div className='qoperations'>
             <h3>Answer Questions Operations</h3>
