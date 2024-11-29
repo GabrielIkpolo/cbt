@@ -10,7 +10,7 @@ const deleteAllAnsweredQuestions = async (req, res) => {
             prisma.userExamResult.deleteMany()
         ], {timeout: 300000});
 
-        return res.status(200).json({ message: "All answered questions and exams in progress deleted successfully" });
+        return res.json({ message: "All answered questions and exams in progress deleted successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });

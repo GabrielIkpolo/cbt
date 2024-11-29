@@ -8,6 +8,8 @@ const DeleteUploadedExam = () => {
     const [selectedValue, setSelectedValue] = useState('');
     const [exams, setExams] = useState([]);
     const { user } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchExams();
@@ -16,14 +18,18 @@ const DeleteUploadedExam = () => {
     const fetchExams = async () => {
         try {
             const { data } = await axiosInstance.get('/api/exams');
-            if (data) {
+            if (Array.isArray(data)) {
                 setExams(data);
             } else {
-                console.error('Exams could not be fetched');
+                setExams([]);
+                console.error('Exams could not be fetched or no exam exist');
+                setError("There is cauurently no exam available");
             }
         } catch (error) {
             console.log(error, 'Could not fetch exams');
             toast.error('Error fetching exams');
+        }finally{
+            setIsLoading(false);
         }
     };
 
