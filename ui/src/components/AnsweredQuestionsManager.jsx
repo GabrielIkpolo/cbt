@@ -48,6 +48,7 @@ const AnsweredQuestionsManager = () => {
         }
     };
 
+    
     return (
         <div className='qoperations'>
             <h3>Answer Questions Operations</h3>
