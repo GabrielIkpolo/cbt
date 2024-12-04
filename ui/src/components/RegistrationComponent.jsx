@@ -16,8 +16,9 @@ const RegistrationComponent = () => {
         'Accounting',
         'Agric Engineering',
         'Anatomy',
-        'BCH',
+        'BioChemistry(BCH)',
         'Biology',
+        'Biotechnology',
         'Busssiness Administration',
         'Chemistry',
         'Civil Engineering',
@@ -29,9 +30,14 @@ const RegistrationComponent = () => {
         'Economics',
         'Electrical Electronics Engr',
         'Engineering',
+        'English and Literary studies',
         'Finance',
+        'HIM',
+        'History',
+        'Industrial Chemistry',
         'Law',
         'LIS',
+        'Linguistics and language Studies',
         'Mass Comm.',
         'Mathematics',
         'MCB',
@@ -43,7 +49,10 @@ const RegistrationComponent = () => {
         'Political Science',
         'Public Admin.',
         'Public Health',
-        'Software Engineering'
+        'Religion',
+        'Statistics',
+        'Software Engineering',
+        'Not Listed'
     ]);// use an Array of depts here
     const [level, setLevel] = useState("");
     const [levels, setLevels] = useState(["100L", "200L", "300L", "400L", "500L", "Other"]);
