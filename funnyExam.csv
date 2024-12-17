@@ -1,5 +1,5 @@
-"subject","durationMinutes","text","options","correctAnswer","image","examId"
-"Funny Exam",7,"What is 2 + 2?","A: 3; B: 4; C: 5; D: 6","B","ExamSubject-0.png","examId123"
-"Funny Exam",7,"Who was the first president of the United States?","A: Thomas Jefferson; B: George Washington; C: Abraham Lincoln; D: John Adams","B","ExamSubject-1.png","examId123"
-"Funny Exam",7,"What is the Capital of Delta state?","A: Asaba; B: Abuja; C: Awka; D: Enugu","A",,"examId124"
-"Funny Exam",7,"How many branches does the letter 'Y' have?","A: 1; B: 2; C: 3; D: 4","B",,"examId124"
+subject,durationMinutes,text,options,correctAnswer,image,examId
+Demo,7,What is 2 + 2?,A: 3; B: 4; C: 5; D: 6,B,ExamSubject-0.png,examId123
+,7,Who was the first president of the United States?,A: Thomas Jefferson; B: George Washington; C: Abraham Lincoln; D: John Adams,B,ExamSubject-1.png,examId123
+,7,What is the Capital of Delta state?,A: Asaba; B: Abuja; C: Awka; D: Enugu,A,,examId124
+,7,How many branches does the letter 'Y' have?,A: 1; B: 2; C: 3; D: 4,B,,examId124
