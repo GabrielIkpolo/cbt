@@ -226,7 +226,7 @@ const resetAllExams = async (req, res) => {
     }
 }
 
-
+// exports all the functions
 export default {
     createUser, getUserById, updateUser, deleteUser,
     getAllUsers, resetAllExams, getUserByEmail
