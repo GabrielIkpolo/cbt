@@ -212,6 +212,71 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+
+
+// Get All Users with Pagination and Search
+// const getAllUsers = async (req, res) => {
+//     try {
+//         const page = parseInt(req.query.page) || 1; // defaults to page 1
+//         const pageSize = parseInt(req.query.pageSize) || 100; // defaults to 10 items per page
+//         const search = req.query.search || ''; // defaults to an empty search
+//         const skip = (page - 1) * pageSize;
+
+//         const users = await prisma.user.findMany({
+//             skip,
+//             take: pageSize,
+//             where: {
+//                 OR: [
+//                     { name: { contains: search, mode: 'insensitive' } },
+//                     { email: { contains: search, mode: 'insensitive' } },
+//                     { registrationNumber: { contains: search, mode: 'insensitive' } },
+//                     { department: { contains: search, mode: 'insensitive' } },
+//                 ],
+//             },
+//             select: {
+//                 id: true,
+//                 name: true,
+//                 email: true,
+//                 registrationNumber: true,
+//                 department: true,
+//                 role: true,
+//                 takenExam: true,
+//                 createdAt: true
+//             },
+//             orderBy: {
+//                 createdAt: 'desc',
+//             },
+//         });
+
+//         const total = await prisma.user.count({
+//             where: {
+//                 OR: [
+//                     { name: { contains: search, mode: 'insensitive' } },
+//                     { email: { contains: search, mode: 'insensitive' } },
+//                     { registrationNumber: { contains: search, mode: 'insensitive' } },
+//                     { department: { contains: search, mode: 'insensitive' } },
+//                 ],
+//             },
+//         });
+
+//         return res.json({
+//             data: users,
+//             page,
+//             pageSize,
+//             total,
+//         });
+
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ error: "Internal Server Error" });
+//     }
+// }
+
+
+
+
+
+
 // Reset all Exams 
 const resetAllExams = async (req, res) => {
 

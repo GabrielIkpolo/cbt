@@ -298,9 +298,64 @@ const deleteAllExamInProgress = async (req, res) => {
     } 
 };
 
+//The now get all examination in progress
+// const nowGetAllExamInProgress = async (req, res) => {
+//     try {
+//         const allExamsInProgress = await prisma.examInProgress.findMany({
+//             include: {
+//                 user: {
+//                     select: {
+//                         id: true,
+//                         email: true,
+//                     },
+//                 },
+//                 exam: {
+//                     select: {
+//                         id: true,
+//                         subject: true,
+//                     },
+//                 },
+//             },
+//         });
+
+//         if (!allExamsInProgress.length) {
+//             return res.json({ error: "No exams in progress found" });
+//         }
+
+//         const formattedExamsInProgress = allExamsInProgress.map(examInProgress => ({
+//             id: examInProgress.id,
+//             userId: examInProgress.user.id,
+//             userEmail: examInProgress.user.email,
+//             examId: examInProgress.exam.id,
+//             examSubject: examInProgress.exam.subject,
+//             score: examInProgress.score
+//         }));
+
+//         return res.status(200).json(formattedExamsInProgress);
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ error: "Internal Server Error" });
+//     }
+// };
+
+
+//Get all Exam in Progress with Pagination and Search
 const nowGetAllExamInProgress = async (req, res) => {
     try {
-        const allExamsInProgress = await prisma.examInProgress.findMany({
+        const page = parseInt(req.query.page) || 1; // defaults to page 1
+        const pageSize = parseInt(req.query.pageSize) || 100; // defaults to 10 items per page
+        const search = req.query.search || ''; // defaults to an empty search
+        const skip = (page - 1) * pageSize;
+
+        const examsInProgress = await prisma.examInProgress.findMany({
+            skip,
+            take: pageSize,
+            where: {
+                OR: [
+                    { user: { email: { contains: search, mode: 'insensitive' } } },
+                    { exam: { subject: { contains: search, mode: 'insensitive' } } },
+                ],
+            },
             include: {
                 user: {
                     select: {
@@ -315,13 +370,21 @@ const nowGetAllExamInProgress = async (req, res) => {
                     },
                 },
             },
+            // orderBy: {
+            //     createdAt: 'desc',
+            // },
         });
 
-        if (!allExamsInProgress.length) {
-            return res.json({ error: "No exams in progress found" });
-        }
+        const total = await prisma.examInProgress.count({
+            where: {
+                OR: [
+                    { user: { email: { contains: search, mode: 'insensitive' } } },
+                    { exam: { subject: { contains: search, mode: 'insensitive' } } },
+                ],
+            },
+        });
 
-        const formattedExamsInProgress = allExamsInProgress.map(examInProgress => ({
+        const formattedExamsInProgress = examsInProgress.map(examInProgress => ({
             id: examInProgress.id,
             userId: examInProgress.user.id,
             userEmail: examInProgress.user.email,
@@ -330,12 +393,19 @@ const nowGetAllExamInProgress = async (req, res) => {
             score: examInProgress.score
         }));
 
-        return res.status(200).json(formattedExamsInProgress);
+        return res.json({
+            data: formattedExamsInProgress,
+            page,
+            pageSize,
+            total,
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+
 
 export default {
     createExamInProgress, getExamInProgressById, checkAnswer, saveUserResponse,
