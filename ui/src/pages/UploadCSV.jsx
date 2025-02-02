@@ -45,13 +45,15 @@ const UploadCSV = () => {
     };
 
     return (
-        <div>
+        <div className='uploadQuestionsBiz'>
             <h1>Questions Upload</h1>
 
             {uploadSuccess ? (
                 <div>
                     <p>File uploaded successfully!</p>
-                    <button onClick={() => setUploadSuccess(false)}>Upload another file</button>
+                    <button onClick={() => setUploadSuccess(false)}
+                        className='uploadAnotherFile'
+                    >Upload another file</button>
                 </div>
             ) :
 
