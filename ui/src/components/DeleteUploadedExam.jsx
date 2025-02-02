@@ -3,6 +3,8 @@ import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../utils/AuthContext';
 import { useContext } from 'react';
+import "./deleteUploadedExam.css";
+
 
 const DeleteUploadedExam = () => {
     const [selectedValue, setSelectedValue] = useState('');
@@ -60,7 +62,7 @@ const DeleteUploadedExam = () => {
 
     return (
         <>
-            <div className='deleteUploadedExam'>
+            <div className='deleteUploadedExamView'>
                 <h2>Delete Uploaded Exam</h2>
                 <div className="examOptions">
                     <select value={selectedValue} onChange={handleExamSelection}>
@@ -71,7 +73,9 @@ const DeleteUploadedExam = () => {
                             </option>
                         ))}
                     </select>
-                    <button onClick={handleDeleteExam} disabled={!selectedValue} >Delete Exam</button>
+                    <button onClick={handleDeleteExam} disabled={!selectedValue} 
+                    className='deleteUploadedExamBtn'
+                    >Delete Exam</button>
                 </div>
             </div>
         </>
