@@ -1,0 +1,35 @@
+
+.uploadQuestions{
+    margin-top: 2rem;
+    background-color:  rgb(62, 62, 235);
+    color: white;
+    padding: 0.6rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 1rem;
+}
+
+.uploadQuestions:hover{
+    cursor: pointer;
+    background-color: rgba(61, 61, 233, 0.699);
+}
+
+
+.uplaodQuestionBtn{
+    background-color: white;
+    padding: 0.85rem;
+    color: black;
+    border-radius: 1rem;
+}
+
+.uplaodQuestionBtn:hover{
+    cursor: pointer;
+    background-color: rgb(62, 62, 235);
+    color: white;
+}
+
+.errorUploading{
+    color: red;
+    text-align: left;
+    font-size: 1rem;
+}
