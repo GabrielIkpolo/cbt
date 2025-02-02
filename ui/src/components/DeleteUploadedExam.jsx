@@ -30,7 +30,7 @@ const DeleteUploadedExam = () => {
         } catch (error) {
             console.log(error, 'Could not fetch exams');
             toast.error('Error fetching exams');
-        }finally{
+        } finally {
             setIsLoading(false);
         }
     };
@@ -73,9 +73,11 @@ const DeleteUploadedExam = () => {
                             </option>
                         ))}
                     </select>
-                    <button onClick={handleDeleteExam} disabled={!selectedValue} 
-                    className='deleteUploadedExamBtn'
-                    >Delete Exam</button>
+                    <button onClick={handleDeleteExam} disabled={!selectedValue}
+                        className='deleteUploadedExamBtn'
+                    >
+                        Delete Exam
+                    </button>
                 </div>
             </div>
         </>
