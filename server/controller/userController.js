@@ -117,31 +117,31 @@ const updateUser = async (req, res) => {
         await prisma.$transaction(async (prisma) => {
 
 
-         // If password is provided, hash it
-        let hashedPassword = undefined;
-        if (password) {
-            if (password.length < 6) {
-                return res.json({ error: "Password must be at least 6 characters long" });
+            // If password is provided, hash it
+            let hashedPassword = undefined;
+            if (password) {
+                if (password.length < 6) {
+                    return res.json({ error: "Password must be at least 6 characters long" });
+                }
+                hashedPassword = await authHelpers.hashPassword(password);
             }
-            hashedPassword = await authHelpers.hashPassword(password);
-        }
 
-        const updatedUser = await prisma.user.update({
-            where: { id: userId },
-            data: {
-                name,
-                email,
-                password: hashedPassword,
-                registrationNumber,
-                department,
-                role,
-                takenExam,
-                enableUpdate
-            },
-        });
+            const updatedUser = await prisma.user.update({
+                where: { id: userId },
+                data: {
+                    name,
+                    email,
+                    password: hashedPassword,
+                    registrationNumber,
+                    department,
+                    role,
+                    takenExam,
+                    enableUpdate
+                },
+            });
 
-        return res.status(200).json(updatedUser);
-    }, {timeout: 30000});
+            return res.status(200).json(updatedUser);
+        }, { timeout: 30000 });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ Error: "Internal Server Error" });
@@ -174,7 +174,7 @@ const deleteUser = async (req, res) => {
             });
 
             return res.status(200).json(deletedUser);
-        }, {timeout: 30000});
+        }, { timeout: 30000 });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
@@ -215,64 +215,66 @@ const getAllUsers = async (req, res) => {
 
 
 // Get All Users with Pagination and Search
-// const getAllUsers = async (req, res) => {
-//     try {
-//         const page = parseInt(req.query.page) || 1; // defaults to page 1
-//         const pageSize = parseInt(req.query.pageSize) || 100; // defaults to 10 items per page
-//         const search = req.query.search || ''; // defaults to an empty search
-//         const skip = (page - 1) * pageSize;
+// Get All Users with Pagination and Search
+const getAllUsersPaginated = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1; // defaults to page 1
+        const pageSize = parseInt(req.query.pageSize) || 50; // defaults to 50 items per page
+        const search = req.query.search || ''; // defaults to an empty search
+        const skip = (page - 1) * pageSize;
 
-//         const users = await prisma.user.findMany({
-//             skip,
-//             take: pageSize,
-//             where: {
-//                 OR: [
-//                     { name: { contains: search, mode: 'insensitive' } },
-//                     { email: { contains: search, mode: 'insensitive' } },
-//                     { registrationNumber: { contains: search, mode: 'insensitive' } },
-//                     { department: { contains: search, mode: 'insensitive' } },
-//                 ],
-//             },
-//             select: {
-//                 id: true,
-//                 name: true,
-//                 email: true,
-//                 registrationNumber: true,
-//                 department: true,
-//                 role: true,
-//                 takenExam: true,
-//                 createdAt: true
-//             },
-//             orderBy: {
-//                 createdAt: 'desc',
-//             },
-//         });
+        const users = await prisma.user.findMany({
+            skip,
+            take: pageSize,
+            where: {
+                OR: [
+                    { name: { contains: search, mode: 'insensitive' } },
+                    { email: { contains: search, mode: 'insensitive' } },
+                    { registrationNumber: { contains: search, mode: 'insensitive' } },
+                    { department: { contains: search, mode: 'insensitive' } },
+                ],
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                registrationNumber: true,
+                department: true,
+                role: true,
+                takenExam: true,
+                createdAt: true
+            },
+            // orderBy: {
+            //     createdAt: 'desc',
+            // },
+        });
 
-//         const total = await prisma.user.count({
-//             where: {
-//                 OR: [
-//                     { name: { contains: search, mode: 'insensitive' } },
-//                     { email: { contains: search, mode: 'insensitive' } },
-//                     { registrationNumber: { contains: search, mode: 'insensitive' } },
-//                     { department: { contains: search, mode: 'insensitive' } },
-//                 ],
-//             },
-//         });
+        const total = await prisma.user.count({
+            where: {
+                OR: [
+                    { name: { contains: search, mode: 'insensitive' } },
+                    { email: { contains: search, mode: 'insensitive' } },
+                    { registrationNumber: { contains: search, mode: 'insensitive' } },
+                    { department: { contains: search, mode: 'insensitive' } },
+                ],
+            },
+        });
 
-//         return res.json({
-//             data: users,
-//             page,
-//             pageSize,
-//             total,
-//         });
+        const totalPages = Math.ceil(total / pageSize);
 
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ error: "Internal Server Error" });
-//     }
-// }
+        return res.json({
+            data: users,
+            page,
+            pageSize,
+            total,
+            totalPages,
+        });
 
-
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
 
 
 
@@ -294,5 +296,5 @@ const resetAllExams = async (req, res) => {
 // exports all the functions
 export default {
     createUser, getUserById, updateUser, deleteUser,
-    getAllUsers, resetAllExams, getUserByEmail
+    getAllUsers, resetAllExams, getUserByEmail, getAllUsersPaginated
 }
