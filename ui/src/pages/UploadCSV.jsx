@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
+import "./uplaodCSV.css";
 
 
 const UploadCSV = () => {
@@ -22,7 +23,7 @@ const UploadCSV = () => {
         formData.append('examFile', file);
 
         try {
-            const {data} = await axiosInstance.post('/api/exams/upload', formData, {
+            const { data } = await axiosInstance.post('/api/exams/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -31,7 +32,7 @@ const UploadCSV = () => {
             if (data.error) {
                 setError(data.error);
                 toast.error(data.error);
-                
+
             } else {
                 setUploadSuccess(true);
                 toast.success(" File uploaded sucessfully");
@@ -44,29 +45,33 @@ const UploadCSV = () => {
     };
 
     return (
-        <div>
+        <div className='uploadQuestionsBiz'>
             <h1>Questions Upload</h1>
 
             {uploadSuccess ? (
                 <div>
                     <p>File uploaded successfully!</p>
-                    <button onClick={() => setUploadSuccess(false)}>Upload another file</button>
+                    <button onClick={() => setUploadSuccess(false)}
+                        className='uploadAnotherFile'
+                    >Upload another file</button>
                 </div>
-            ) : 
-            
-            (
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Select CSV File:
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                        />
-                    </label>
-                    <button type="submit" disabled={loading}>Upload File</button>
-                </form>
-            )}
-            {error && <p>{error}</p>}
+            ) :
+
+                (
+                    <form onSubmit={handleSubmit} className='uploadQuestionsForm'>
+                        <label  >
+                            Select CSV File:
+                            <input className='uploadQuestions'
+                                type="file"
+                                onChange={handleFileChange}
+                            />
+                        </label>
+                        <button type="submit" disabled={loading} className='uplaodQuestionBtn'>
+                            Upload File
+                        </button>
+                    </form>
+                )}
+            {error && <p className='errorUploading'>{error}</p>}
         </div>
     );
 }

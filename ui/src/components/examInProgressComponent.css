@@ -1,3 +1,153 @@
-.examInProgress{
-    /* background-color: red; */
+/* .examInProgressView {
+    max-width: 95%;
+    margin-left: 0;
+}
+
+
+.searchBox {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5rem;
+}
+
+.examInProgressTable {
+    width: 70%;
+    border-collapse: collapse;
+}
+
+.examInProgressTableHead {
+    max-width: 70px;
+}
+
+.examInProgressTableBody {
+    width: 70%;
+}
+
+
+.examInProgressTr {
+    max-width: 10px;
+}
+
+.examInProgresstableTh,
+.examInProgresstableTd {
+    padding: 2px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.examInProgresstableTh {
+    background-color: #f2f2f2;
+}
+
+.error {
+    color: red;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination button.active:hover {
+    background-color: #0056b3;
+} */
+
+
+.examInProgressView {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.searchBox {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5rem;
+}
+
+.examInProgressTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+.examInProgressTableHead,
+.examInProgressTableBody {
+    width: 100%;
+}
+
+.examInProgressTr {
+    width: 100%;
+}
+
+.examInProgressTh,
+.examInProgressTd {
+    padding: 6px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.examInProgressTh {
+    background-color: #f2f2f2;
+}
+
+.error {
+    color: red;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination button.active:hover {
+    background-color: #0056b3;
 }

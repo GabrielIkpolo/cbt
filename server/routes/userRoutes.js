@@ -14,11 +14,17 @@ router.put('/the-users/:id', userController.updateUser);
 router.delete('/the-users/:id', userController.deleteUser);
 router.get('/the-users', userController.getAllUsers);
 
+
+
 // Endpoint to resset all exams 
 router.put('/', userController.resetAllExams);
 
 // Endpoint to get users by email 
 router.get('/by-email', userController.getUserByEmail); //See app.js for route prefix
+
+// New route for paginated and searchable user list
+router.get('/paginated-users', userController.getAllUsersPaginated);
+
 
 
 

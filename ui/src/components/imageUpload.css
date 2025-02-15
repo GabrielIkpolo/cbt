@@ -1,32 +1,60 @@
 .image-upload {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .image-upload h2 {
-    margin-bottom: 10px;
-  }
-  
-  .image-upload form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .preview {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  
-  .preview-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 1rem;
+  padding: 1rem;
+ }
+
+.image-upload h2 {
+  margin-bottom: 1rem;
+}
+
+.image-upload form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.imageBrowseBtn {
+  background-color: rgb(62, 62, 235);
+  color: white;
+  padding: 0.6rem;
+  border-radius: 1rem;
+}
+
+.imageBrowseBtn:hover{
+  cursor: pointer;
+  background-color: rgba(61, 61, 233, 0.699);
+}
+
+.imageUploadBtn {
+  background-color: white;
+  padding: 0.85rem;
+  color: black;
+  border-radius: 1rem;
+}
+
+.imageUploadBtn:hover{
+  cursor: pointer;
+  background-color: rgb(62, 62, 235);
+  color: white;
+  border-color: rgb(62, 62, 235);
+}
+
+
+.preview {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  width: 15rem;
+  height: 15rem;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

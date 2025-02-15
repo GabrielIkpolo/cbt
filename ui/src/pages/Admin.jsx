@@ -17,6 +17,11 @@ const Admin = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeComponent, setActiveComponent] = useState(" User Management");
 
+    //Pagination functionality
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(50);
+    const [totalPages, setTotalPages] = useState(1);
+
     // fetch all users when component mounts
     useEffect(() => {
         const fetchUsers = async () => {
@@ -31,10 +36,38 @@ const Admin = () => {
         fetchUsers();
     }, []);
 
+    // Fetch all users in a paginated way
+    useEffect(() => {
+        const fetchPaginatedUsers = async () => {
+            try {
+                const { data } = await axiosInstance.get(`api/paginated-users`, {
+                    params: {
+                        page: currentPage,
+                        pageSize: pageSize,
+                        search: searchQuery
+                    }
+                });
+                setUsers(data.data);
+                setTotalPages(data.totalPages);
+            } catch (error) {
+                console.error("Error fetching users", error);
+            }
+        };
+
+        fetchPaginatedUsers();
+    }, [currentPage, pageSize, searchQuery]);
+
+
     // Function to handle search input change 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        setCurrentPage(1); // Resets to the first page when search query changes
     }
+
+    //Function to handle page change
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     // Filter Users based on search query 
     const filterdUsers = users.filter((user) =>
@@ -91,12 +124,12 @@ const Admin = () => {
                 takenExam: 0,
                 totalExamsTaken: 0,
             })));
+
+            // add toast functionalist
+            toast.success("takenExam resetted");
         } catch (error) {
             console.error("Error resseting all exams", error);
         }
-
-        // add toast functionalist
-        toast.success("takenExam resetted");
     }
 
 
@@ -184,7 +217,7 @@ const Admin = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filterdUsers.map((user) => (
+                                        {users.map((user) => (
                                             <tr key={user.id}>
                                                 <td>{user.email}</td>
                                                 <td>{user.name}</td>
@@ -207,6 +240,19 @@ const Admin = () => {
                                     </tbody>
                                 </table>
                                 <button className="resetAllBtn" onClick={resetAllExam} > Reset All Exam</button>
+                                
+                                {/* Button Pagination  */}
+                                <div className="pagination">
+                                    {Array.from({ length: totalPages }, (_, index) => (
+                                        <button
+                                            key={index}
+                                            className={`pageButton ${currentPage === index + 1 ? 'active' : ''}`}
+                                            onClick={() => handlePageChange(index + 1)}
+                                        >
+                                            {index + 1}
+                                        </button>
+                                    ))}
+                                </div>
 
                             </div>
                         </div>
@@ -264,7 +310,7 @@ const Admin = () => {
 
                     {/* =========Exam in Progress ====== */}
 
-                    { activeComponent === 'examInProgress' &&
+                    {activeComponent === 'examInProgress' &&
                         <div className='examInProgress'>
                             <ExamInProgressComponent />
                         </div>
@@ -282,4 +328,9 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default Admin;
+
+
+
+
+

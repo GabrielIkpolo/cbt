@@ -38,5 +38,35 @@ tbody td {
 }
 
 .deleteButton:hover {
-    background-color: #c9302c;
+    background-color: #ff1a1a;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination button:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination button.active:hover {
+    background-color: #0056b3;
+}
+
