@@ -113,6 +113,12 @@ app.all('*', (req, res) => {
   });
 });
 
+// Global error handler
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: "Something broke!" });
+});
+
+
 app.listen(port, () => {
   console.log(`app is running on ${port}`);
 });
