@@ -278,7 +278,7 @@ const submitExamResult = async (req, res) => {
 
         // If the transaction is successful, send the response
         return res.status(200).json({ message: "Final result submitted successfully", userExamResult });
-
+it
     } catch (error) {
         console.error(error);
         if (error.message === "Exam in Progress not Found") {

@@ -38,7 +38,7 @@ const ExamPage = () => {
 
         // Shuffle the question array
         const shuffledQuestions = shuffleArray(data.questions);
-        
+
         setQuestions(shuffledQuestions);
         // setQuestions(data.questions);
         setTimeRemaining(data.durationMinutes * 60); // Convert minutes to seconds
@@ -87,7 +87,7 @@ const ExamPage = () => {
 
   }, [timeRemaining, isLoading]);
 
-// Using a debounce fuction to auto save ===========
+  // Using a debounce fuction to auto save ===========
   // const debouncedSaveAnswer = useDebouncedCallback(async (optionToSave) => {
   //       if (!optionToSave) return;
   //       const questionId = questions[currentQuestionIndex.id];
@@ -115,7 +115,7 @@ const ExamPage = () => {
   //       debouncedSaveAnswer(newSelectedOption); // Trigger the auto-save
   //   };
 
-//==================================================
+  //==================================================
 
 
   // Handle option change
@@ -259,7 +259,7 @@ const ExamPage = () => {
 
 
   // Handle page refresh issue
-   useEffect(() => {
+  useEffect(() => {
     const handleBeforeUnload = (event) => {
       if (timeRemaining > 0) {
         event.preventDefault();
@@ -345,6 +345,29 @@ const ExamPage = () => {
                 </div>
               ))}
           </form>
+
+
+          {/* <form>
+            {currentQuestionIndex < questions.length &&
+              questions[currentQuestionIndex].options.map((option, index) => {
+                const optionId = `q${currentQuestionIndex}-o${index}`;
+
+                return (
+                  <div className="firstR" key={index}>
+                    <input
+                      id={optionId} // <-- ADD THIS ID
+                      type="radio"
+                      value={option}
+                      checked={selectedOption === option}
+                      onChange={handleOptionChange}
+                    />
+                    <label htmlFor={optionId}>
+                      <code>{option}</code>
+                    </label>
+                  </div>
+                );
+              })}
+          </form> */}
           {/* <p>The Selected Option: {selectedOption}</p> */}
         </div>
 
