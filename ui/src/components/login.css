@@ -72,34 +72,43 @@ input {
     /* Add shadow on hover for depth */
 }
 
-@media(max-width:600px) {
+
+
+
+@media (max-width: 600px) {
 
     .parrentDiv {
+        /* Add some padding to the sides on mobile */
+        padding: 0 20px;
         margin-top: 2rem;
     }
 
+    .cbtTitle,
     .login {
-        width: 400px;
-        margin-left: 30%;
-        margin-right: 30%;
-        border: 1px solid black;
-        margin-top: 100px;
-        border-radius: 10px;
+        /* Change from fixed width to a flexible width */
+        width: 100%; 
+        margin-top: 20px; 
+    }
+    
+    .login {
+        margin-top: 50px;
     }
 
-    .cbtTitle {
-        text-align: center;
-        font-size: 12px;
-        font-weight: lighter;
-        margin-top: 1rem;
-        width: 400px;
-        margin: auto;
-
-        margin-left: 30%;
-        margin-right: 30%;
+    /* Make the form elements fill their container */
+    .loginForm {
+        /* Add padding inside the form */
+        padding: 0 15px;
+        box-sizing: border-box; 
     }
 
-    .submitBtn{
+    .inputes input,
+    .submitBtn {
+        /* The inputs and button should take the full available width */
+        width: 100%;
+        box-sizing: border-box; 
+    }
+
+    .submitBtn {
         margin-bottom: 3rem;
     }
 }
