@@ -31,22 +31,27 @@
 /* ================== */
 .firstR {
   display: flex;
-  align-items: flex-start; /* Align items at the start to align radio button with top of text */
-  margin-bottom: 10px; /* Add space between options */
+  align-items: flex-start;
+  margin-bottom: 10px; 
 }
 
 .firstR input[type="radio"] {
-  margin-top: 1px; /* Adjust margin to align radio button vertically with the text */
+  margin-top: 1px; 
   flex-shrink: 0;
 }
 
-.firstR span {
-  margin-left: -120px; /* Add margin to the left for spacing */
-  max-width: calc(100% - 30px); /* Ensure the span does not exceed the container width */
-  word-wrap: break-word; /* Break long words if necessary */
-  line-height: 1.5; /* Ensure proper line spacing */
-  display: inline-block; /* Ensure the span behaves like a block to wrap text properly */
+.firstR input[type="radio"] {
+  margin-right: 10px; /* Adds a bit of space between the button and the text */
+  flex-shrink: 0; /* Prevents the radio button from shrinking */
 }
+
+.firstR span {
+  margin-left: -120px;
+  max-width: calc(100% - 30px);
+  word-wrap: break-word; 
+  line-height: 1.; 
+  display: inline-block; 
+}         
 
 
 /* ======================== */
