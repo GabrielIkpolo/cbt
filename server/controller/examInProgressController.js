@@ -20,7 +20,7 @@ const createExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 }
 
 // Get Exam in Progress by id
@@ -43,7 +43,7 @@ const getExamInProgressById = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 }
 
 // Update exam in Progress
@@ -68,7 +68,7 @@ const updateExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ Error: "Internal Server Error" });
-    } 
+    }
 }
 
 
@@ -78,6 +78,12 @@ const deleteExamInProgressById = async (req, res) => {
     try {
 
         await prisma.$transaction(async (prisma) => {
+
+
+            // First, delete related AnsweredQuestion records
+            await prisma.answeredQuestion.deleteMany({
+                where: { examInProgressId: examInProgressId },
+            });
 
             const deletedExamInProgress = await prisma.examInProgress.delete({
                 where: { id: examInProgressId },
@@ -95,8 +101,11 @@ const deleteExamInProgressById = async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        if (error.code === 'P2025') { 
+            return res.status(404).json({ error: "Exam in Progress not Found" });
+        }
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 }
 
 
@@ -121,7 +130,7 @@ const getAllExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 }
 
 
@@ -202,92 +211,95 @@ const checkAnswer = async (req, res) => {
 // saveUserResponse function to ensure proper score calculation and prevent duplicate submissions
 const saveUserResponse = async (req, res) => {
     try {
-      await prisma.$transaction(async (prisma) => {
-        const { userId, examId, questionId, selectedOption } = req.body;
-  
-        // Validate incoming data
-        if (!userId || !examId || !questionId || !selectedOption) {
-          return res.status(400).json({ error: "Missing Parameters" });
-        }
-  
-        // Fetch the relevant examInProgress record
-        const examInProgress = await prisma.examInProgress.findFirst({
-          where: { userId, examId },
-          include: { answeredQuestions: true, exam: { include: { questions: true } } },
-        });
-  
-        if (!examInProgress) {
-          return res.status(404).json({ error: "Exam in Progress not Found" });
-        }
-  
-        // Fetch the correct answer for the question
-        const question = await prisma.question.findUnique({
-          where: { id: questionId },
-          select: { correctAnswer: true },
-        });
-  
-        if (!question) {
-          return res.status(404).json({ error: "Question not found" });
-        }
-  
-        const selectedLetter = selectedOption.split(':')[0].trim();
-  
-        // Check if the selected option is correct
-        const isCorrect = question.correctAnswer === selectedLetter;
-  
-        console.log("Is correct Answer:", isCorrect, "check", question.correctAnswer, " selected option==>", selectedOption);
-  
-        // Check if the question was already answered
-        const existingAnswer = examInProgress.answeredQuestions.find(q => q.questionId === questionId);
-  
-        let updatedScore = examInProgress.score;
-  
-        if (existingAnswer) {
-          // Update existing answer if necessary
-          await prisma.answeredQuestion.update({
-            where: { id: existingAnswer.id },
-            data: { selectedOption, isCorrect },
-          });
-  
-          // Adjust score based on the new correctness
-          if (existingAnswer.isCorrect && !isCorrect) {
-            updatedScore -= (1 / examInProgress.exam.questions.length) * 100;
-          } else if (!existingAnswer.isCorrect && isCorrect) {
-            updatedScore += (1 / examInProgress.exam.questions.length) * 100;
-          }
-        } else {
-          // Create a new answered question entry
-          await prisma.answeredQuestion.create({
-            data: {
-              question: { connect: { id: questionId } },
-              examInProgress: { connect: { id: examInProgress.id } },
-              selectedOption,
-              isCorrect,
-            },
-          });
-  
-          // Adjust score based on the new answer
-          if (isCorrect) {
-            updatedScore += (1 / examInProgress.exam.questions.length) * 100;
-          }
-        }
-  
-        // Update the examInProgress with the new score
-        const updatedExamInProgress = await prisma.examInProgress.update({
-          where: { id: examInProgress.id },
-          data: { score: updatedScore },
-        });
-  
-        return res.status(200).json(updatedExamInProgress);
-      }, { timeout: 90000 });
+        await prisma.$transaction(async (prisma) => {
+            const { userId, examId, questionId, selectedOption } = req.body;
+
+            // Validate incoming data
+            if (!userId || !examId || !questionId || !selectedOption) {
+                return res.status(400).json({ error: "Missing Parameters" });
+            }
+
+            // Fetch the relevant examInProgress record
+            const examInProgress = await prisma.examInProgress.findFirst({
+                where: { userId, examId },
+                orderBy: {
+                    startTime: 'desc',
+                },
+                include: { answeredQuestions: true, exam: { include: { questions: true } } },
+            });
+
+            if (!examInProgress) {
+                return res.status(404).json({ error: "Exam in Progress not Found" });
+            }
+
+            // Fetch the correct answer for the question
+            const question = await prisma.question.findUnique({
+                where: { id: questionId },
+                select: { correctAnswer: true },
+            });
+
+            if (!question) {
+                return res.status(404).json({ error: "Question not found" });
+            }
+
+            const selectedLetter = selectedOption.split(':')[0].trim();
+
+            // Check if the selected option is correct
+            const isCorrect = question.correctAnswer === selectedLetter;
+
+            console.log("Is correct Answer:", isCorrect, "check", question.correctAnswer, " selected option==>", selectedOption);
+
+            // Check if the question was already answered
+            const existingAnswer = examInProgress.answeredQuestions.find(q => q.questionId === questionId);
+
+            let updatedScore = examInProgress.score;
+
+            if (existingAnswer) {
+                // Update existing answer if necessary
+                await prisma.answeredQuestion.update({
+                    where: { id: existingAnswer.id },
+                    data: { selectedOption, isCorrect },
+                });
+
+                // Adjust score based on the new correctness
+                if (existingAnswer.isCorrect && !isCorrect) {
+                    updatedScore -= (1 / examInProgress.exam.questions.length) * 100;
+                } else if (!existingAnswer.isCorrect && isCorrect) {
+                    updatedScore += (1 / examInProgress.exam.questions.length) * 100;
+                }
+            } else {
+                // Create a new answered question entry
+                await prisma.answeredQuestion.create({
+                    data: {
+                        question: { connect: { id: questionId } },
+                        examInProgress: { connect: { id: examInProgress.id } },
+                        selectedOption,
+                        isCorrect,
+                    },
+                });
+
+                // Adjust score based on the new answer
+                if (isCorrect) {
+                    updatedScore += (1 / examInProgress.exam.questions.length) * 100;
+                }
+            }
+
+            // Update the examInProgress with the new score
+            const updatedExamInProgress = await prisma.examInProgress.update({
+                where: { id: examInProgress.id },
+                data: { score: updatedScore },
+            });
+
+            return res.status(200).json(updatedExamInProgress);
+        }, { timeout: 90000 });
     } catch (error) {
-      console.error('Error saving user response:', error);
-      return res.status(500).json({ error: 'Internal server error' });
-    } 
-  };
+        console.error('Error saving user response:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+};
 
 
-  // Delete All Exam In Progress
+// Delete All Exam In Progress
 const deleteAllExamInProgress = async (req, res) => {
     try {
         await prisma.examInProgress.deleteMany();
@@ -295,48 +307,9 @@ const deleteAllExamInProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: "Internal Server Error" });
-    } 
+    }
 };
 
-//The now get all examination in progress
-// const nowGetAllExamInProgress = async (req, res) => {
-//     try {
-//         const allExamsInProgress = await prisma.examInProgress.findMany({
-//             include: {
-//                 user: {
-//                     select: {
-//                         id: true,
-//                         email: true,
-//                     },
-//                 },
-//                 exam: {
-//                     select: {
-//                         id: true,
-//                         subject: true,
-//                     },
-//                 },
-//             },
-//         });
-
-//         if (!allExamsInProgress.length) {
-//             return res.json({ error: "No exams in progress found" });
-//         }
-
-//         const formattedExamsInProgress = allExamsInProgress.map(examInProgress => ({
-//             id: examInProgress.id,
-//             userId: examInProgress.user.id,
-//             userEmail: examInProgress.user.email,
-//             examId: examInProgress.exam.id,
-//             examSubject: examInProgress.exam.subject,
-//             score: examInProgress.score
-//         }));
-
-//         return res.status(200).json(formattedExamsInProgress);
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ error: "Internal Server Error" });
-//     }
-// };
 
 
 //Get all Exam in Progress with Pagination and Search
@@ -410,5 +383,5 @@ const nowGetAllExamInProgress = async (req, res) => {
 export default {
     createExamInProgress, getExamInProgressById, checkAnswer, saveUserResponse,
     updateExamInProgress, deleteExamInProgressById, getAllExamInProgress,
-    deleteAllExamInProgress, nowGetAllExamInProgress 
+    deleteAllExamInProgress, nowGetAllExamInProgress
 }
