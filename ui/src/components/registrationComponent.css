@@ -94,3 +94,31 @@
      text-align: center;
      color: red;
  }
+
+
+ @media (max-width: 768px) {
+    /* Allow the main form to take up more space */
+    .registerForm {
+        width: 90%; /* Use most of the screen width */
+    }
+
+    /* Ensure inputs and selects don't have excessive horizontal margins */
+    .registerInputes,
+    .selectOption,
+    .registerBtn {
+        width: 100%; /* Fill the width of the form container */
+        margin-left: 0;
+        margin-right: 0;
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    /* Adjust spacing for the success message on mobile */
+    .sucessfulDivNotification {
+        width: 90%;
+    }
+
+    .selectionMode {
+        text-align: center; /* Center the Register/Update links */
+        margin-left: 0;
+    }
+}

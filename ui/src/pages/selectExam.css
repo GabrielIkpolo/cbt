@@ -85,41 +85,44 @@
     font-size: 16px;
 }
 
-@media(max-width: 576px) {
+@media (max-width: 900px) {
     .selectExam {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 50px;
-        overflow: hidden;
-        width: 100%;
-
-        margin-left: 30%;
-        margin-right: 30%;
+        /* Switch from a 3-column grid to a single column */
+        grid-template-columns: 1fr;
+        padding: 0 20px; /* Add horizontal padding for spacing */
+        grid-gap: 40px; /* Increase the gap between stacked items */
     }
 
-    .examDescription {
-        text-align: left;
-        width: 300px;
-
+    /* Center the content of each section */
+    .userDetails,
+    .examDescription,
+    .examOptions {
+        text-align: center;
+        margin: 0;
     }
 
     .userPassport {
-        width: 300px;
+        /* Center the image and adjust its size */
+        margin: 20px auto;
+        width: 150px;
+        height: 150px;
+    }
+
+    .examDescription {
+        text-align: left; /* Keep instructions left-aligned for readability */
     }
 
     .examOptions .customSelectOptions {
-        width: 300px;
+        width: 100%; /* Make the dropdown fill the container */
+        box-sizing: border-box;
     }
 
-    /* The Buttom area */
-    .startBtn{
-        width:100%;
-        margin-left: 45%;
+    .startExam {
+        padding: 0 20px; /* Align the button container with the grid padding */
+    }
+
+    .startBtn {
+        width: 100%; /* Make the button fill the available width */
+        margin-top: 40px; /* Reduce top margin for mobile */
     }
 }
-
-/* .startBtn:disabled {
-    background-color: grey;
-    cursor: not-allowed;
-    opacity: 0.5;
-} */

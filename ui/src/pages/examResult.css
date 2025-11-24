@@ -30,3 +30,23 @@
     background-color: green;
   }
   
+  @media (max-width: 600px) {
+  .examResult {
+    /* Add horizontal padding to prevent text from touching screen edges */
+    padding: 0 15px;
+    margin: 10px 0; /* Adjust margin for mobile */
+  }
+  
+  .examResult h1 {
+    font-size: 1.8rem; /* Slightly smaller heading on mobile */
+  }
+
+  .examResult p {
+    font-size: 1rem; /* Adjust paragraph font size */
+  }
+
+  .progress-bar {
+    /* Make the progress bar shorter on mobile */
+    height: 3.5rem;
+  }
+}
