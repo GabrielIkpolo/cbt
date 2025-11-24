@@ -87,6 +87,37 @@ const ExamPage = () => {
 
   }, [timeRemaining, isLoading]);
 
+// Using a debounce fuction to auto save ===========
+  // const debouncedSaveAnswer = useDebouncedCallback(async (optionToSave) => {
+  //       if (!optionToSave) return;
+  //       const questionId = questions[currentQuestionIndex.id];
+  //       try {
+  //           await axiosInstance.post('/api/save-user-response', {
+  //               userId: user.id,
+  //               examId: selectedExam,
+  //               questionId: questionId,
+  //               selectedOption: optionToSave,
+  //           });
+  //       } catch (error) {
+  //           console.error("Error auto-saving answer", error);
+  //       }
+  //   }, 5000); 
+
+
+  //   // Handle option change
+  //   const handleOptionChange = (event) => {
+  //       const newSelectedOption = event.target.value;
+  //       setSelectedOption(newSelectedOption); // Update UI instantly
+  //       setUserResponses({
+  //           ...userResponses,
+  //           [currentQuestionIndex]: newSelectedOption,
+  //       });
+  //       debouncedSaveAnswer(newSelectedOption); // Trigger the auto-save
+  //   };
+
+//==================================================
+
+
   // Handle option change
   const handleOptionChange = (event) => {
     const selectedOption = event.target.value;
@@ -123,6 +154,7 @@ const ExamPage = () => {
   // Function to navigate to next question
   const goToNextQuestion = (e) => {
     if (currentQuestionIndex < questions.length - 1) {
+      // debouncedSaveAnswer.flush(); // Force save any pending changes immediately
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedOption(userResponses[currentQuestionIndex + 1] || "");
@@ -134,6 +166,7 @@ const ExamPage = () => {
   // Function to navigate to previous question
   const goToPreviousQuestion = (e) => {
     if (currentQuestionIndex > 0) {
+      // debouncedSaveAnswer.flush(); // Force save any pending changes immediately
       handleAnswerSubmit().then(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
         setSelectedOption(userResponses[currentQuestionIndex - 1] || "");
