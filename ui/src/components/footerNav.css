@@ -26,3 +26,14 @@
     margin-top: 20.2rem;
   }
 }
+
+@media (max-width: 600px) {
+  .footer {
+    /* The only thing needed is to ensure it doesn't have a fixed width */
+    width: 100%; /* It will take up the full screen width */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    padding: 1rem 0;
+    margin-top: 2rem; /* Reduced top margin for better spacing */
+    text-align: center; /* Center the text inside */
+  }
+}

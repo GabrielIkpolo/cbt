@@ -1,68 +1,94 @@
-.headers{
-  padding-top: 5px;
-  padding-bottom: 5px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-row: 1;
+/* --- Desktop First Styles --- */
+.headers {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 5px 20px; 
 }
 
 .logo {
-  width: 100px;
-  height: 100px;
+  width: 80px; 
+  height: 80px;
 }
-
-/* .nav {
-  display: flex;
-  justify-content: center;
-} */
 
 .navListParent {
   display: flex;
-  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .listItems {
-  margin-right:20px;
+  margin-right: 25px;
   list-style: none;
-  padding-top: 30px;
-  
 }
 
 .navLink {
   text-decoration: none;
   color: brown;
-  /* color:  #3c3333;
-  font-size: 18px; */
-  font-weight: bold; 
+  font-weight: bold;
 }
 
-.loginButton {
-  border-radius: 10px;
-  background-color: rgb(247, 15, 15);
-  width: 150px; /* Set width to auto */
-  height: 40px; /* Set height to auto */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  overflow: hidden;
-  border: none;
-  font-size: 16px; 
-  color: white;
+.auth-buttons {
+  /* A wrapper for the auth buttons */
 }
 
-.logoutBtn{
+.loginButton, .logoutBtn {
   border-radius: 10px;
   background-color: rgb(247, 15, 15);
-  width: 150px; /* Set width to auto */
-  height: 40px; /* Set height to auto */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  overflow: hidden;
+  width: 120px;
+  height: 40px;
   border: none;
-  font-size: 16px; 
+  font-size: 16px;
   color: white;
+  cursor: pointer;
+}
+
+/* Hide hamburger on desktop */
+.hamburger {
+  display: none;
+}
+
+
+/* ======================================================== */
+/* START: PROPOSED MOBILE STYLES (for screens <= 768px)     */
+/* ======================================================== */
+@media (max-width: 768px) {
+  .headers {
+    flex-wrap: wrap; 
+    position: relative; 
+  }
+
+  .hamburger {
+    display: block; 
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* Make it the last item in the row */
+    order: 2; 
+  }
+  
+  .auth-buttons {
+      order: 1; /* Move auth buttons before hamburger icon */
+  }
+
+  .nav {
+    display: none; /* Hide the nav by default */
+    width: 100%;
+    order: 3; /* Make nav appear on the second line */
+  }
+
+  .nav-open {
+    display: block; /* Show the nav when the menu is open */
+  }
+  
+  .navListParent {
+    flex-direction: column; /* Stack the nav links vertically */
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .listItems {
+    margin: 10px 0; /* Adjust spacing for vertical layout */
+  }
 }
