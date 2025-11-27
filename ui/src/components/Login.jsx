@@ -60,7 +60,7 @@ const Login = () => {
       <div className="parrentDiv">
 
         <div className="cbtTitle">
-          <h1>Computer Base Testing, CBT</h1>
+          <h1>Computer-Based Testing, CBT</h1>
         </div>
 
         <div className="login">
